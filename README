@@ -1,0 +1,10 @@
+README:
+primo applicativo con utilizzo di of_fat_062
+------------------
+name: videograb-ofxKinect-opencv-sonos
+addons: ofxOpencv, ofxkinect
+included lib: videoGrab
+------------------
+
+
+
