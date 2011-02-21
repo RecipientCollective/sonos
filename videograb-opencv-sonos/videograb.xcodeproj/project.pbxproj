@@ -758,9 +758,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E4B69B5A0A3A1756003C02F2 /* ofxKinect */ = {
+		E4B69B5A0A3A1756003C02F2 /* videograb */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "ofxKinect" */;
+			buildConfigurationList = E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "videograb" */;
 			buildPhases = (
 				E4B69B580A3A1756003C02F2 /* Sources */,
 				E4B69B590A3A1756003C02F2 /* Frameworks */,
@@ -772,7 +772,7 @@
 			dependencies = (
 				E4C2422810CC54DA004149E2 /* PBXTargetDependency */,
 			);
-			name = ofxKinect;
+			name = videograb;
 			productName = myOFApp;
 			productReference = E4B69B5B0A3A1756003C02F2 /* ofxKinectDebug.app */;
 			productType = "com.apple.product-type.application";
@@ -782,7 +782,7 @@
 /* Begin PBXProject section */
 		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 			isa = PBXProject;
-			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "ofxKinect" */;
+			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "videograb" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -803,7 +803,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				E4B69B5A0A3A1756003C02F2 /* ofxKinect */,
+				E4B69B5A0A3A1756003C02F2 /* videograb */,
 			);
 		};
 /* End PBXProject section */
@@ -1188,7 +1188,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "ofxKinect" */ = {
+		E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "videograb" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B4E0A3A1720003C02F2 /* Debug */,
@@ -1198,7 +1198,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "ofxKinect" */ = {
+		E4B69B5F0A3A1757003C02F2 /* Build configuration list for PBXNativeTarget "videograb" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E4B69B600A3A1757003C02F2 /* Debug */,
