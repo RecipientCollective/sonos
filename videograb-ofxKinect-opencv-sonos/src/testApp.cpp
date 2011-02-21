@@ -307,12 +307,10 @@ void testApp::keyPressed (int key)
 		break;
 	
 		case '>':
-		case '.':
 			farThreshold ++;
 			if (farThreshold > 255) farThreshold = 255;
 			break;
-		case '<':		
-		case ',':		
+		case '<':				
 			farThreshold --;
 			if (farThreshold < 0) farThreshold = 0;
 			break;
@@ -425,6 +423,12 @@ void testApp::keyPressed (int key)
 		case 'v':
 			videosurce = !videosurce;
 			setup();
+			break;
+		case ',':
+			if (videosurce){
+				vidGrabber.videoSettings();
+			
+			}
 			break;
 	}
 }
