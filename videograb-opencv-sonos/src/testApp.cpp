@@ -4,10 +4,7 @@
 //--------------------------------------------------------------
 void testApp::setup()
 {
-	
-videosurce = true;	
-	
-	if (videosurce) {
+
 		camWidth = 640;
 		camHeight = 480;
 		vidGrabber.setVerbose(true);
@@ -20,56 +17,29 @@ videosurce = true;
 		
 		bLearnBakground = true;
 		Threshold = 50;
-				
-		
 		
 		bThreshWithOpenCV = false;
 
-		
-	} else {
-		//shows infrared image
-		kinect.init(true);
-		kinect.setVerbose(true);
-		kinect.open();
-		
-		colorImg.allocate(kinect.width, kinect.height);
-		grayImage.allocate(kinect.width, kinect.height);
-		grayThresh.allocate(kinect.width, kinect.height);
-		grayThreshFar.allocate(kinect.width, kinect.height);
-		
-		nearThreshold = 50;
-		farThreshold  = 200;
-		bThreshWithOpenCV = true;
-		
-		angle = 0;
-		kinect.setCameraTiltAngle(angle);
-	
-	}
+		ofSetFrameRate(60);
 
 	
-		
-	ofSetFrameRate(60);
-
-	
-	colorz=1;
-	contour_min = 100;
-	scale_x = 1.0;
-	scale_y = 1.0;
-	mtrx = 1.0;
-	mtry = 1.0;
-	interface = true;
-	circle = true;
-	cloud = false;
-	debug = false;
-	
-	rectangle = false;
+		colorz=1;
+		blobMax=3;
+		contour_min = 100;
+		scale_x = 1.0;
+		scale_y = 1.0;
+		mtrx = 1.0;
+		mtry = 1.0;
+		interface = true;
+		circle = true;
+		debug = false;
+		rectangle = false;
 }
 
 //--------------------------------------------------------------
 void testApp::update()
 {
 	ofBackground(100, 100, 100);
-	if (videosurce) {
 		bool bNewFrame = false;
 		
 		vidGrabber.grabFrame();
@@ -88,37 +58,7 @@ void testApp::update()
 			grayDiff.threshold(Threshold);
 			}
 		
-		
-		
-	} else {
-		kinect.update();
-		grayImage.setFromPixels(kinect.getDepthPixels(), kinect.width, kinect.height);
-		
-		//we do two thresholds - one for the far plane and one for the near plane
-		//we then do a cvAnd to get the pixels which are a union of the two thresholds.	
-		if( bThreshWithOpenCV ){
-			grayThreshFar = grayImage;
-			grayThresh = grayImage;
-			grayThreshFar.threshold(farThreshold, true);
-			grayThresh.threshold(nearThreshold);
-			cvAnd(grayThresh.getCvImage(), grayThreshFar.getCvImage(), grayImage.getCvImage(), NULL);
-		}else{
-			
-			//or we do it ourselves - show people how they can work with the pixels
-			
-			unsigned char * pix = grayImage.getPixels();
-			int numPixels = grayImage.getWidth() * grayImage.getHeight();
-			
-			for(int i = 0; i < numPixels; i++){
-				if( pix[i] > nearThreshold && pix[i] < farThreshold ){
-					pix[i] = 255;
-				}else{
-					pix[i] = 0;
-				}
-			}
-		}
-		
-	}
+
 		//update the cv image
 	grayImage.flagImageChanged();
 
@@ -136,11 +76,8 @@ void testApp::update()
 	
 	// find contours which are between the size of 20 pixels and 1/3 the w*h pixels.
 	// also, find holes is set to true so we will get interior contours as well....
-	if (videosurce){
-	contourFinder.findContours(grayDiff, 20, (camWidth*camHeight)/3, 3, false);
-	} else {
-    contourFinder.findContours(grayImage, contour_min, (kinect.width*kinect.height)/3, 3, false, true);
-	}
+	contourFinder.findContours(grayDiff, contour_min, (camWidth*camHeight)/3, blobMax, false, true);
+	
 }
 
 //--------------------------------------------------------------
@@ -153,7 +90,7 @@ void testApp::draw()
 
 	if (debug) {
 		 
-		if (videosurce){
+		
 			colorImg.draw(20,20);
 			grayImage.draw(360,20);
 			grayBg.draw(20,280);
@@ -175,27 +112,15 @@ void testApp::draw()
 				contourFinder.blobs[i].draw(360,540);
 			}
 		
-		} else {
-			kinect.drawDepth(10, 10, 400, 300);
-			kinect.draw(420, 10, 400, 300);
-			contourFinder.draw(10, 320, 400, 300);	
-		}
+		
 
 
 		
 	} else {
-		
-		ofSetColor(205, 205, 205);
-		
-		if (videosurce){
+			ofSetColor(205, 205, 205);
 			grayDiff.draw(0,0, camWidth, camHeight);
-
 			//colorImg.draw(20,20, camWidth, camHeight);
 			//grayImage.draw(0, 0, camWidth, camHeight);
-		} else {
-		
-		grayImage.draw(0, 0, kinect.width, kinect.height);
-	}
 		
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			
@@ -245,13 +170,7 @@ void testApp::draw()
 		
 	}
 
-	
 
-	// point cloud is commented out because we need a proper camera class to explore it effectively	
-	if (cloud) {
-		drawPointCloud();
-	}
-	
 	ofPopMatrix();
 	
 	ofSetColor(255, 255, 255);
@@ -259,41 +178,21 @@ void testApp::draw()
 	// INTERFACE DEBUG
 	if (interface) {
 		ofDrawBitmapString("INTERFACE (press: h to hide)", 20, 20);
-		ofDrawBitmapString("accel is: " + ofToString(kinect.getMksAccel().x, 2) + " / " 
-						   + ofToString(kinect.getMksAccel().y, 2) + " / "
-						   + ofToString(kinect.getMksAccel().z, 2), 20, 58 );
-		
 		char reportStr[1024];
-		sprintf(reportStr, "using opencv threshold = %i (press spacebar)\nset near threshold %i (press: + -)\nset far threshold %i (press: < >) num blobs found %i, fps: %f",bThreshWithOpenCV, nearThreshold, farThreshold, contourFinder.nBlobs, ofGetFrameRate());
+		sprintf(reportStr, "using opencv threshold = %i (press: s)\nset threshold %i (press: + -)\nnum blobs found %i,color: %i , fps: %f",bThreshWithOpenCV, Threshold, contourFinder.nBlobs, colorz, ofGetFrameRate());
 		ofDrawBitmapString(reportStr, 20, 90);
-		ofDrawBitmapString("tilt angle: " + ofToString(angle) + " (press: s x). Contour (poress: t y): " + ofToString(contour_min) ,20,130);
+		ofDrawBitmapString("color number: " + ofToString(colorz)+ " (press: 1,2,3,4). Contour (press: t y): " + ofToString(contour_min) +" MaxBlobs (press: < >): "+ofToString(blobMax) ,20,130);
 		ofDrawBitmapString("scale: " + ofToString(scale_x) + "," + ofToString(scale_y) + " (press: a z)", 20,160);
 		ofDrawBitmapString("translate: " + ofToString(mtrx) + "," + ofToString(mtry) + " (press: ARROWS)", 20,190);			
-		ofDrawBitmapString("d: debug mode. c: toggle circle. r: reset scale and translate. p: point cloud", 20,220);
+		ofDrawBitmapString("d: debug mode. c: toggle circle. r: reset scale and translate. ,: video settings", 20,220);
 
 	}
 }
 
-void testApp::drawPointCloud() {
-	ofScale(400, 400, 400);
-	int w = 640;
-	int h = 480;
-	ofRotateY(mouseX);
-	float* distancePixels = kinect.getDistancePixels();
-	glBegin(GL_POINTS);
-	int step = 2;
-	for(int y = 0; y < h; y += step) {
-		for(int x = 0; x < w; x += step) {
-			ofPoint cur = kinect.getWorldCoordinateFor(x, y);
-			glVertex3f(cur.x, cur.y, cur.z);
-		}
-	}
-	glEnd();
-}
 
 //--------------------------------------------------------------
 void testApp::exit(){
-	kinect.close();
+//magari c' da chiudere la cam o i video da verificare;
 }
 
 //--------------------------------------------------------------
@@ -303,43 +202,34 @@ void testApp::keyPressed (int key)
 	{
 		case ' ':
 			bLearnBakground = true;
-			bThreshWithOpenCV = !bThreshWithOpenCV;
+			
 		break;
 	
 		case '>':
-			farThreshold ++;
-			if (farThreshold > 255) farThreshold = 255;
+			blobMax ++;
 			break;
-		case '<':				
-			farThreshold --;
-			if (farThreshold < 0) farThreshold = 0;
+		case '<':	
+			blobMax --;
 			break;
 			
 		case '+':
-		case '=':
-			nearThreshold ++;
 			Threshold ++;
-			if (nearThreshold > 255) nearThreshold = 255;
+			if (Threshold > 255) Threshold = 255;
 			break;
-		case '-':		
-			nearThreshold --;
+		case '-':
 			Threshold --;
-			if (nearThreshold < 0) nearThreshold = 0;
+			if (Threshold < 0) Threshold = 0;
 			break;
 		case 'w':
-			kinect.enableDepthNearValueWhite(!kinect.isDepthNearValueWhite());
+			
 			break;
 
 		case 's':
-			angle++;
-			if(angle>30) angle=30;
-			kinect.setCameraTiltAngle(angle);
+			bThreshWithOpenCV = !bThreshWithOpenCV;
 			break;
 
 		case 'x':
-			angle--;
-			if(angle<-30) angle=-30;
-			kinect.setCameraTiltAngle(angle);
+			
 			break;
 			
 		case OF_KEY_UP:
@@ -400,7 +290,6 @@ void testApp::keyPressed (int key)
 			circle = !circle;
 			break;
 		case 'p':
-			cloud = !cloud;
 			break;
 		case 'd':
 			debug = !debug;
@@ -421,14 +310,9 @@ void testApp::keyPressed (int key)
 			rectangle = !rectangle;
 			break;	
 		case 'v':
-			videosurce = !videosurce;
-			setup();
 			break;
 		case ',':
-			if (videosurce){
 				vidGrabber.videoSettings();
-			
-			}
 			break;
 	}
 }

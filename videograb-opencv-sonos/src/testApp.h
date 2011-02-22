@@ -4,7 +4,7 @@
 #include "ofMain.h"
 
 #include "ofxOpenCv.h"
-#include "ofxKinect.h"
+//#include "ofxKinect.h"
 
 
 #define OUTPUT_HEIGHT 768
@@ -29,14 +29,8 @@ class testApp : public ofBaseApp
 		void mouseReleased(int x, int y, int button);
 		void windowResized(int w, int h);
 
-		ofxKinect kinect;
-
 		ofxCvColorImage		colorImg;
-
 		ofxCvGrayscaleImage 	grayImage;
-		ofxCvGrayscaleImage 	grayThresh;
-		ofxCvGrayscaleImage 	grayThreshFar;
-	
 		ofxCvGrayscaleImage 	grayBg;
 		ofxCvGrayscaleImage 	grayDiff;
 
@@ -45,10 +39,9 @@ class testApp : public ofBaseApp
 		bool				bThreshWithOpenCV;
 		bool				bFullscreen;
 
-		int 				nearThreshold;
-		int					farThreshold;
 		int					colorz;
-		int					angle;
+		int					blobMax;
+
 	
 	ofVideoGrabber 		vidGrabber;
 	unsigned char * 	videoInverted;
@@ -63,7 +56,6 @@ class testApp : public ofBaseApp
 	float mtry;
 	bool interface;
 	bool circle;
-	bool cloud;
 	bool debug;
 	bool rectangle;
 	bool videosurce;
