@@ -4,8 +4,9 @@
 #include "ofMain.h"
 
 #include "ofxOpenCv.h"
-//#include "ofxKinect.h"
 
+
+//#define _USE_LIVE_VIDEO	
 
 #define OUTPUT_HEIGHT 768
 #define OUTPUT_WIDTH 1024
@@ -42,10 +43,13 @@ class testApp : public ofBaseApp
 		int					colorz;
 		int					blobMax;
 
-	
+#ifdef _USE_LIVE_VIDEO
 	ofVideoGrabber 		vidGrabber;
-	unsigned char * 	videoInverted;
-	ofTexture			videoTexture;
+#else
+	ofVideoPlayer 		vidPlayer;
+#endif
+	//unsigned char * 	videoInverted;
+	//ofTexture			videoTexture;
 	int 				camWidth;
 	int 				camHeight;
 	int 				Threshold;

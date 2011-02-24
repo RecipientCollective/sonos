@@ -1,10 +1,36 @@
 README:
 primo applicativo con utilizzo di of_fat_062
+
+
+tutte le path sono relative
+
+/of_preRelease_v0062_osxSL_FAT
+		->/Code/sonos questa è la path correta dove posizionare il repo git in locale
+
+ho notato che i file video cosi come son o non funzionano e sto verificando il codec adatto.
+
+
+1.
 ------------------
-name: videograb-ofxKinect-opencv-sonos
+Name: ofxKinect-opencv-sonos
 addons: ofxOpencv, ofxkinect
-included lib: videoGrab
 ------------------
 
+2.
+------------------
+Name: videograb-opencv-sonos
+addons: ofxOpencv
+included lib: videoGrab
+
+data for tests
+http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/buio_aperto_ircam_oggetti.mov
+http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/buio_aperto_ircam.mov
+http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/buio_aperto_webcam.mov
+http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/buio_chiuso_ircam.mov
+http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/buio_chiuso_irweb.mov
+http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/luce_aperto_ircam-oggetti.mov
+http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/luce_chiuso_ircam.mov
+
+------------------
 
 

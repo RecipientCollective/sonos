@@ -7,8 +7,19 @@ void testApp::setup()
 
 		camWidth = 640;
 		camHeight = 480;
-		vidGrabber.setVerbose(true);
-		vidGrabber.initGrabber(camWidth, camHeight, false);
+	
+	
+#ifdef _USE_LIVE_VIDEO
+	vidGrabber.setVerbose(true);
+	vidGrabber.initGrabber(camWidth, camHeight, false);
+#else
+	vidPlayer.loadMovie("buio_aperto_ircam.mov");
+	vidPlayer.play();
+#endif
+	
+	
+	
+		
 		
 		colorImg.allocate(camWidth, camHeight);
 		grayImage.allocate(camWidth, camHeight);
@@ -39,14 +50,30 @@ void testApp::setup()
 //--------------------------------------------------------------
 void testApp::update()
 {
-	ofBackground(100, 100, 100);
+		ofBackground(100, 100, 100);
 		bool bNewFrame = false;
 		
+	#ifdef _USE_LIVE_VIDEO
 		vidGrabber.grabFrame();
 		bNewFrame = vidGrabber.isFrameNew();
-		
+	#else
+		vidPlayer.idleMovie();
+		bNewFrame = vidPlayer.isFrameNew();
+	#endif
+	
+	
+	
 		if (bNewFrame){
-		colorImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
+		
+		#ifdef _USE_LIVE_VIDEO
+			colorImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
+		#else
+            colorImg.setFromPixels(vidPlayer.getPixels(), camWidth,camHeight);
+		#endif
+			
+
+			
+			
 			grayImage = colorImg;
 			if (bLearnBakground == true){
 				grayBg = grayImage;		// the = sign copys the pixels from grayImage into grayBg (operator overloading)
@@ -312,7 +339,11 @@ void testApp::keyPressed (int key)
 		case 'v':
 			break;
 		case ',':
-				vidGrabber.videoSettings();
+	#ifdef _USE_LIVE_VIDEO
+			vidGrabber.videoSettings();
+	#else
+			//
+	#endif
 			break;
 	}
 }

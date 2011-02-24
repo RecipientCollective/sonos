@@ -5,7 +5,7 @@
 void testApp::setup()
 {
 	
-videosurce = true;	
+videosurce = false;	
 	
 	if (videosurce) {
 		camWidth = 640;
