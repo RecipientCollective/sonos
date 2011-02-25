@@ -5,16 +5,18 @@
 void testApp::setup()
 {
 
-		camWidth = 640;
-		camHeight = 480;
-	
+
 	
 #ifdef _USE_LIVE_VIDEO
+	camWidth = 640;
+	camHeight = 480;
 	vidGrabber.setVerbose(true);
 	vidGrabber.initGrabber(camWidth, camHeight, false);
 #else
-	vidPlayer.loadMovie("buio_aperto_ircam.mov");
+	vidPlayer.loadMovie("buio_aperto_ircam_oggetti.mov");
 	vidPlayer.play();
+	camWidth = vidPlayer.getWidth();
+	camHeight = vidPlayer.getHeight();
 #endif
 	
 	
@@ -26,10 +28,10 @@ void testApp::setup()
 		grayBg.allocate(camWidth,camHeight);
 		grayDiff.allocate(camWidth,camHeight);
 		
-		bLearnBakground = true;
+		bLearnBakground = false;
 		Threshold = 50;
 		
-		bThreshWithOpenCV = false;
+		bThreshWithOpenCV = true;
 
 		ofSetFrameRate(60);
 

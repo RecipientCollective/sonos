@@ -212,8 +212,9 @@
 				307525EF11CA84AF007EB8FF /* docs */,
 				307525F211CA84AF007EB8FF /* src */,
 			);
-			path = ofxThread;
-			sourceTree = "<group>";
+			name = ofxThread;
+			path = ../../../addons/ofxThread;
+			sourceTree = SOURCE_ROOT;
 		};
 		307525EF11CA84AF007EB8FF /* docs */ = {
 			isa = PBXGroup;
@@ -239,8 +240,9 @@
 				3077437611CC21810022444F /* libs */,
 				3077438C11CC21820022444F /* src */,
 			);
-			path = ofxOpenCv;
-			sourceTree = "<group>";
+			name = ofxOpenCv;
+			path = ../../../addons/ofxOpenCv;
+			sourceTree = SOURCE_ROOT;
 		};
 		3077437611CC21810022444F /* libs */ = {
 			isa = PBXGroup;
@@ -872,7 +874,7 @@
 				GCC_INLINES_ARE_PRIVATE_EXTERN = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_VERSION = "";
+				GCC_VERSION = 4.0;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
 				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
