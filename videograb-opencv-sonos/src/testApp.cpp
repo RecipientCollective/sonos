@@ -106,6 +106,14 @@ void testApp::update()
 	}
 }
 
+// grezzo test per grezzo man
+bool sortByCentroid(const ofxCvBlob& d1, const ofxCvBlob& d2)
+{
+	return d1.centroid.x < d2.centroid.x;
+}
+
+
+
 //--------------------------------------------------------------
 void testApp::draw()
 {		
@@ -149,6 +157,7 @@ void testApp::draw()
 		//grayImage.draw(0, 0, camWidth, camHeight);
 		
 		//float max_x = 0;
+		std::sort(contourFinder.blobs.begin(),contourFinder.blobs.end(), sortByCentroid);
 		
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			
@@ -161,7 +170,7 @@ void testApp::draw()
 			float rectx = curr_blob.boundingRect.x;
 			float recty = curr_blob.boundingRect.y;
 			
-			
+			/*
 			float unit = camWidth / 2;
 			if (contourFinder.blobs.size() > 1) {
 				if (cx <= unit) {
@@ -172,6 +181,7 @@ void testApp::draw()
 			} else {
 				ofSetColor(255, 0, 0);
 			}
+			*/
 
 			/*
 			 if (cx <= unit) {
@@ -200,17 +210,16 @@ void testApp::draw()
 			}
 			 */
 			
-			/*
 			if (i == 0) {
-				ofSetColor(255, 255, 100);
+				ofSetColor(255, 0, 0);
 			} else if (i == 1) {
-				ofSetColor(255, 100, 255);
+				ofSetColor(0, 255, 0);
 			} else if (i == 2) {
-				ofSetColor(100, 255, 255);
+				ofSetColor(0, 0, 255);
 			} else {
-				ofSetColor(100, 120, 150);
+				ofSetColor(100, 100, 150);
 			}
-			 */
+
 				
 			ofNoFill();
 			ofRect(rectx,recty,blobwidth,blobheight);
