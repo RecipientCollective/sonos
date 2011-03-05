@@ -38,7 +38,7 @@ void testApp::setup()
 	
 	colorz=1;
 	blobMax=2;
-	contour_min = 100;
+	contour_min = 350;
 	scale_x = 1.0;
 	scale_y = 1.0;
 	mtrx = 1.0;
@@ -147,8 +147,42 @@ void testApp::draw()
 		//colorImg.draw(20,20, camWidth, camHeight);
 		//grayImage.draw(0, 0, camWidth, camHeight);
 		
+		float max_x = 0;
+		
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			
+			ofxCvBlob curr_blob = contourFinder.blobs[i];
+			float cx = curr_blob.centroid.x;
+			float cy = curr_blob.centroid.y;
+			float blobarea = curr_blob.area;
+			float blobheight = curr_blob.boundingRect.height;	
+			float blobwidth = curr_blob.boundingRect.width;	
+			float rectx = curr_blob.boundingRect.x;
+			float recty = curr_blob.boundingRect.y;
+			
+			
+			float unit = camWidth / 2;
+			if (contourFinder.blobs.size() > 1) {
+				if (cx <= unit) {
+					ofSetColor(0, 255, 0);
+				} else {
+					ofSetColor(0, 0, 255);
+				}
+			} else {
+				ofSetColor(255, 0, 0);
+			}
+
+			/*
+			 if (cx <= unit) {
+			 ofSetColor(255, 0, 0);
+			 } else if (cx > unit && cx <= unit*2) {
+			 ofSetColor(0, 255, 0);
+			 } else if (cx > unit*2) {
+			 ofSetColor(0, 0, 255);
+			 }
+			 */
+			
+			/*
 			switch(colorz){
 				case 1:
 					ofSetColor(255, 255, 100);
@@ -163,16 +197,20 @@ void testApp::draw()
 					ofSetColor(100, 120, 150);
 					break;
 			}
+			 */
 			
-			ofxCvBlob curr_blob = contourFinder.blobs[i];
-			float cx = curr_blob.centroid.x;
-			float cy = curr_blob.centroid.y;
-			float blobarea = curr_blob.area;
-			float blobheight = curr_blob.boundingRect.height;	
-			float blobwidth = curr_blob.boundingRect.width;	
-			float rectx = curr_blob.boundingRect.x;
-			float recty = curr_blob.boundingRect.y;
-			
+			/*
+			if (i == 0) {
+				ofSetColor(255, 255, 100);
+			} else if (i == 1) {
+				ofSetColor(255, 100, 255);
+			} else if (i == 2) {
+				ofSetColor(100, 255, 255);
+			} else {
+				ofSetColor(100, 120, 150);
+			}
+			 */
+				
 			ofNoFill();
 			ofRect(rectx,recty,blobwidth,blobheight);
 			ofFill();
@@ -284,7 +322,8 @@ void testApp::keyPressed (int key)
 				ofSetFullscreen(true);
 			}
 			break;
-			
+		
+		/*	
 		case '1':
 			colorz=1;
 			break;
@@ -300,6 +339,8 @@ void testApp::keyPressed (int key)
 		case '4':
 			colorz=4;
 			break;
+		*/
+			
 		case 'a':
 			scale_x+=0.01;
 			scale_y+=0.01;
