@@ -84,7 +84,8 @@ void testApp::update()
 		grayDiff.threshold(Threshold);
 	
 		//update the cv image
-		//grayImage.flagImageChanged();
+		grayImage.flagImageChanged();
+		grayDiff.flagImageChanged();
 		
 		// find contours which are between the size of 20 pixels and 1/3 the w*h pixels.
 		// also, find holes is set to true so we will get interior contours as well....
@@ -147,7 +148,7 @@ void testApp::draw()
 		//colorImg.draw(20,20, camWidth, camHeight);
 		//grayImage.draw(0, 0, camWidth, camHeight);
 		
-		float max_x = 0;
+		//float max_x = 0;
 		
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			
