@@ -4,7 +4,7 @@
 #include "ofMain.h"
 
 #include "ofxOpenCv.h"
-
+#include <fstream>
 
 //#define _USE_LIVE_VIDEO	
 

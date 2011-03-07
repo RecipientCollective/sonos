@@ -13,10 +13,27 @@ void testApp::setup()
 	vidGrabber.setVerbose(true);
 	vidGrabber.initGrabber(camWidth, camHeight, false);
 #else
-	vidPlayer.loadMovie("retro-ir.mov");
-	vidPlayer.play();
-	camWidth = vidPlayer.getWidth();
-	camHeight = vidPlayer.getHeight();
+	//check if file exists
+	bool bFileThere = false;
+	fstream fin;
+	string fileNameInOF = ofToDataPath("retro-ir.mov"); // since OF files are in the data directory, we need to do this
+	fin.open(fileNameInOF.c_str(),ios::in);
+	if ( fin.is_open() ) {
+		cout<<"file exists"<<endl;
+		bFileThere =true;
+	}
+	fin.close();
+	
+	if (bFileThere) {
+		vidPlayer.loadMovie("retro-ir.mov");
+		vidPlayer.play();
+		camWidth = vidPlayer.getWidth();
+		camHeight = vidPlayer.getHeight();
+	} else {
+		cout << "No File here!" << endl;
+		testApp:exit();
+	}
+
 #endif
 	
 	
@@ -266,6 +283,7 @@ void testApp::draw()
 //--------------------------------------------------------------
 void testApp::exit(){
 	//magari c' da chiudere la cam o i video da verificare;
+	std::exit(0);
 }
 
 //--------------------------------------------------------------
