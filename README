@@ -14,7 +14,7 @@ tutte le path sono relative
 Name: ofxKinect-opencv-sonos
 addons: ofxOpencv, ofxkinect
 
-patch in standby per ora, da valutare l'utilizzo di tecnologie come il kinect ma realizzate per una profonditˆ di campo maggiore.
+patch in standby per ora, da valutare l'utilizzo di tecnologie come il kinect ma realizzate per una profondita' di campo maggiore.
 ho trovato una ditta italiana che li importa, http://www.3dtarget.it/
 ------------------
 
@@ -25,6 +25,19 @@ addons: ofxOpencv
 included lib: videoGrab
 
 video per i test da includere in /bin/data/ 
+
+
+nuova sessione di video molto piu utili ai fini dei test
+http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/front-ir-bottom.mov
+http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/front-ir-top.mov
+http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/front-near-background.mov
+http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/retro-ir-luce-buio-tuta.mov
+*** questo da' il miglior risultato   -> http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/retro-ir.mov
+
+
+
+prima sessione di riprese
+
 http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/buio_aperto_ircam_oggetti.mov
 http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/buio_aperto_ircam.mov
 http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/buio_aperto_webcam.mov
@@ -32,6 +45,10 @@ http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/buio_chiuso_ircam.
 http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/buio_chiuso_irweb.mov
 http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/luce_aperto_ircam-oggetti.mov
 http://ipnotica.net/projectfiles/sonos/teatro_materiali_video/luce_chiuso_ircam.mov
+
+
+
+
 
 ------------------
 
