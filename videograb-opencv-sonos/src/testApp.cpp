@@ -1,6 +1,7 @@
 #include "testApp.h"
 
 
+
 //--------------------------------------------------------------
 void testApp::setup()
 {
@@ -13,6 +14,18 @@ void testApp::setup()
 	vidGrabber.setVerbose(true);
 	vidGrabber.initGrabber(camWidth, camHeight, false);
 #else
+	/* //WORKING ON FILE DIRECTORY cosi crasha sullo switch tfra video che si fa con "p" e "o" 
+	 probabilmente no ndisallochiamo la memoria
+	 
+	DIR.setVerbose(false);
+	nVideos = DIR.listDir("videos");
+	string Videos[nVideos];
+	for(int i = 0; i < nVideos; i++){
+	Videos[i] = DIR.getPath(i);
+    }
+    
+	currentVideo = 0;
+	*/
 	//check if file exists
 	bool bFileThere = false;
 	fstream fin;
@@ -33,6 +46,18 @@ void testApp::setup()
 		cout << "No File here!" << endl;
 		testApp:exit();
 	}
+	
+	/*if (nVideos > 0) {
+		vidPlayer.loadMovie(Videos[currentVideo]);
+		vidPlayer.play();
+		camWidth = vidPlayer.getWidth();
+		camHeight = vidPlayer.getHeight();
+		
+		
+	} else {
+		cout << "No File here!" << endl;
+		testApp:exit();
+	}*/
 
 #endif
 	
@@ -384,7 +409,22 @@ void testApp::keyPressed (int key)
 			circle = !circle;
 			break;
 		case 'p':
+			vidPlayer.close();
+			currentVideo++;
+			if (currentVideo==nVideos) {
+				currentVideo=0;
+			}
+			setup();
 			break;
+		case 'o':
+			vidPlayer.close();
+			currentVideo--;
+			if (currentVideo<0) {
+				currentVideo=nVideos;
+			}
+			setup();
+			break;
+
 		case 'd':
 			debug = !debug;
 			break;

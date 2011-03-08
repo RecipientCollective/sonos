@@ -4,6 +4,7 @@
 #include "ofMain.h"
 
 #include "ofxOpenCv.h"
+#include "ofxDirList.h"
 #include <fstream>
 
 //#define _USE_LIVE_VIDEO	
@@ -36,6 +37,10 @@ public:
 	ofxCvGrayscaleImage 	grayDiff;
 	
 	ofxCvContourFinder 	contourFinder;
+	
+	ofxDirList   DIR;
+	int 		nVideos;
+	int         currentVideo;
 	
 	bool				bThreshWithOpenCV;
 	bool				bFullscreen;
