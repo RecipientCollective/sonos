@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0AEA7A471325B2DA00ADD972 /* ofxDirList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AEA7A451325B2DA00ADD972 /* ofxDirList.cpp */; };
 		307525F511CA84AF007EB8FF /* ofxThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 307525F311CA84AF007EB8FF /* ofxThread.cpp */; };
 		3077439D11CC21820022444F /* openCV.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3077438B11CC21820022444F /* openCV.a */; };
 		3077439E11CC21820022444F /* ofxCvColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3077438E11CC21820022444F /* ofxCvColorImage.cpp */; };
@@ -78,6 +79,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0AEA7A421325B2DA00ADD972 /* Instructions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Instructions.txt; path = of_preRelease_v0062_osxSL_FAT/addons/ofxDirList/doc/Instructions.txt; sourceTree = SYSTEM_DEVELOPER_DIR; };
+		0AEA7A431325B2DA00ADD972 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = install.xml; path = of_preRelease_v0062_osxSL_FAT/addons/ofxDirList/install.xml; sourceTree = SYSTEM_DEVELOPER_DIR; };
+		0AEA7A451325B2DA00ADD972 /* ofxDirList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxDirList.cpp; path = of_preRelease_v0062_osxSL_FAT/addons/ofxDirList/src/ofxDirList.cpp; sourceTree = SYSTEM_DEVELOPER_DIR; };
+		0AEA7A461325B2DA00ADD972 /* ofxDirList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxDirList.h; path = of_preRelease_v0062_osxSL_FAT/addons/ofxDirList/src/ofxDirList.h; sourceTree = SYSTEM_DEVELOPER_DIR; };
 		307525F011CA84AF007EB8FF /* Instructions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Instructions.txt; sourceTree = "<group>"; };
 		307525F311CA84AF007EB8FF /* ofxThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxThread.cpp; sourceTree = "<group>"; };
 		307525F411CA84AF007EB8FF /* ofxThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxThread.h; sourceTree = "<group>"; };
@@ -206,6 +211,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0AEA7A401325B2DA00ADD972 /* ofxDirList */ = {
+			isa = PBXGroup;
+			children = (
+				0AEA7A411325B2DA00ADD972 /* doc */,
+				0AEA7A431325B2DA00ADD972 /* install.xml */,
+				0AEA7A441325B2DA00ADD972 /* src */,
+			);
+			name = ofxDirList;
+			path = of_preRelease_v0062_osxSL_FAT/addons/ofxDirList;
+			sourceTree = SYSTEM_DEVELOPER_DIR;
+		};
+		0AEA7A411325B2DA00ADD972 /* doc */ = {
+			isa = PBXGroup;
+			children = (
+				0AEA7A421325B2DA00ADD972 /* Instructions.txt */,
+			);
+			name = doc;
+			path = of_preRelease_v0062_osxSL_FAT/addons/ofxDirList/doc;
+			sourceTree = SYSTEM_DEVELOPER_DIR;
+		};
+		0AEA7A441325B2DA00ADD972 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				0AEA7A451325B2DA00ADD972 /* ofxDirList.cpp */,
+				0AEA7A461325B2DA00ADD972 /* ofxDirList.h */,
+			);
+			name = src;
+			path = of_preRelease_v0062_osxSL_FAT/addons/ofxDirList/src;
+			sourceTree = SYSTEM_DEVELOPER_DIR;
+		};
 		307525EE11CA84AF007EB8FF /* ofxThread */ = {
 			isa = PBXGroup;
 			children = (
@@ -326,6 +361,7 @@
 		E44665C70F5B3E03005D0BF0 /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				0AEA7A401325B2DA00ADD972 /* ofxDirList */,
 				E4F055F81293A22200BAAF7C /* ofxVectorMath */,
 				3077437411CC21810022444F /* ofxOpenCv */,
 				307525EE11CA84AF007EB8FF /* ofxThread */,
@@ -743,6 +779,7 @@
 				E4F056081293A22200BAAF7C /* ofxMatrix3x3.cpp in Sources */,
 				E4F056091293A22200BAAF7C /* ofxMatrix4x4.cpp in Sources */,
 				E4F0560A1293A22200BAAF7C /* ofxQuaternion.cpp in Sources */,
+				0AEA7A471325B2DA00ADD972 /* ofxDirList.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
