@@ -147,8 +147,13 @@ void testApp::update()
 		
 		// DR: copy the blobs to sonosBlobs map
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
-			sonosBlob myblob;
-			sonosblobs[i] = myblob;
+
+			sonosBlob myblob = contourFinder.blobs[i];
+			// myblob ha area quindi e' figlio di ofxCvBlob
+			std::cout << "AREA: " << myblob.area << std::endl;
+			// myblob ha anche Z
+			std::cout << "Z: " << myblob.z << std::endl;
+			
 		}
 	
 	}

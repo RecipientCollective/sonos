@@ -15,10 +15,26 @@
 class sonosBlob : public ofxCvBlob 
 {
 public:
+	
+	double z;
+	
 	// costruttore (vuoto)
-	sonosBlob() : ofxCvBlob() {}
+	sonosBlob() : ofxCvBlob() 
+	{
+		z = 0.0;
+	}
 
-	// copiatore (a = ofCvBlob)
+	// copiatore da ofxCvBlob (a = ofCvBlob)
+	sonosBlob(const ofxCvBlob &other)
+	{
+		area 		= other.area;
+		length 		= other.length;
+		hole 		= other.hole;
+		nPts        = other.nPts;
+		
+		// No info on Z when I copy the blob
+		z           = 0.0;
+	}
 	
 };
 
