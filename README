@@ -59,3 +59,8 @@ tutte le path sono relative,
 |
 |
 ---------------------------
+
+### NOTE DEVELOPING ###
+
+* configurazione git su MAC OSX: http://www.arthurkoziel.com/2008/05/02/git-configuration/
+   Per avere autocomplete, colori, editor, etc...
