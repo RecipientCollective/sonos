@@ -14,6 +14,11 @@
 
 class sonosBlob : public ofxCvBlob 
 {
+public:
+	// costruttore (vuoto)
+	sonosBlob() : ofxCvBlob() {}
+
+	// copiatore (a = ofCvBlob)
 	
 };
 
