@@ -150,10 +150,14 @@ void testApp::update()
 		//float max_x = 0;
 		std::sort(contourFinder.blobs.begin(),contourFinder.blobs.end(), sortByCentroid);
 		
-		// DR: copy the blobs to sonosBlobs map
+		// clean sonosblob map
+		sonosblobs.clear();
+		
+		// copy the blobs to sonosBlobs map
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 
 			sonosBlob myblob = contourFinder.blobs[i];
+			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 			// myblob ha area quindi e' figlio di ofxCvBlob
 			// std::cout << "AREA: " << myblob.area << std::endl;
 			// myblob ha anche Z
@@ -203,10 +207,12 @@ void testApp::draw()
 		//colorImg.draw(20,20, camWidth, camHeight);
 		//grayImage.draw(0, 0, camWidth, camHeight);
 		
-		// in draw we iterate
-		for(int i = 0; i < contourFinder.blobs.size(); i++) {
+		// in draw we iterate in the map
+		for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
+		{
+			int index = i->first;
+			sonosBlob curr_blob = i->second;
 			
-			ofxCvBlob curr_blob = contourFinder.blobs[i];
 			float cx = curr_blob.centroid.x;
 			float cy = curr_blob.centroid.y;
 			float blobarea = curr_blob.area;
@@ -214,6 +220,9 @@ void testApp::draw()
 			float blobwidth = curr_blob.boundingRect.width;	
 			float rectx = curr_blob.boundingRect.x;
 			float recty = curr_blob.boundingRect.y;
+			
+			
+			std::cout << curr_blob.centroid.x << std::endl;
 			
 			/*
 			float unit = camWidth / 2;
@@ -255,16 +264,15 @@ void testApp::draw()
 			}
 			 */
 			
-			if (i == 0) {
+			if (i->first == 0) {
 				ofSetColor(255, 0, 0);
-			} else if (i == 1) {
+			} else if (i->first == 1) {
 				ofSetColor(0, 255, 0);
-			} else if (i == 2) {
+			} else if (i->first == 2) {
 				ofSetColor(0, 0, 255);
 			} else {
 				ofSetColor(100, 100, 150);
 			}
-
 				
 			ofNoFill();
 			ofRect(rectx,recty,blobwidth,blobheight);
@@ -278,7 +286,6 @@ void testApp::draw()
 			if (rectangle) {
 				ofRect(rectx,0,blobwidth, 480);
 			}
-			
 			
 			//if (interface) {
 			//ofSetColor(255, 255, 255);

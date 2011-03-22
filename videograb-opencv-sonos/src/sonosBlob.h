@@ -27,13 +27,15 @@ public:
 	// copiatore da ofxCvBlob (a = ofCvBlob)
 	sonosBlob(const ofxCvBlob &other)
 	{
-		area 		= other.area;
-		length 		= other.length;
-		hole 		= other.hole;
-		nPts        = other.nPts;
+		area 		 = other.area;
+		length 		 = other.length;
+		hole 		 = other.hole;
+		nPts         = other.nPts;
+		centroid     = other.centroid;
+		boundingRect = other.boundingRect;
 		
 		// No info on Z when I copy the blob
-		z           = 0.0;
+		z            = 0.0;
 	}
 	
 };
