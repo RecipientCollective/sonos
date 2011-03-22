@@ -7,3 +7,14 @@
  *
  */
 
+#ifndef _SONOS_BLOB
+#define _SONOS_BLOB
+
+#include "ofxOpenCv.h"
+
+class sonosBlob : public ofxCvBlob 
+{
+	
+};
+
+#endif

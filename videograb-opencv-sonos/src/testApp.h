@@ -4,7 +4,7 @@
 #include "ofMain.h"
 
 #include "ofxOpenCv.h"
-
+#include "sonosBlob.h"
 
 //#define _USE_LIVE_VIDEO	
 
@@ -13,36 +13,36 @@
 
 class testApp : public ofBaseApp
 {
-
-	public:
-
-		void setup();
-		void update();
-		void draw();
-		void exit();
 	
-		void drawPointCloud();
-
-		void keyPressed  (int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void windowResized(int w, int h);
-
-		ofxCvColorImage		colorImg;
-		ofxCvGrayscaleImage 	grayImage;
-		ofxCvGrayscaleImage 	grayBg;
-		ofxCvGrayscaleImage 	grayDiff;
-
-		ofxCvContourFinder 	contourFinder;
-		
-		bool				bThreshWithOpenCV;
-		bool				bFullscreen;
-
-		int					colorz;
-		int					blobMax;
-
+public:
+	
+	void setup();
+	void update();
+	void draw();
+	void exit();
+	
+	void drawPointCloud();
+	
+	void keyPressed  (int key);
+	void mouseMoved(int x, int y );
+	void mouseDragged(int x, int y, int button);
+	void mousePressed(int x, int y, int button);
+	void mouseReleased(int x, int y, int button);
+	void windowResized(int w, int h);
+	
+	ofxCvColorImage		    colorImg;
+	ofxCvGrayscaleImage 	grayImage;
+	ofxCvGrayscaleImage 	grayBg;
+	ofxCvGrayscaleImage 	grayDiff;
+	
+	ofxCvContourFinder 	contourFinder;
+	
+	bool				bThreshWithOpenCV;
+	bool				bFullscreen;
+	
+	int					colorz;
+	int					blobMax;
+	
 #ifdef _USE_LIVE_VIDEO
 	ofVideoGrabber 		vidGrabber;
 #else
@@ -65,6 +65,10 @@ class testApp : public ofBaseApp
 	bool videosurce;
 	bool bLearnBakground;
 	int contour_min;
-		};
+	
+	// testing sonoBLobs as map
+	map<int ,sonosBlob>  sonosblobs;
+	
+};
 
 #endif
