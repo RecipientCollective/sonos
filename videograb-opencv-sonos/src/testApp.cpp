@@ -48,7 +48,7 @@ void testApp::setup()
 		camWidth = vidPlayer.getWidth();
 		camHeight = vidPlayer.getHeight();
 	} else {
-		cout << "No File here!" << endl;
+		cout << "File" << fileNameInOF << " is not here!" << endl;
 		testApp:exit();
 	}
 	
