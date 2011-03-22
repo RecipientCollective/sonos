@@ -79,10 +79,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0AEA7A421325B2DA00ADD972 /* Instructions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Instructions.txt; path = of_preRelease_v0062_osxSL_FAT/addons/ofxDirList/doc/Instructions.txt; sourceTree = SYSTEM_DEVELOPER_DIR; };
-		0AEA7A431325B2DA00ADD972 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = install.xml; path = of_preRelease_v0062_osxSL_FAT/addons/ofxDirList/install.xml; sourceTree = SYSTEM_DEVELOPER_DIR; };
-		0AEA7A451325B2DA00ADD972 /* ofxDirList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxDirList.cpp; path = of_preRelease_v0062_osxSL_FAT/addons/ofxDirList/src/ofxDirList.cpp; sourceTree = SYSTEM_DEVELOPER_DIR; };
-		0AEA7A461325B2DA00ADD972 /* ofxDirList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxDirList.h; path = of_preRelease_v0062_osxSL_FAT/addons/ofxDirList/src/ofxDirList.h; sourceTree = SYSTEM_DEVELOPER_DIR; };
+		0AEA7A421325B2DA00ADD972 /* Instructions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Instructions.txt; sourceTree = "<group>"; };
+		0AEA7A431325B2DA00ADD972 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = install.xml; path = ../../../addons/ofxDirList/install.xml; sourceTree = SOURCE_ROOT; };
+		0AEA7A451325B2DA00ADD972 /* ofxDirList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ofxDirList.cpp; path = ../../../addons/ofxDirList/src/ofxDirList.cpp; sourceTree = SOURCE_ROOT; };
+		0AEA7A461325B2DA00ADD972 /* ofxDirList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofxDirList.h; path = ../../../addons/ofxDirList/src/ofxDirList.h; sourceTree = SOURCE_ROOT; };
 		307525F011CA84AF007EB8FF /* Instructions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Instructions.txt; sourceTree = "<group>"; };
 		307525F311CA84AF007EB8FF /* ofxThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxThread.cpp; sourceTree = "<group>"; };
 		307525F411CA84AF007EB8FF /* ofxThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxThread.h; sourceTree = "<group>"; };
@@ -219,17 +219,16 @@
 				0AEA7A441325B2DA00ADD972 /* src */,
 			);
 			name = ofxDirList;
-			path = of_preRelease_v0062_osxSL_FAT/addons/ofxDirList;
-			sourceTree = SYSTEM_DEVELOPER_DIR;
+			path = ../../../addons/ofxDirList;
+			sourceTree = SOURCE_ROOT;
 		};
 		0AEA7A411325B2DA00ADD972 /* doc */ = {
 			isa = PBXGroup;
 			children = (
 				0AEA7A421325B2DA00ADD972 /* Instructions.txt */,
 			);
-			name = doc;
-			path = of_preRelease_v0062_osxSL_FAT/addons/ofxDirList/doc;
-			sourceTree = SYSTEM_DEVELOPER_DIR;
+			path = doc;
+			sourceTree = "<group>";
 		};
 		0AEA7A441325B2DA00ADD972 /* src */ = {
 			isa = PBXGroup;
@@ -237,9 +236,8 @@
 				0AEA7A451325B2DA00ADD972 /* ofxDirList.cpp */,
 				0AEA7A461325B2DA00ADD972 /* ofxDirList.h */,
 			);
-			name = src;
-			path = of_preRelease_v0062_osxSL_FAT/addons/ofxDirList/src;
-			sourceTree = SYSTEM_DEVELOPER_DIR;
+			path = src;
+			sourceTree = "<group>";
 		};
 		307525EE11CA84AF007EB8FF /* ofxThread */ = {
 			isa = PBXGroup;
