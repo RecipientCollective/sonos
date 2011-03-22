@@ -5,6 +5,9 @@
 
 #include "ofxOpenCv.h"
 #include "sonosBlob.h"
+#include "ofxDirList.h"
+#include <fstream>
+
 
 //#define _USE_LIVE_VIDEO	
 
@@ -30,12 +33,17 @@ public:
 	void mouseReleased(int x, int y, int button);
 	void windowResized(int w, int h);
 	
-	ofxCvColorImage		    colorImg;
+	ofxCvColorImage		colorImg;
 	ofxCvGrayscaleImage 	grayImage;
 	ofxCvGrayscaleImage 	grayBg;
 	ofxCvGrayscaleImage 	grayDiff;
 	
 	ofxCvContourFinder 	contourFinder;
+	
+
+	ofxDirList   DIR;
+	int 		nVideos;
+	int         currentVideo;
 	
 	bool				bThreshWithOpenCV;
 	bool				bFullscreen;

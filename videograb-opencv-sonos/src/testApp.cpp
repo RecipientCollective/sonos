@@ -1,6 +1,7 @@
 #include "testApp.h"
 
 
+
 //--------------------------------------------------------------
 void testApp::setup()
 {
@@ -13,10 +14,51 @@ void testApp::setup()
 	vidGrabber.setVerbose(true);
 	vidGrabber.initGrabber(camWidth, camHeight, false);
 #else
-	vidPlayer.loadMovie("retro-ir.mov");
-	vidPlayer.play();
-	camWidth = vidPlayer.getWidth();
-	camHeight = vidPlayer.getHeight();
+	/* //WORKING ON FILE DIRECTORY cosi crasha sullo switch tfra video che si fa con "p" e "o" 
+	 probabilmente no ndisallochiamo la memoria
+	 
+	DIR.setVerbose(false);
+	nVideos = DIR.listDir("videos");
+	string Videos[nVideos];
+	for(int i = 0; i < nVideos; i++){
+	Videos[i] = DIR.getPath(i);
+    }
+    
+	currentVideo = 0;
+	*/
+	//check if file exists
+	bool bFileThere = false;
+	fstream fin;
+	string fileNameInOF = ofToDataPath("retro-ir.mov"); // since OF files are in the data directory, we need to do this
+	fin.open(fileNameInOF.c_str(),ios::in);
+	if ( fin.is_open() ) {
+		cout<<"file exists"<<endl;
+		bFileThere =true;
+	}
+	fin.close();
+	
+	if (bFileThere) {
+		vidPlayer.loadMovie("retro-ir.mov");
+		vidPlayer.play();
+		camWidth = vidPlayer.getWidth();
+		camHeight = vidPlayer.getHeight();
+	} else {
+		cout << "No File here!" << endl;
+		testApp:exit();
+	}
+	
+	/*if (nVideos > 0) {
+		vidPlayer.loadMovie(Videos[currentVideo]);
+		vidPlayer.play();
+		camWidth = vidPlayer.getWidth();
+		camHeight = vidPlayer.getHeight();
+		
+		
+	} else {
+		cout << "No File here!" << endl;
+		testApp:exit();
+	}*/
+
 #endif
 	
 	
@@ -38,7 +80,7 @@ void testApp::setup()
 	
 	colorz=1;
 	blobMax=2;
-	contour_min = 100;
+	contour_min = 350;
 	scale_x = 1.0;
 	scale_y = 1.0;
 	mtrx = 1.0;
@@ -84,7 +126,8 @@ void testApp::update()
 		grayDiff.threshold(Threshold);
 	
 		//update the cv image
-		//grayImage.flagImageChanged();
+		grayImage.flagImageChanged();
+		grayDiff.flagImageChanged();
 		
 		// find contours which are between the size of 20 pixels and 1/3 the w*h pixels.
 		// also, find holes is set to true so we will get interior contours as well....
@@ -104,6 +147,14 @@ void testApp::update()
 	
 	}
 }
+
+// grezzo test per grezzo man
+bool sortByCentroid(const ofxCvBlob& d1, const ofxCvBlob& d2)
+{
+	return d1.centroid.x < d2.centroid.x;
+}
+
+
 
 //--------------------------------------------------------------
 void testApp::draw()
@@ -147,8 +198,44 @@ void testApp::draw()
 		//colorImg.draw(20,20, camWidth, camHeight);
 		//grayImage.draw(0, 0, camWidth, camHeight);
 		
+		//float max_x = 0;
+		std::sort(contourFinder.blobs.begin(),contourFinder.blobs.end(), sortByCentroid);
+		
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			
+			ofxCvBlob curr_blob = contourFinder.blobs[i];
+			float cx = curr_blob.centroid.x;
+			float cy = curr_blob.centroid.y;
+			float blobarea = curr_blob.area;
+			float blobheight = curr_blob.boundingRect.height;	
+			float blobwidth = curr_blob.boundingRect.width;	
+			float rectx = curr_blob.boundingRect.x;
+			float recty = curr_blob.boundingRect.y;
+			
+			/*
+			float unit = camWidth / 2;
+			if (contourFinder.blobs.size() > 1) {
+				if (cx <= unit) {
+					ofSetColor(0, 255, 0);
+				} else {
+					ofSetColor(0, 0, 255);
+				}
+			} else {
+				ofSetColor(255, 0, 0);
+			}
+			*/
+
+			/*
+			 if (cx <= unit) {
+			 ofSetColor(255, 0, 0);
+			 } else if (cx > unit && cx <= unit*2) {
+			 ofSetColor(0, 255, 0);
+			 } else if (cx > unit*2) {
+			 ofSetColor(0, 0, 255);
+			 }
+			 */
+			
+			/*
 			switch(colorz){
 				case 1:
 					ofSetColor(255, 255, 100);
@@ -163,16 +250,19 @@ void testApp::draw()
 					ofSetColor(100, 120, 150);
 					break;
 			}
+			 */
 			
-			ofxCvBlob curr_blob = contourFinder.blobs[i];
-			float cx = curr_blob.centroid.x;
-			float cy = curr_blob.centroid.y;
-			float blobarea = curr_blob.area;
-			float blobheight = curr_blob.boundingRect.height;	
-			float blobwidth = curr_blob.boundingRect.width;	
-			float rectx = curr_blob.boundingRect.x;
-			float recty = curr_blob.boundingRect.y;
-			
+			if (i == 0) {
+				ofSetColor(255, 0, 0);
+			} else if (i == 1) {
+				ofSetColor(0, 255, 0);
+			} else if (i == 2) {
+				ofSetColor(0, 0, 255);
+			} else {
+				ofSetColor(100, 100, 150);
+			}
+
+				
 			ofNoFill();
 			ofRect(rectx,recty,blobwidth,blobheight);
 			ofFill();
@@ -218,6 +308,7 @@ void testApp::draw()
 //--------------------------------------------------------------
 void testApp::exit(){
 	//magari c'è da chiudere la cam o i video da verificare;
+	std::exit(0);
 }
 
 //--------------------------------------------------------------
@@ -284,7 +375,8 @@ void testApp::keyPressed (int key)
 				ofSetFullscreen(true);
 			}
 			break;
-			
+		
+		/*	
 		case '1':
 			colorz=1;
 			break;
@@ -300,6 +392,8 @@ void testApp::keyPressed (int key)
 		case '4':
 			colorz=4;
 			break;
+		*/
+			
 		case 'a':
 			scale_x+=0.01;
 			scale_y+=0.01;
@@ -315,7 +409,22 @@ void testApp::keyPressed (int key)
 			circle = !circle;
 			break;
 		case 'p':
+			vidPlayer.close();
+			currentVideo++;
+			if (currentVideo==nVideos) {
+				currentVideo=0;
+			}
+			setup();
 			break;
+		case 'o':
+			vidPlayer.close();
+			currentVideo--;
+			if (currentVideo<0) {
+				currentVideo=nVideos;
+			}
+			setup();
+			break;
+
 		case 'd':
 			debug = !debug;
 			break;
