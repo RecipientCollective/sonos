@@ -1,5 +1,10 @@
 #include "testApp.h"
 
+// grezzo test per grezzo man
+bool sortByCentroid(const ofxCvBlob& d1, const ofxCvBlob& d2)
+{
+	return d1.centroid.x < d2.centroid.x;
+}
 
 
 //--------------------------------------------------------------
@@ -60,9 +65,6 @@ void testApp::setup()
 	}*/
 
 #endif
-	
-	
-	
 	
 	
 	colorImg.allocate(camWidth, camHeight);
@@ -145,26 +147,22 @@ void testApp::update()
 		// also, find holes is set to true so we will get interior contours as well....
 		contourFinder.findContours(grayDiff, contour_min, (camWidth*camHeight)/3, blobMax, false, true);
 		
+		//float max_x = 0;
+		std::sort(contourFinder.blobs.begin(),contourFinder.blobs.end(), sortByCentroid);
+		
 		// DR: copy the blobs to sonosBlobs map
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 
 			sonosBlob myblob = contourFinder.blobs[i];
 			// myblob ha area quindi e' figlio di ofxCvBlob
-			std::cout << "AREA: " << myblob.area << std::endl;
+			// std::cout << "AREA: " << myblob.area << std::endl;
 			// myblob ha anche Z
-			std::cout << "Z: " << myblob.z << std::endl;
+			// std::cout << "Z: " << myblob.z << std::endl;
 			
 		}
 	
 	}
 }
-
-// grezzo test per grezzo man
-bool sortByCentroid(const ofxCvBlob& d1, const ofxCvBlob& d2)
-{
-	return d1.centroid.x < d2.centroid.x;
-}
-
 
 
 //--------------------------------------------------------------
@@ -199,19 +197,13 @@ void testApp::draw()
 			contourFinder.blobs[i].draw(360,540);
 		}
 		
-		
-		
-		
-		
 	} else {
 		ofSetColor(205, 205, 205);
 		grayDiff.draw(0,0, camWidth, camHeight);
 		//colorImg.draw(20,20, camWidth, camHeight);
 		//grayImage.draw(0, 0, camWidth, camHeight);
 		
-		//float max_x = 0;
-		std::sort(contourFinder.blobs.begin(),contourFinder.blobs.end(), sortByCentroid);
-		
+		// in draw we iterate
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			
 			ofxCvBlob curr_blob = contourFinder.blobs[i];

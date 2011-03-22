@@ -16,7 +16,7 @@ class sonosBlob : public ofxCvBlob
 {
 public:
 	
-	double z;
+	double z;        // Z-POSITION
 	
 	// costruttore (vuoto)
 	sonosBlob() : ofxCvBlob() 
