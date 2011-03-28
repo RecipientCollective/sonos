@@ -6,6 +6,7 @@
 #include "ofxOpenCv.h"
 
 
+
 //#define _USE_LIVE_VIDEO	
 
 #define OUTPUT_HEIGHT 768
@@ -68,7 +69,6 @@ class testApp : public ofBaseApp
 	
 	bool openVideo;
 	
-	int openFile(string& URL);
 };
 
 #endif

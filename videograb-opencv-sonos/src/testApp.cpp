@@ -1,7 +1,8 @@
 #include "testApp.h"
 
 
-#include <Carbon/Carbon.h>
+
+#include "SonosFileDialog.h"
 
 //--------------------------------------------------------------
 void testApp::setup()
@@ -59,26 +60,6 @@ void testApp::update()
 	bool bNewFrame = false;
 	
 	
-	
-	if (openVideo) {
-		vidPlayer->stop();
-		vidPlayer->close();
-		delete vidPlayer;
-		
-		
-		string URL;
-		openFile(URL);
-		cout << "URL: " << URL << endl; 
-		
-		vidPlayer = new ofVideoPlayer();
-		vidPlayer->loadMovie(URL);
-		vidPlayer->play();
-		camWidth = vidPlayer->getWidth();
-		camHeight = vidPlayer->getHeight();
-		openVideo = FALSE;
-		
-	
-	}
 	
 #ifdef _USE_LIVE_VIDEO
 	vidGrabber.grabFrame();
@@ -248,75 +229,6 @@ void testApp::exit(){
 //--------------------------------------------------------------
 
 
-int testApp::openFile(string& URL)
-{
-	short fRefNumOut;
-	FSRef output_file;
-	OSStatus err;
-	
-	NavDialogCreationOptions options;
-	NavGetDefaultDialogCreationOptions( &options );
-	options.modality = kWindowModalityAppModal;
-	// adding a banner
-	// options.message =  CFStringCreateWithCString(kCFAllocatorDefault, "hello world", kCFStringEncodingMacRoman);
-	NavDialogRef dialog;
-	
-	err = NavCreateGetFileDialog(&options, NULL, NULL ,NULL, NULL, NULL, &dialog);
-	err = NavDialogRun(dialog);
-	
-	NavUserAction action;
-	action = NavDialogGetUserAction( dialog );
-	
-	if (action == kNavUserActionNone || action == kNavUserActionCancel) {
-		cout << "no action or action cancel" << endl;
-		return 0;
-	}
-	
-	// get dialog reply
-	NavReplyRecord reply;
-	err = NavDialogGetReply(dialog, &reply);
-	if ( err != noErr ){
-		cout << "error getting DialogReply" << endl;
-		return 0;
-	}
-	if ( reply.replacing )
-	{
-		cout << (" need to replace\n ") << endl;
-	}
-	
-	AEKeyword keyword;
-	DescType actual_type;
-	Size actual_size;
-	FSRef output_dir;
-	err = AEGetNthPtr(&(reply.selection), 1, typeFSRef, &keyword, &actual_type,
-					  &output_dir, sizeof(output_file), &actual_size);
-	
-	CFURLRef cfUrl = CFURLCreateFromFSRef( kCFAllocatorDefault, &output_dir );
-	CFStringRef cfString = NULL;
-	if ( cfUrl != NULL )
-	{ 
-		cfString = CFURLCopyFileSystemPath( cfUrl, kCFURLPOSIXPathStyle );
-		CFRelease( cfUrl );
-	}
-	
-	// copy from a CFString into a local c string (http://www.carbondev.com/site/?page=CStrings+)
-	const int kBufferSize = 255;
-	
-	char fileURL[kBufferSize];
-	Boolean bool1 = CFStringGetCString(cfString,fileURL,kBufferSize,kCFStringEncodingMacRoman);
-	
-	URL = fileURL;
-	cout << URL << endl;
-	
-	// cleanup dialog
-	NavDialogDispose(dialog);
-	// dispose of reply:
-	NavDisposeReply(&reply);
-	// dispose of cfString
-	CFRelease( cfString );
-return 1;
-
-}
 
 
 void testApp::keyPressed (int key)
@@ -440,9 +352,29 @@ void testApp::keyPressed (int key)
 #else
 			//
 #endif
-			case 'o':
-			openVideo = TRUE;
+		case 'o': {
 			
+			vidPlayer->stop();
+			SonosFileDialog* fd = new SonosFileDialog();
+			string URL;
+			if(fd->openFile(URL)) {
+				vidPlayer->close();
+				delete vidPlayer;
+				cout << "URL: " << URL << endl; 
+				vidPlayer = new ofVideoPlayer();
+				vidPlayer->loadMovie(URL);
+				vidPlayer->play();
+				camWidth = vidPlayer->getWidth();
+				camHeight = vidPlayer->getHeight();
+			}
+			else
+				vidPlayer->play();
+			delete fd;
+			
+		}
+		break;
+		
+		default:
 			break;
 	}
 }
