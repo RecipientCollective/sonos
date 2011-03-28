@@ -1,6 +1,8 @@
 #include "testApp.h"
 
 
+#include <Carbon/Carbon.h>
+
 //--------------------------------------------------------------
 void testApp::setup()
 {
@@ -13,14 +15,15 @@ void testApp::setup()
 	vidGrabber.setVerbose(true);
 	vidGrabber.initGrabber(camWidth, camHeight, false);
 #else
-	vidPlayer.loadMovie("retro-ir.mov");
-	vidPlayer.play();
-	camWidth = vidPlayer.getWidth();
-	camHeight = vidPlayer.getHeight();
+	vidPlayer = new ofVideoPlayer();
+	vidPlayer->loadMovie("retro-ir.mov");
+	vidPlayer->play();
+	camWidth = vidPlayer->getWidth();
+	camHeight = vidPlayer->getHeight();
 #endif
 	
 	
-	
+	openVideo = FALSE;
 	
 	
 	colorImg.allocate(camWidth, camHeight);
@@ -55,12 +58,34 @@ void testApp::update()
 	ofBackground(100, 100, 100);
 	bool bNewFrame = false;
 	
+	
+	
+	if (openVideo) {
+		vidPlayer->stop();
+		vidPlayer->close();
+		delete vidPlayer;
+		
+		
+		string URL;
+		openFile(URL);
+		cout << "URL: " << URL << endl; 
+		
+		vidPlayer = new ofVideoPlayer();
+		vidPlayer->loadMovie(URL);
+		vidPlayer->play();
+		camWidth = vidPlayer->getWidth();
+		camHeight = vidPlayer->getHeight();
+		openVideo = FALSE;
+		
+	
+	}
+	
 #ifdef _USE_LIVE_VIDEO
 	vidGrabber.grabFrame();
 	bNewFrame = vidGrabber.isFrameNew();
 #else
-	vidPlayer.idleMovie();
-	bNewFrame = vidPlayer.isFrameNew();
+	vidPlayer->idleMovie();
+	bNewFrame = vidPlayer->isFrameNew();
 #endif
 	
 	
@@ -70,7 +95,7 @@ void testApp::update()
 #ifdef _USE_LIVE_VIDEO
 		colorImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
 #else
-		colorImg.setFromPixels(vidPlayer.getPixels(), camWidth,camHeight);
+		colorImg.setFromPixels(vidPlayer->getPixels(), camWidth,camHeight);
 #endif						
 
 		grayImage = colorImg;
@@ -209,7 +234,7 @@ void testApp::draw()
 		ofDrawBitmapString("color number: " + ofToString(colorz)+ " (press: 1,2,3,4). Contour (press: t y): " + ofToString(contour_min) +" MaxBlobs (press: < >): "+ofToString(blobMax) ,20,130);
 		ofDrawBitmapString("scale: " + ofToString(scale_x) + "," + ofToString(scale_y) + " (press: a z)", 20,160);
 		ofDrawBitmapString("translate: " + ofToString(mtrx) + "," + ofToString(mtry) + " (press: ARROWS)", 20,190);			
-		ofDrawBitmapString("d: debug mode. c: toggle circle. r: reset scale and translate. ,: video settings", 20,220);
+		ofDrawBitmapString("d: debug mode. c: toggle circle. r: reset scale and translate. ,: video settings o: open file", 20,220);
 		
 	}
 }
@@ -221,6 +246,79 @@ void testApp::exit(){
 }
 
 //--------------------------------------------------------------
+
+
+int testApp::openFile(string& URL)
+{
+	short fRefNumOut;
+	FSRef output_file;
+	OSStatus err;
+	
+	NavDialogCreationOptions options;
+	NavGetDefaultDialogCreationOptions( &options );
+	options.modality = kWindowModalityAppModal;
+	// adding a banner
+	// options.message =  CFStringCreateWithCString(kCFAllocatorDefault, "hello world", kCFStringEncodingMacRoman);
+	NavDialogRef dialog;
+	
+	err = NavCreateGetFileDialog(&options, NULL, NULL ,NULL, NULL, NULL, &dialog);
+	err = NavDialogRun(dialog);
+	
+	NavUserAction action;
+	action = NavDialogGetUserAction( dialog );
+	
+	if (action == kNavUserActionNone || action == kNavUserActionCancel) {
+		cout << "no action or action cancel" << endl;
+		return 0;
+	}
+	
+	// get dialog reply
+	NavReplyRecord reply;
+	err = NavDialogGetReply(dialog, &reply);
+	if ( err != noErr ){
+		cout << "error getting DialogReply" << endl;
+		return 0;
+	}
+	if ( reply.replacing )
+	{
+		cout << (" need to replace\n ") << endl;
+	}
+	
+	AEKeyword keyword;
+	DescType actual_type;
+	Size actual_size;
+	FSRef output_dir;
+	err = AEGetNthPtr(&(reply.selection), 1, typeFSRef, &keyword, &actual_type,
+					  &output_dir, sizeof(output_file), &actual_size);
+	
+	CFURLRef cfUrl = CFURLCreateFromFSRef( kCFAllocatorDefault, &output_dir );
+	CFStringRef cfString = NULL;
+	if ( cfUrl != NULL )
+	{ 
+		cfString = CFURLCopyFileSystemPath( cfUrl, kCFURLPOSIXPathStyle );
+		CFRelease( cfUrl );
+	}
+	
+	// copy from a CFString into a local c string (http://www.carbondev.com/site/?page=CStrings+)
+	const int kBufferSize = 255;
+	
+	char fileURL[kBufferSize];
+	Boolean bool1 = CFStringGetCString(cfString,fileURL,kBufferSize,kCFStringEncodingMacRoman);
+	
+	URL = fileURL;
+	cout << URL << endl;
+	
+	// cleanup dialog
+	NavDialogDispose(dialog);
+	// dispose of reply:
+	NavDisposeReply(&reply);
+	// dispose of cfString
+	CFRelease( cfString );
+return 1;
+
+}
+
+
 void testApp::keyPressed (int key)
 {
 	switch (key)
@@ -342,6 +440,9 @@ void testApp::keyPressed (int key)
 #else
 			//
 #endif
+			case 'o':
+			openVideo = TRUE;
+			
 			break;
 	}
 }

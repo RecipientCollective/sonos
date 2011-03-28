@@ -46,7 +46,7 @@ class testApp : public ofBaseApp
 #ifdef _USE_LIVE_VIDEO
 	ofVideoGrabber 		vidGrabber;
 #else
-	ofVideoPlayer 		vidPlayer;
+	ofVideoPlayer* 		vidPlayer;
 #endif
 	//unsigned char * 	videoInverted;
 	//ofTexture			videoTexture;
@@ -65,6 +65,10 @@ class testApp : public ofBaseApp
 	bool videosurce;
 	bool bLearnBakground;
 	int contour_min;
-		};
+	
+	bool openVideo;
+	
+	int openFile(string& URL);
+};
 
 #endif
