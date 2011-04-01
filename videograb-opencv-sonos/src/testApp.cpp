@@ -72,10 +72,13 @@ void testApp::setup()
 	
 	bLearnBakground = true;
 	Threshold = 50;
-	
+	//treshold with opencv or not
 	bThreshWithOpenCV = true;
-	
+	//set resolution of circle
 	ofSetCircleResolution(40);
+	//for smooth animation, set vertical sync if we can
+	//ofSetVerticalSync(true);
+	ofEnableSmoothing();
 	
 	ofSetFrameRate(60);
 	
