@@ -29,7 +29,7 @@ void testApp::setup()
 	//check if file exists
 	bool bFileThere = false;
 	fstream fin;
-	string fileNameInOF = ofToDataPath("retro-ir.mov"); // since OF files are in the data directory, we need to do this
+	string fileNameInOF = ofToDataPath("videos/retro-ir.mov"); // since OF files are in the data directory, we need to do this
 	fin.open(fileNameInOF.c_str(),ios::in);
 	if ( fin.is_open() ) {
 		cout<<"file exists"<<endl;
@@ -38,7 +38,7 @@ void testApp::setup()
 	fin.close();
 	
 	if (bFileThere) {
-		vidPlayer.loadMovie("retro-ir.mov");
+		vidPlayer.loadMovie("videos/retro-ir.mov");
 		vidPlayer.play();
 		camWidth = vidPlayer.getWidth();
 		camHeight = vidPlayer.getHeight();
@@ -74,6 +74,8 @@ void testApp::setup()
 	Threshold = 50;
 	
 	bThreshWithOpenCV = true;
+	
+	ofSetCircleResolution(40);
 	
 	ofSetFrameRate(60);
 	
