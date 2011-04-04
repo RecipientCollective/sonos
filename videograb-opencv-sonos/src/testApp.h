@@ -24,6 +24,8 @@ public:
 	
 	void drawPointCloud();
 	
+	void background();
+	
 	void keyPressed  (int key);
 	void mouseMoved(int x, int y );
 	void mouseDragged(int x, int y, int button);
@@ -45,8 +47,11 @@ public:
 	bool				bThreshWithOpenCV;
 	bool				bFullscreen;
 	
+	int					BlobColor;
+	int					BckColor;
 	int					colorz;
 	int					blobMax;
+	
 	
 #ifdef _USE_LIVE_VIDEO
 	ofVideoGrabber 		vidGrabber;
@@ -58,7 +63,6 @@ public:
 	int 				camWidth;
 	int 				camHeight;
 	int 				Threshold;
-	
 	float scale_x;
 	float scale_y;
 	float mtrx;

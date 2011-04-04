@@ -82,8 +82,12 @@ void testApp::setup()
 	
 	ofSetFrameRate(60);
 	
-	
+	//colors setup
+	BckColor=1;
+	BlobColor=0xDD00CC;
 	colorz=1;
+	
+	
 	blobMax=2;
 	contour_min = 350;
 	scale_x = 1.0;
@@ -99,7 +103,8 @@ void testApp::setup()
 //--------------------------------------------------------------
 void testApp::update()
 {
-	ofBackground(100, 100, 100);
+	testApp::background();
+	
 	bool bNewFrame = false;
 	
 #ifdef _USE_LIVE_VIDEO
@@ -198,10 +203,7 @@ void testApp::draw()
 		
 		
 	} else {
-		ofSetColor(205, 205, 205);
-		grayDiff.draw(0,0, camWidth, camHeight);
-		//colorImg.draw(20,20, camWidth, camHeight);
-		//grayImage.draw(0, 0, camWidth, camHeight);
+				
 		
 		//float max_x = 0;
 		std::sort(contourFinder.blobs.begin(),contourFinder.blobs.end(), sortByCentroid);
@@ -216,6 +218,25 @@ void testApp::draw()
 			float blobwidth = curr_blob.boundingRect.width;	
 			float rectx = curr_blob.boundingRect.x;
 			float recty = curr_blob.boundingRect.y;
+			
+			
+			
+			//drawing only pixels form blobs, extracted from conturfinder
+			ofPushStyle();
+			ofSetColor(BlobColor);
+			glPushMatrix();
+			for( int k=0; k<(int)contourFinder.blobs.size(); k++ ) {
+				ofBeginShape();
+				for( int j=0; j<contourFinder.blobs[i].nPts; j++ ) {
+					ofVertex( contourFinder.blobs[i].pts[j].x, contourFinder.blobs[i].pts[j].y );
+				}
+				ofEndShape();
+				
+			}
+			glPopMatrix();
+			ofPopStyle();
+			
+			
 			
 			/*
 			float unit = camWidth / 2;
@@ -267,12 +288,12 @@ void testApp::draw()
 				ofSetColor(100, 100, 150);
 			}
 
-				
+			if(interface){
 			ofNoFill();
 			ofRect(rectx,recty,blobwidth,blobheight);
 			ofFill();
+			}
 			
-			//ofSetColor(255, 255, 255);
 			if (circle) {
 				float raggio = (blobheight >= blobwidth ? blobheight : blobwidth) / 1.5;
 				ofCircle( cx, cy, raggio);
@@ -293,10 +314,13 @@ void testApp::draw()
 	
 	ofPopMatrix();
 	
-	ofSetColor(255, 255, 255);
+	
 	
 	// INTERFACE DEBUG
 	if (interface) {
+		
+		
+		ofSetColor(255, 255, 255);
 		ofDrawBitmapString("INTERFACE (press: h to hide)", 20, 20);
 		char reportStr[1024];
 		sprintf(reportStr, "using opencv threshold = %i (press: s)\nset threshold %i (press: + -)\nnum blobs found %i,color: %i , fps: %f",bThreshWithOpenCV, Threshold, contourFinder.nBlobs, colorz, ofGetFrameRate());
@@ -314,6 +338,23 @@ void testApp::draw()
 void testApp::exit(){
 	//magari c'è da chiudere la cam o i video da verificare;
 	std::exit(0);
+}
+
+
+void testApp::background(){
+	
+	
+	switch (BckColor)
+	{
+		case '1':
+			ofBackground(100, 100, 100);
+			break;
+			
+		case '2':
+			ofBackground(0, 0, 0);
+			break;
+	}	
+
 }
 
 //--------------------------------------------------------------
