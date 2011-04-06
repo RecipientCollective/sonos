@@ -31,6 +31,7 @@ public:
 		length 		 = other.length;
 		hole 		 = other.hole;
 		nPts         = other.nPts;
+		pts          = other.pts;
 		centroid     = other.centroid;
 		boundingRect = other.boundingRect;
 		

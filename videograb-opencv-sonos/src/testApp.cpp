@@ -22,15 +22,15 @@ void testApp::setup()
 	/* //WORKING ON FILE DIRECTORY cosi crasha sullo switch tfra video che si fa con "p" e "o" 
 	 probabilmente no ndisallochiamo la memoria
 	 
-	DIR.setVerbose(false);
-	nVideos = DIR.listDir("videos");
-	string Videos[nVideos];
-	for(int i = 0; i < nVideos; i++){
-	Videos[i] = DIR.getPath(i);
-    }
-    
-	currentVideo = 0;
-	*/
+	 DIR.setVerbose(false);
+	 nVideos = DIR.listDir("videos");
+	 string Videos[nVideos];
+	 for(int i = 0; i < nVideos; i++){
+	 Videos[i] = DIR.getPath(i);
+	 }
+	 
+	 currentVideo = 0;
+	 */
 	//check if file exists
 	bool bFileThere = false;
 	fstream fin;
@@ -49,21 +49,21 @@ void testApp::setup()
 		camHeight = vidPlayer.getHeight();
 	} else {
 		cout << "File" << fileNameInOF << " is not here!" << endl;
-		testApp:exit();
+	testApp:exit();
 	}
 	
 	/*if (nVideos > 0) {
-		vidPlayer.loadMovie(Videos[currentVideo]);
-		vidPlayer.play();
-		camWidth = vidPlayer.getWidth();
-		camHeight = vidPlayer.getHeight();
-		
-		
-	} else {
-		cout << "No File here!" << endl;
-		testApp:exit();
-	}*/
-
+	 vidPlayer.loadMovie(Videos[currentVideo]);
+	 vidPlayer.play();
+	 camWidth = vidPlayer.getWidth();
+	 camHeight = vidPlayer.getHeight();
+	 
+	 
+	 } else {
+	 cout << "No File here!" << endl;
+	 testApp:exit();
+	 }*/
+	
 #endif
 	
 	
@@ -84,8 +84,12 @@ void testApp::setup()
 	
 	ofSetFrameRate(60);
 	
-	
+	//colors setup
+	BckColor=1;
+	BlobColor=0xDD00CC;
 	colorz=1;
+	
+	
 	blobMax=2;
 	contour_min = 350;
 	scale_x = 1.0;
@@ -101,7 +105,8 @@ void testApp::setup()
 //--------------------------------------------------------------
 void testApp::update()
 {
-	ofBackground(100, 100, 100);
+	testApp::background();
+	
 	bool bNewFrame = false;
 	
 #ifdef _USE_LIVE_VIDEO
@@ -121,7 +126,7 @@ void testApp::update()
 #else
 		colorImg.setFromPixels(vidPlayer.getPixels(), camWidth,camHeight);
 #endif						
-
+		
 		grayImage = colorImg;
 		if (bLearnBakground == true){
 			grayBg = grayImage;		// the = sign copys the pixels from grayImage into grayBg (operator overloading)
@@ -131,7 +136,7 @@ void testApp::update()
 		// take the abs value of the difference between background and incoming and then threshold:
 		grayDiff.absDiff(grayBg, grayImage);
 		grayDiff.threshold(Threshold);
-	
+		
 		//update the cv image
 		grayImage.flagImageChanged();
 		grayDiff.flagImageChanged();
@@ -160,7 +165,7 @@ void testApp::update()
 		
 		// copy the blobs to sonosBlobs map
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
-
+			
 			sonosBlob myblob = contourFinder.blobs[i];
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 			// myblob ha area quindi e' figlio di ofxCvBlob
@@ -169,7 +174,7 @@ void testApp::update()
 			// std::cout << "Z: " << myblob.z << std::endl;
 			
 		}
-	
+		
 	}
 }
 
@@ -207,10 +212,7 @@ void testApp::draw()
 		}
 		
 	} else {
-		ofSetColor(205, 205, 205);
-		grayDiff.draw(0,0, camWidth, camHeight);
-		//colorImg.draw(20,20, camWidth, camHeight);
-		//grayImage.draw(0, 0, camWidth, camHeight);
+		
 		
 		// in draw we iterate in the map
 		for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
@@ -227,21 +229,33 @@ void testApp::draw()
 			float recty = curr_blob.boundingRect.y;
 			
 			
-			std::cout << curr_blob.centroid.x << std::endl;
+			//drawing only pixels form blobs, extracted from conturfinder
+			ofPushStyle();
+			ofSetColor(BlobColor);
+			glPushMatrix();
+			ofBeginShape();
+			for( int j=0; j<curr_blob.nPts; j++ ) {
+				ofVertex( curr_blob.pts[j].x, curr_blob.pts[j].y );
+			}
+			ofEndShape();
+				
+			glPopMatrix();
+			ofPopStyle();
+			
 			
 			/*
-			float unit = camWidth / 2;
-			if (contourFinder.blobs.size() > 1) {
-				if (cx <= unit) {
-					ofSetColor(0, 255, 0);
-				} else {
-					ofSetColor(0, 0, 255);
-				}
-			} else {
-				ofSetColor(255, 0, 0);
-			}
-			*/
-
+			 float unit = camWidth / 2;
+			 if (contourFinder.blobs.size() > 1) {
+			 if (cx <= unit) {
+			 ofSetColor(0, 255, 0);
+			 } else {
+			 ofSetColor(0, 0, 255);
+			 }
+			 } else {
+			 ofSetColor(255, 0, 0);
+			 }
+			 */
+			
 			/*
 			 if (cx <= unit) {
 			 ofSetColor(255, 0, 0);
@@ -253,20 +267,20 @@ void testApp::draw()
 			 */
 			
 			/*
-			switch(colorz){
-				case 1:
-					ofSetColor(255, 255, 100);
-					break;
-				case 2:
-					ofSetColor(255, 100, 255);
-					break;
-				case 3:
-					ofSetColor(100, 255, 255);
-					break;
-				case 4:
-					ofSetColor(100, 120, 150);
-					break;
-			}
+			 switch(colorz){
+			 case 1:
+			 ofSetColor(255, 255, 100);
+			 break;
+			 case 2:
+			 ofSetColor(255, 100, 255);
+			 break;
+			 case 3:
+			 ofSetColor(100, 255, 255);
+			 break;
+			 case 4:
+			 ofSetColor(100, 120, 150);
+			 break;
+			 }
 			 */
 			
 			if (i->first == 0) {
@@ -278,12 +292,14 @@ void testApp::draw()
 			} else {
 				ofSetColor(100, 100, 150);
 			}
-				
-			ofNoFill();
-			ofRect(rectx,recty,blobwidth,blobheight);
-			ofFill();
 			
-			//ofSetColor(255, 255, 255);
+			
+			if(interface){
+				ofNoFill();
+				ofRect(rectx,recty,blobwidth,blobheight);
+				ofFill();
+			}
+			
 			if (circle) {
 				float raggio = (blobheight >= blobwidth ? blobheight : blobwidth) / 1.5;
 				ofCircle( cx, cy, raggio);
@@ -303,10 +319,13 @@ void testApp::draw()
 	
 	ofPopMatrix();
 	
-	ofSetColor(255, 255, 255);
+	
 	
 	// INTERFACE DEBUG
 	if (interface) {
+		
+		
+		ofSetColor(255, 255, 255);
 		ofDrawBitmapString("INTERFACE (press: h to hide)", 20, 20);
 		char reportStr[1024];
 		sprintf(reportStr, "using opencv threshold = %i (press: s)\nset threshold %i (press: + -)\nnum blobs found %i,color: %i , fps: %f",bThreshWithOpenCV, Threshold, contourFinder.nBlobs, colorz, ofGetFrameRate());
@@ -324,6 +343,23 @@ void testApp::draw()
 void testApp::exit(){
 	//magari c'è da chiudere la cam o i video da verificare;
 	std::exit(0);
+}
+
+
+void testApp::background(){
+	
+	
+	switch (BckColor)
+	{
+		case '1':
+			ofBackground(100, 100, 100);
+			break;
+			
+		case '2':
+			ofBackground(0, 0, 0);
+			break;
+	}	
+	
 }
 
 //--------------------------------------------------------------
@@ -390,24 +426,24 @@ void testApp::keyPressed (int key)
 				ofSetFullscreen(true);
 			}
 			break;
-		
-		/*	
-		case '1':
-			colorz=1;
-			break;
 			
-		case '2':
-			colorz=2;
-			break;
-			
-		case '3':
-			colorz=3;
-			
-			break;
-		case '4':
-			colorz=4;
-			break;
-		*/
+			/*	
+			 case '1':
+			 colorz=1;
+			 break;
+			 
+			 case '2':
+			 colorz=2;
+			 break;
+			 
+			 case '3':
+			 colorz=3;
+			 
+			 break;
+			 case '4':
+			 colorz=4;
+			 break;
+			 */
 			
 		case 'a':
 			scale_x+=0.01;
@@ -439,7 +475,7 @@ void testApp::keyPressed (int key)
 			}
 			setup();
 			break;
-
+			
 		case 'd':
 			debug = !debug;
 			break;
