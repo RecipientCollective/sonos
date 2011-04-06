@@ -19,18 +19,6 @@ void testApp::setup()
 	vidGrabber.setVerbose(true);
 	vidGrabber.initGrabber(camWidth, camHeight, false);
 #else
-	/* //WORKING ON FILE DIRECTORY cosi crasha sullo switch tfra video che si fa con "p" e "o" 
-	 probabilmente no ndisallochiamo la memoria
-	 
-	 DIR.setVerbose(false);
-	 nVideos = DIR.listDir("videos");
-	 string Videos[nVideos];
-	 for(int i = 0; i < nVideos; i++){
-	 Videos[i] = DIR.getPath(i);
-	 }
-	 
-	 currentVideo = 0;
-	 */
 	//check if file exists
 	bool bFileThere = false;
 	fstream fin;
@@ -51,21 +39,8 @@ void testApp::setup()
 		cout << "File" << fileNameInOF << " is not here!" << endl;
 	testApp:exit();
 	}
-	
-	/*if (nVideos > 0) {
-	 vidPlayer.loadMovie(Videos[currentVideo]);
-	 vidPlayer.play();
-	 camWidth = vidPlayer.getWidth();
-	 camHeight = vidPlayer.getHeight();
-	 
-	 
-	 } else {
-	 cout << "No File here!" << endl;
-	 testApp:exit();
-	 }*/
-	
+		
 #endif
-	
 	
 	colorImg.allocate(camWidth, camHeight);
 	grayImage.allocate(camWidth, camHeight);
@@ -105,7 +80,6 @@ void testApp::setup()
 //--------------------------------------------------------------
 void testApp::update()
 {
-	testApp::background();
 	
 	bool bNewFrame = false;
 	
@@ -182,6 +156,8 @@ void testApp::update()
 //--------------------------------------------------------------
 void testApp::draw()
 {		
+	// background
+	testApp::background(BckColor);
 	
 	ofPushMatrix();
 	ofScale(scale_x, scale_y, 1.0);
@@ -242,47 +218,6 @@ void testApp::draw()
 			glPopMatrix();
 			ofPopStyle();
 			
-			
-			/*
-			 float unit = camWidth / 2;
-			 if (contourFinder.blobs.size() > 1) {
-			 if (cx <= unit) {
-			 ofSetColor(0, 255, 0);
-			 } else {
-			 ofSetColor(0, 0, 255);
-			 }
-			 } else {
-			 ofSetColor(255, 0, 0);
-			 }
-			 */
-			
-			/*
-			 if (cx <= unit) {
-			 ofSetColor(255, 0, 0);
-			 } else if (cx > unit && cx <= unit*2) {
-			 ofSetColor(0, 255, 0);
-			 } else if (cx > unit*2) {
-			 ofSetColor(0, 0, 255);
-			 }
-			 */
-			
-			/*
-			 switch(colorz){
-			 case 1:
-			 ofSetColor(255, 255, 100);
-			 break;
-			 case 2:
-			 ofSetColor(255, 100, 255);
-			 break;
-			 case 3:
-			 ofSetColor(100, 255, 255);
-			 break;
-			 case 4:
-			 ofSetColor(100, 120, 150);
-			 break;
-			 }
-			 */
-			
 			if (i->first == 0) {
 				ofSetColor(255, 0, 0);
 			} else if (i->first == 1) {
@@ -304,14 +239,11 @@ void testApp::draw()
 				float raggio = (blobheight >= blobwidth ? blobheight : blobwidth) / 1.5;
 				ofCircle( cx, cy, raggio);
 			}
+
 			if (rectangle) {
 				ofRect(rectx,0,blobwidth, 480);
 			}
 			
-			//if (interface) {
-			//ofSetColor(255, 255, 255);
-			//ofDrawBitmapString("blob "+ ofToString(i, 0) + ": try " + ofToString(cy, 2) + " /trx " + ofToString(cx, 2) + " /area " + ofToString(blobarea, 0) , 20, 200+i*10 );
-			//}
 		}
 		
 	}
@@ -346,16 +278,15 @@ void testApp::exit(){
 }
 
 
-void testApp::background(){
-	
-	
-	switch (BckColor)
+void testApp::background(int color){
+
+	switch (color)
 	{
-		case '1':
+		case 1:
 			ofBackground(100, 100, 100);
 			break;
 			
-		case '2':
+		case 2:
 			ofBackground(0, 0, 0);
 			break;
 	}	
@@ -367,9 +298,16 @@ void testApp::keyPressed (int key)
 {
 	switch (key)
 	{
+		case '1':
+			BckColor=1;
+			break;
+			
+		case '2':
+			BckColor=2;
+			break;
+			
 		case ' ':
 			bLearnBakground = true;
-			
 			break;
 			
 		case '>':
@@ -426,24 +364,6 @@ void testApp::keyPressed (int key)
 				ofSetFullscreen(true);
 			}
 			break;
-			
-			/*	
-			 case '1':
-			 colorz=1;
-			 break;
-			 
-			 case '2':
-			 colorz=2;
-			 break;
-			 
-			 case '3':
-			 colorz=3;
-			 
-			 break;
-			 case '4':
-			 colorz=4;
-			 break;
-			 */
 			
 		case 'a':
 			scale_x+=0.01;
