@@ -77,6 +77,7 @@ public:
 	bool videosurce;
 	bool bLearnBakground;
 	int contour_min;
+	std::string filename;
 	
 	// testing sonoBLobs as map
 	map<int ,sonosBlob>  sonosblobs;

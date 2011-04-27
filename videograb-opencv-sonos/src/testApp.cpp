@@ -10,8 +10,7 @@ bool sortByCentroid(const ofxCvBlob& d1, const ofxCvBlob& d2)
 //--------------------------------------------------------------
 void testApp::setup()
 {
-	
-	
+	filename = "videos/retro-ir.mov";
 	
 #ifdef _USE_LIVE_VIDEO
 	camWidth = 640;
@@ -22,7 +21,7 @@ void testApp::setup()
 	//check if file exists
 	bool bFileThere = false;
 	fstream fin;
-	string fileNameInOF = ofToDataPath("videos/retro-ir.mov"); // since OF files are in the data directory, we need to do this
+	string fileNameInOF = ofToDataPath(filename); // since OF files are in the data directory, we need to do this
 	fin.open(fileNameInOF.c_str(),ios::in);
 	if ( fin.is_open() ) {
 		cout<<"file exists"<<endl;
@@ -31,7 +30,7 @@ void testApp::setup()
 	fin.close();
 	
 	if (bFileThere) {
-		vidPlayer.loadMovie("videos/retro-ir.mov");
+		vidPlayer.loadMovie(filename);
 		vidPlayer.play();
 		camWidth = vidPlayer.getWidth();
 		camHeight = vidPlayer.getHeight();
