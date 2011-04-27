@@ -268,11 +268,6 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateExpansionKey</key>
 							<array>
 								<string>E4B69B4A0A3A1720003C02F2</string>
-								<string>E4B69E1C0A3A1BDC003C02F2</string>
-								<string>E4C2422310CC54B6004149E2</string>
-								<string>BB4B014C10F69532006C3DED</string>
-								<string>EDB418E913685C7100A6C47B</string>
-								<string>EDB418F613685C7100A6C47B</string>
 								<string>E45BE0360E8CC5DE009D7055</string>
 								<string>1C37FBAC04509CD000000102</string>
 								<string>1C37FABC05509CD000000102</string>
@@ -280,6 +275,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
+									<integer>5</integer>
 									<integer>0</integer>
 								</array>
 							</array>
@@ -333,11 +329,11 @@
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>ED7FA9F613685F9A00BD7AF8</string>
+										<string>ED7FAA6A136862CB00BD7AF8</string>
 										<key>history</key>
 										<array>
 											<string>EDB413E7136836B900A6C47B</string>
-											<string>ED507ACE13685F6200613141</string>
+											<string>ED7FAA37136862AB00BD7AF8</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -349,14 +345,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1712, 712}}</string>
+								<string>{{0, 0}, {1712, 708}}</string>
 								<key>RubberWindowFrame</key>
 								<string>0 107 1920 951 0 0 1920 1058 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>712pt</string>
+							<string>708pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -369,14 +365,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 717}, {1712, 193}}</string>
+								<string>{{0, 713}, {1712, 197}}</string>
 								<key>RubberWindowFrame</key>
 								<string>0 107 1920 951 0 0 1920 1058 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>193pt</string>
+							<string>197pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -395,9 +391,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>ED7FA9F313685F7F00BD7AF8</string>
+				<string>ED7FAA6B136862CB00BD7AF8</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>ED7FA9F413685F7F00BD7AF8</string>
+				<string>ED7FAA6C136862CB00BD7AF8</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -535,12 +531,8 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>ED7FA9FE13685F9A00BD7AF8</string>
-		<string>ED7FA9FF13685F9A00BD7AF8</string>
-		<string>1C78EAAD065D492600B07095</string>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>EDB413D01368361E00A6C47B</string>
-		<string>/Users/drambald/Code/of_preRelease_v0062_osxSL_FAT/Code/sonos/MSAtest/3DMSAtest.xcodeproj</string>
+		<string>/Users/drambald/Code/of_preRelease_v0062_osxSL_FAT/Code/sonos/MSAtest/MSAtest.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
 	<string>0 107 1920 951 0 0 1920 1058 </string>
@@ -620,7 +612,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>EDB413D01368361E00A6C47B</string>
-				<string>ED7FA9F513685F7F00BD7AF8</string>
+				<string>ED7FAA6D136862CB00BD7AF8</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
