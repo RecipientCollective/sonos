@@ -52,7 +52,6 @@ void sonosApp::setup()
 	// SETUP DEFAULT PARAMETERS
 	bLearnBakground = true;
 	Threshold = 50;
-	bThreshWithOpenCV = true;      //treshold with opencv or not
 	ofSetCircleResolution(40); 	   //set resolution of circle
 	ofEnableSmoothing();	
 	ofSetFrameRate(60);
@@ -68,8 +67,8 @@ void sonosApp::setup()
 	contour_min = 350;
 	scale_x = 1.0;
 	scale_y = 1.0;
-	mtrx = 1.0;
-	mtry = 1.0;
+	mtrx = 1;
+	mtry = 1;
 	interface = true;
 	circle = false;
 	debug = false;
@@ -155,6 +154,25 @@ void sonosApp::draw()
 		// background
 		sonosApp::background(BckColor);
 	}
+	
+	if (interface) {
+		drawInterface(20, 20);
+	}
+}
+
+//--------------------------------------------------------------
+void sonosApp::setFullScreen(bool full)
+{
+	if (full) {
+		ofSetFullscreen(true);
+	} else {
+		ofSetWindowShape(OUTPUT_WIDTH,OUTPUT_HEIGHT);
+		ofSetFullscreen(false);
+		// figure out how to put the window in the center:
+		int screenW = ofGetScreenWidth();
+		int screenH = ofGetScreenHeight();
+		ofSetWindowPosition(screenW/2-OUTPUT_WIDTH/2, screenH/2-OUTPUT_HEIGHT/2);
+	}
 }
 
 //--------------------------------------------------------------
@@ -162,6 +180,16 @@ void sonosApp::exit()
 {
 	//magari c'è da chiudere la cam o i video da verificare;
 	OF_EXIT_APP(0);
+}
+
+void sonosApp::drawInterface(float x, float y)
+{
+	ofSetColor(255, 255, 255);
+	ofDrawBitmapString("INTERFACE (press: h to hide)", x, y);
+	char reportStr[1024];
+	char help[1024] = "fps: %f\nnum blobs found %i\nMaxBlobs: %i (< >)\nThreshold %i (+ -)\nSPACEBAR: learn background\nContourMinSize: %i (t y)\nf: fullscreen\nARROWS: translate (%i, %i)\n[a : z] scale (%.2f, %.2f)\nr : reset scale and translate\nTESTS: colors (1-n), circle (c), rectangle (r)";
+	sprintf(reportStr, help , ofGetFrameRate(),contourFinder.nBlobs, blobMax, Threshold, contour_min, mtrx, mtry, scale_x, scale_y);
+	ofDrawBitmapString(reportStr, x, y + 20);
 }
 
 //--------------------------------------------------------------
@@ -172,11 +200,7 @@ void sonosApp::debugDraw()
 	int margin = 20;
 	int spacerx = camWidth + margin;
 	int spacery = camHeight + margin;
-	
-//#ifdef DEBUG
-//	std::cerr << "Scale factor = " << sx << " CamWidth =" << camWidth << std::endl;
-//#endif
-	
+		
 	ofPushMatrix();
 	ofScale(scalef, scalef, 1.0);
 	ofBackground(0, 0, 0);
@@ -209,14 +233,13 @@ void sonosApp::drawDebugInterface(float x, float y)
 	char reportStr[1024];
 	ofSetColor(255, 255, 255);
 	ofDrawBitmapString("DEBUG INTERFACE", x, y);
-	sprintf(reportStr, "CamWidth: %i, CamHeight: %i\nfps: %f", camWidth, camHeight, ofGetFrameRate());
+	sprintf(reportStr, "CamWidth: %i, CamHeight: %i\nfps: %f\nnum blobs found %i", camWidth, camHeight, ofGetFrameRate(),contourFinder.nBlobs);
 	ofDrawBitmapString(reportStr, x, y + 20);
 }
 
 //--------------------------------------------------------------
 void sonosApp::background(int color)
 {
-	
 	switch (color)
 	{
 		case 1:
@@ -225,6 +248,8 @@ void sonosApp::background(int color)
 			
 		case 2:
 			ofBackground(0, 0, 0);
+			break;
+		default:
 			break;
 	}	
 	
@@ -235,17 +260,83 @@ void sonosApp::keyPressed(int key)
 {
 	switch (key) {
 		case '1':
-			BckColor = 1;
+			BckColor=1;
 			break;
 		case '2':
-			BckColor = 2;
+			BckColor=2;
 			break;
 		case 'd':
 			debug = !debug;
 			break;
+		case 'h':
+			interface = !interface;
+			break;
+		case '+':
+			Threshold ++;
+			if (Threshold > 255) Threshold = 255;
+			break;
+		case '-':
+			Threshold --;
+			if (Threshold < 0) Threshold = 0;
+			break;
+		case ' ':
+			bLearnBakground = true;
+			break;
+		case '>':
+			blobMax ++;
+			break;
+		case '<':	
+			blobMax --;
+			if (blobMax < 0) blobMax = 0;
+			break;
+		case 'f':
+			bFullscreen = !bFullscreen;
+			sonosApp::setFullScreen(bFullscreen);
+			break;
+		case 'a':
+			scale_x+=0.01;
+			scale_y+=0.01;
+			break;
+		case 'z':
+			scale_x-=0.01;
+			scale_y-=0.01;
+			break;
+		case 'r':
+			scale_x = 1.0;
+			scale_y = 1.0;
+			mtrx = 1.0;
+			mtry = 1.0;
+			break;
+		case 't':
+			contour_min--;
+			break;
+		case 'y':
+			contour_min++;
+			break;
+			
+		// TEST
+		case 'c':
+			circle = !circle;
+			break;
+		case 'q':
+			rectangle = !rectangle;
+			break;
+			
+		// arrows
+		case OF_KEY_UP:
+			mtry--;
+			break;
+		case OF_KEY_DOWN:
+			mtry++;	
+			break;
+		case OF_KEY_LEFT:
+			mtrx--;		
+			break;
+		case OF_KEY_RIGHT:
+			mtrx++;
+			break;
 #ifdef _USE_LIVE_VIDEO
 		case ',':
-
 			vidGrabber.videoSettings();
 			break;
 #endif			

@@ -38,23 +38,24 @@ public:
 	void background(int color);
 	void debugDraw();
 	void drawDebugInterface(float x, float y);
+	void drawInterface(float x, float y);
+	void setFullScreen(bool sflag);
 	
 	// Our vars
 	std::string filename;
 	int 		camWidth;
 	int 		camHeight;
 	int 		Threshold;
-	bool		bThreshWithOpenCV;
 	bool		bFullscreen;
 	bool        bLearnBakground;
 	int			blobMax;
 	int			BlobColor;
 	int			BckColor;
 	int         contour_min;
+	int			mtrx;
+	int			mtry;
 	float       scale_x;
 	float       scale_y;
-	float		mtrx;
-	float		mtry;
 	bool        interface;
 	bool        circle;
 	bool        debug;
