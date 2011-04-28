@@ -13,10 +13,9 @@ void sonosApp::setup(){
 	//check if file exists
 	bool bFileThere = false;
 	fstream fin;
-	string fileNameInOF = ofToDataPath(filename); // since OF files are in the data directory, we need to do this
+	string fileNameInOF = ofToDataPath(filename, false); // since OF files are in the data directory, we need to do this
 	fin.open(fileNameInOF.c_str(),ios::in);
 	if ( fin.is_open() ) {
-		cout<<"file exists"<<endl;
 		bFileThere =true;
 	}
 	fin.close();
@@ -27,7 +26,7 @@ void sonosApp::setup(){
 		camWidth = vidPlayer.getWidth();
 		camHeight = vidPlayer.getHeight();
 	} else {
-		cout << "File" << fileNameInOF << " is not here!" << endl;
+		cerr << "File " << fileNameInOF << " is not here!" << endl;
 		sonosApp:exit();
 	}
 	
@@ -46,6 +45,7 @@ void sonosApp::draw(){
 //--------------------------------------------------------------
 void sonosApp::exit(){
 	//magari c' da chiudere la cam o i video da verificare;
+	OF_EXIT_APP(0);
 }
 
 //--------------------------------------------------------------
