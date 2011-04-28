@@ -3,6 +3,8 @@
 #include "ofMain.h"
 #include "ofxOpenCv.h"
 
+//#define _USE_LIVE_VIDEO
+
 #define OUTPUT_HEIGHT 768
 #define OUTPUT_WIDTH 1024
 
@@ -15,11 +17,32 @@ public:
 	void draw();
 	void exit();
 	
+	// VideoGrabber/Player
+#ifdef _USE_LIVE_VIDEO
+	ofVideoGrabber 		vidGrabber;
+#else
+	ofVideoPlayer 		vidPlayer;
+#endif
+	
+	// openCV stuffs
+	ofxCvColorImage			colorImg;
+	ofxCvGrayscaleImage 	grayImage;
+	ofxCvGrayscaleImage 	grayBg;
+	ofxCvGrayscaleImage 	grayDiff;
+	ofxCvContourFinder		contourFinder;
+	
+	// openFrameworks stuffs
+	
+	
 	// Our methods
 	void drawPointCloud();
 	void background(int color);
+	bool sortByCentroid(const ofxCvBlob& d1, const ofxCvBlob& d2);
 	
 	// Our vars
+	std::string filename;
+	int 				camWidth;
+	int 				camHeight;
 	
 	// Events
 	void keyPressed  (int key);
