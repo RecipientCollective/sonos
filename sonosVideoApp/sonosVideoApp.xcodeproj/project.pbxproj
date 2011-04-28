@@ -1142,6 +1142,7 @@
 					"../../../libs/freeimage/include/**",
 				);
 				OTHER_CPLUSPLUSFLAGS = (
+					"-DDEBUG=1",
 					"-D__MACOSX_CORE__",
 					"-lpthread",
 				);

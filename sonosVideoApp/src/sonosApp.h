@@ -36,6 +36,7 @@ public:
 	// Our methods
 	void drawPointCloud();
 	void background(int color);
+	void debugDraw();
 	
 	// Our vars
 	std::string filename;

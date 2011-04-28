@@ -18,6 +18,9 @@ void sonosApp::setup(){
 	string fileNameInOF = ofToDataPath(filename, false); // since OF files are in the data directory, we need to do this
 	fin.open(fileNameInOF.c_str(),ios::in);
 	if ( fin.is_open() ) {
+#ifdef DEBUG
+		cerr << "Founded file " << fileNameInOF << endl;
+#endif
 		bFileThere =true;
 	}
 	fin.close();
@@ -28,9 +31,15 @@ void sonosApp::setup(){
 		camWidth = vidPlayer.getWidth();
 		camHeight = vidPlayer.getHeight();
 	} else {
+#ifdef DEBUG		
 		cerr << "File " << fileNameInOF << " is not here!" << endl;
+#endif
 		sonosApp:exit();
 	}
+#endif
+
+#ifdef DEBUG		
+	cerr << "Input size: width =" << camWidth << " height = " << camHeight << endl;
 #endif
 	
 	// ALLOCATE IMAGES SIZES
@@ -54,6 +63,7 @@ void sonosApp::setup(){
 	BckColor=1;
 	BlobColor=0xDD00CC;
 	colorz=1;
+	
 	blobMax=2;
 	contour_min = 350;
 	scale_x = 1.0;
@@ -62,7 +72,7 @@ void sonosApp::setup(){
 	mtry = 1.0;
 	interface = true;
 	circle = true;
-	debug = false;
+	debug = true;
 	rectangle = false;
 	
 }
@@ -137,15 +147,30 @@ void sonosApp::update(){
 
 //--------------------------------------------------------------
 void sonosApp::draw(){
-	
-	// background
-	sonosApp::background(BckColor);
+	if (debug) {
+		debugDraw();
+	} else {
+		// background
+		sonosApp::background(BckColor);
+	}
 }
 
 //--------------------------------------------------------------
 void sonosApp::exit(){
 	//magari c' da chiudere la cam o i video da verificare;
 	OF_EXIT_APP(0);
+}
+
+//--------------------------------------------------------------
+void sonosApp::debugDraw(){
+	ofPushMatrix();
+	ofScale(0.5, 0.5, 1.0);
+	ofBackground(0, 0, 0);
+	colorImg.draw(20,20);
+	grayImage.draw((camWidth+20),20);
+	grayBg.draw(20,(camHeight+20));
+	grayDiff.draw((camWidth+20),(camHeight+20));
+	ofPopMatrix();
 }
 
 //--------------------------------------------------------------
