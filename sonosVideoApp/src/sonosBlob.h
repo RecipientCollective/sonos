@@ -12,16 +12,19 @@
 
 #include "ofxOpenCv.h"
 
+
 class sonosBlob : public ofxCvBlob 
 {
 public:
 	
 	double z;        // Z-POSITION
+	float avatar_x;
+	float avatar_y;
+	int   avatar_space;
 	
 	// costruttore (vuoto)
 	sonosBlob() : ofxCvBlob() 
 	{
-		z = 0.0;
 	}
 	
 	// copiatore da ofxCvBlob (a = ofCvBlob)
@@ -37,7 +40,13 @@ public:
 		
 		// No info on Z when I copy the blob
 		z            = 0.0;
+		avatar_space = 100;
+		
+		// avatar position
+		setAvatar();
 	}
+	
+	void setAvatar();
 	
 };
 

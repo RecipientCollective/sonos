@@ -9,3 +9,8 @@
 
 #include "sonosBlob.h"
 
+void sonosBlob::setAvatar()
+{
+	avatar_x = centroid.x;
+	avatar_y = boundingRect.x - avatar_space;
+}

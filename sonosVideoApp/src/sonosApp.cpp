@@ -141,7 +141,7 @@ void sonosApp::update()
 			// myblob ha area quindi e' figlio di ofxCvBlob
 			// std::cout << "AREA: " << myblob.area << std::endl;
 			// myblob ha anche Z
-			// std::cout << "Z: " << myblob.z << std::endl;
+			std::cout << "Blobx: " << myblob.avatar_y << std::endl;
 		}
 	}
 }
