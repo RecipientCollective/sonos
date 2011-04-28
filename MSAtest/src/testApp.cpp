@@ -80,7 +80,7 @@ void testApp::setup(){
 	ofSetVerticalSync(true);
 	ofSetFrameRate(60);
 	
-	ballImage.loadImage("MSAPhysics/ball.png");
+	ballImage.loadImage("ball.png");
 	
 	width = ofGetWidth();
 	height = ofGetHeight();
