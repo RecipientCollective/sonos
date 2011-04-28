@@ -4,11 +4,16 @@
 #include "ofxOpenCv.h"
 #include "sonosBlob.h"
 #include "functions.h"
+#include "MSAFluid.h"
+#include "MSATimer.h"
+#include "ParticleSystem.h"
 
 //#define _USE_LIVE_VIDEO
 
 #define OUTPUT_HEIGHT 768.0
 #define OUTPUT_WIDTH 1024.0
+
+using namespace MSA;
 
 class sonosApp : public ofBaseApp{
 	
@@ -32,7 +37,12 @@ public:
 	ofxCvGrayscaleImage 	grayBg;
 	ofxCvGrayscaleImage 	grayDiff;
 	ofxCvContourFinder		contourFinder;
-		
+	
+	// MSAFluids
+	MSA::FluidSolver	fluidSolver;
+	MSA::FluidDrawerGl	fluidDrawer;	
+	ParticleSystem		particleSystem;
+	
 	// Our methods
 	void drawPointCloud();
 	void background(int color);
