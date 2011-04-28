@@ -14,6 +14,11 @@ void sonosApp::draw(){
 }
 
 //--------------------------------------------------------------
+void sonosApp::exit(){
+	//magari c'è da chiudere la cam o i video da verificare;
+}
+
+//--------------------------------------------------------------
 void sonosApp::keyPressed(int key){
 
 }

@@ -1,6 +1,10 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofxOpenCv.h"
+
+#define OUTPUT_HEIGHT 768
+#define OUTPUT_WIDTH 1024
 
 class sonosApp : public ofBaseApp{
 
@@ -8,6 +12,9 @@ class sonosApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
+		void exit();
+		
+		void drawPointCloud();
 
 		void keyPressed  (int key);
 		void keyReleased(int key);
