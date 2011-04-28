@@ -201,6 +201,7 @@ void sonosApp::sonosDraw()
 		ofEndShape();
 		ofPopStyle();
 		
+		// IF interface: draw rectangle around 
 		if(interface){
 			ofPushStyle();
 			ofNoFill();
@@ -208,6 +209,7 @@ void sonosApp::sonosDraw()
 			ofRect(rectx,recty,blobwidth,blobheight);
 			ofPopStyle();
 		}
+		
 		
 		ofPushStyle();
 		if (i->first == 0) {
