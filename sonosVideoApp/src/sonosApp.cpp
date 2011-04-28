@@ -181,6 +181,8 @@ void sonosApp::sonosDraw()
 	for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
 	{
 		sonosBlob curr_blob = i->second;
+		curr_blob.setBlobColor(BlobColor);
+		curr_blob.drawPixels();
 		
 		// get some data
 		float cx = curr_blob.centroid.x;
@@ -192,14 +194,14 @@ void sonosApp::sonosDraw()
 		float recty = curr_blob.boundingRect.y;
 		
 		//drawing only pixels form blobs, extracted from conturfinder
-		ofPushStyle();
-		ofSetHexColor(BlobColor);
-		ofBeginShape();
-		for( int j=0; j<curr_blob.nPts; j++ ) {
-			ofVertex( curr_blob.pts[j].x, curr_blob.pts[j].y );
-		}
-		ofEndShape();
-		ofPopStyle();
+		//ofPushStyle();
+//		ofSetHexColor(BlobColor);
+//		ofBeginShape();
+//		for( int j=0; j<curr_blob.nPts; j++ ) {
+//			ofVertex( curr_blob.pts[j].x, curr_blob.pts[j].y );
+//		}
+//		ofEndShape();
+//		ofPopStyle();
 		
 		// IF interface: draw rectangle around 
 		if(interface){

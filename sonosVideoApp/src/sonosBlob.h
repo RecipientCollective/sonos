@@ -21,6 +21,7 @@ public:
 	float avatar_x;
 	float avatar_y;
 	int   avatar_space;
+	int	  mycolor;
 	
 	// costruttore (vuoto)
 	sonosBlob() : ofxCvBlob() 
@@ -42,11 +43,16 @@ public:
 		z            = 0.0;
 		avatar_space = 100;
 		
+		// default color
+		mycolor = 0;
+		
 		// avatar position
 		setAvatar();
 	}
 	
 	void setAvatar();
+	void drawPixels();
+	void setBlobColor(int color);
 	
 };
 
