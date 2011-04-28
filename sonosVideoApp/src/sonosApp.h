@@ -37,6 +37,7 @@ public:
 	void drawPointCloud();
 	void background(int color);
 	void debugDraw();
+	void drawDebugInterface(float x, float y);
 	
 	// Our vars
 	std::string filename;

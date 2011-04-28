@@ -1,7 +1,8 @@
 #include "sonosApp.h"
 
 //--------------------------------------------------------------
-void sonosApp::setup(){
+void sonosApp::setup()
+{
 	
 #ifdef _USE_LIVE_VIDEO
 	camWidth = 640;
@@ -77,7 +78,8 @@ void sonosApp::setup(){
 }
 
 //--------------------------------------------------------------
-void sonosApp::update(){
+void sonosApp::update()
+{
 	
 	// IS A NEW FRAME?
 	bool bNewFrame = false;
@@ -145,7 +147,8 @@ void sonosApp::update(){
 }
 
 //--------------------------------------------------------------
-void sonosApp::draw(){
+void sonosApp::draw()
+{
 	if (debug) {
 		debugDraw();
 	} else {
@@ -155,42 +158,64 @@ void sonosApp::draw(){
 }
 
 //--------------------------------------------------------------
-void sonosApp::exit(){
+void sonosApp::exit()
+{
 	//magari c'è da chiudere la cam o i video da verificare;
 	OF_EXIT_APP(0);
 }
 
 //--------------------------------------------------------------
-void sonosApp::debugDraw(){
+void sonosApp::debugDraw()
+{
 
-	float sx = camWidth / OUTPUT_WIDTH;
+	float scalef = camWidth / OUTPUT_WIDTH;
+	int margin = 20;
+	int spacerx = camWidth + margin;
+	int spacery = camHeight + margin;
 	
 //#ifdef DEBUG
 //	std::cerr << "Scale factor = " << sx << " CamWidth =" << camWidth << std::endl;
 //#endif
 	
 	ofPushMatrix();
-	ofScale(sx, sx, 1.0);
+	ofScale(scalef, scalef, 1.0);
 	ofBackground(0, 0, 0);
-	colorImg.draw(20,20);
-	grayImage.draw((camWidth+20),20);
-	grayBg.draw(20,(camHeight+20));
-	grayDiff.draw((camWidth+20),(camHeight+20));
+	colorImg.draw(margin,margin);
+	grayImage.draw(spacerx,margin);
+	grayBg.draw(margin,spacery);
+	grayDiff.draw(spacerx, spacery);
 	
 	// then draw the contours:
 	ofFill();
 	ofSetHexColor(0x333333);
-	ofRect((camWidth+20),(camHeight+20),camWidth,camHeight);
+	ofRect(spacerx, spacery,camWidth,camHeight);
 	ofSetHexColor(0xffffff);
 	
 	// draw the whole contour finder
-	contourFinder.draw((camWidth+20),(camHeight+20));
+	contourFinder.draw(spacerx, spacery);
 	
 	ofPopMatrix();
+	
+	ofPushMatrix();
+	
+	drawDebugInterface(OUTPUT_WIDTH - 300, margin);
+	
+	ofPopMatrix();
+	
+}
+
+void sonosApp::drawDebugInterface(float x, float y)
+{
+	char reportStr[1024];
+	ofSetColor(255, 255, 255);
+	ofDrawBitmapString("DEBUG INTERFACE", x, y);
+	sprintf(reportStr, "CamWidth: %i, CamHeight: %i\nfps: %f", camWidth, camHeight, ofGetFrameRate());
+	ofDrawBitmapString(reportStr, x, y + 20);
 }
 
 //--------------------------------------------------------------
-void sonosApp::background(int color){
+void sonosApp::background(int color)
+{
 	
 	switch (color)
 	{
@@ -206,13 +231,17 @@ void sonosApp::background(int color){
 }
 
 //--------------------------------------------------------------
-void sonosApp::keyPressed(int key){
+void sonosApp::keyPressed(int key)
+{
 	switch (key) {
 		case '1':
 			BckColor = 1;
 			break;
 		case '2':
 			BckColor = 2;
+			break;
+		case 'd':
+			debug = !debug;
 			break;
 #ifdef _USE_LIVE_VIDEO
 		case ',':
@@ -227,41 +256,49 @@ void sonosApp::keyPressed(int key){
 }
 
 //--------------------------------------------------------------
-void sonosApp::keyReleased(int key){
+void sonosApp::keyReleased(int key)
+{
 	
 }
 
 //--------------------------------------------------------------
-void sonosApp::mouseMoved(int x, int y ){
+void sonosApp::mouseMoved(int x, int y )
+{
 	
 }
 
 //--------------------------------------------------------------
-void sonosApp::mouseDragged(int x, int y, int button){
+void sonosApp::mouseDragged(int x, int y, int button)
+{
 	
 }
 
 //--------------------------------------------------------------
-void sonosApp::mousePressed(int x, int y, int button){
+void sonosApp::mousePressed(int x, int y, int button)
+{
 	
 }
 
 //--------------------------------------------------------------
-void sonosApp::mouseReleased(int x, int y, int button){
+void sonosApp::mouseReleased(int x, int y, int button)
+{
 	
 }
 
 //--------------------------------------------------------------
-void sonosApp::windowResized(int w, int h){
+void sonosApp::windowResized(int w, int h)
+{
 	
 }
 
 //--------------------------------------------------------------
-void sonosApp::gotMessage(ofMessage msg){
+void sonosApp::gotMessage(ofMessage msg)
+{
 	
 }
 
 //--------------------------------------------------------------
-void sonosApp::dragEvent(ofDragInfo dragInfo){ 
+void sonosApp::dragEvent(ofDragInfo dragInfo)
+{ 
 	
 }
