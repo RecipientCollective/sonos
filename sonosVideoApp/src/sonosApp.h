@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxOpenCv.h"
+#include "sonosBlob.h"
 #include "functions.h"
 
 //#define _USE_LIVE_VIDEO
@@ -57,6 +58,9 @@ public:
 	bool        circle;
 	bool        debug;
 	bool        rectangle;
+	
+	// containers 
+	map<int ,sonosBlob>  sonosblobs;
 	
 	// Events
 	void keyPressed  (int key);

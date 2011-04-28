@@ -116,11 +116,23 @@ void sonosApp::update(){
 		also, find holes is set to true so we will get interior contours as well...  */
 		contourFinder.findContours(grayDiff, contour_min, (camWidth*camHeight)/3, blobMax, false, true);
 			
-		// sort by centrid
+		// sort by centroid
 		std::sort(contourFinder.blobs.begin(),contourFinder.blobs.end(), sortByCentroid);
 		
+		// clean sonosblob map
+		sonosblobs.clear();
+		
+		// copy the blobs to sonosBlobs map
+		for(int i = 0; i < contourFinder.blobs.size(); i++) {
+			
+			sonosBlob myblob = contourFinder.blobs[i];
+			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
+			// myblob ha area quindi e' figlio di ofxCvBlob
+			// std::cout << "AREA: " << myblob.area << std::endl;
+			// myblob ha anche Z
+			// std::cout << "Z: " << myblob.z << std::endl;
+		}
 	}
-	
 }
 
 //--------------------------------------------------------------
