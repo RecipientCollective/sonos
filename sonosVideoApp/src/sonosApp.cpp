@@ -185,6 +185,7 @@ void sonosApp::sonosDraw()
 
 	fluidDrawer.draw(0, 0, getWindowWidth(), getWindowHeight());
 	particleSystem.updateAndDraw( true );
+	
 	// background
 	sonosApp::background(BckColor);
 	
