@@ -11,6 +11,9 @@
 #define _SONOS_BLOB
 
 #include "ofxOpenCv.h"
+#include "MSAFluid.h"
+#include "MSATimer.h"
+#include "ParticleSystem.h"
 
 class sonosBlob : public ofxCvBlob 
 {
@@ -50,7 +53,7 @@ public:
 	}
 	
 	void setAvatar();
-	void drawAvatar();
+	void drawAvatar(ParticleSystem p);
 	void drawPixels();
 	void setBlobColor(int color);
 	void drawRect();

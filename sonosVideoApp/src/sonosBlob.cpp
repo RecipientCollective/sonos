@@ -52,11 +52,26 @@ void sonosBlob::rectangle()
 	ofRect(boundingRect.x,0,boundingRect.width, 480);
 }
 
-void sonosBlob::drawAvatar()
+void sonosBlob::drawAvatar(ParticleSystem p)
 {
+//	ofPushStyle();
+//	ofSetHexColor(mycolor);
+//	float raggio = (boundingRect.height >= boundingRect.width ? boundingRect.height : boundingRect.width) / 5.0;
+//	ofCircle( avatar_x, avatar_y, raggio);
+//	ofPopStyle();
+	
+	// testing fluids
 	ofPushStyle();
-	ofSetHexColor(mycolor);
-	float raggio = (boundingRect.height >= boundingRect.width ? boundingRect.height : boundingRect.width) / 5.0;
-	ofCircle( avatar_x, avatar_y, raggio);
+	Vec2f pos = Vec2f (avatar_x,avatar_y);
+	Vec2f vel = Vec2f (10,10);
+//		int index = fluidSolver.getIndexForPos(pos);
+//		Color drawColor( CM_HSV, ( getElapsedFrames() % 360 ) / 360.0f, 1, 1 );
+//		fluidSolver.addColorAtIndex(index, drawColor * colorMult);
+	
+	p.addParticles(pos , 10 );
+//	fluidSolver.addForceAtIndex(index, vel * velocityMult);
+//		glColor3f(1, 1, 1);
+//		fluidDrawer.draw(0, 0, camWidth, camHeight);
+	p.updateAndDraw( true );	
 	ofPopStyle();
 }

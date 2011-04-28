@@ -176,27 +176,6 @@ void sonosApp::sonosDraw()
 	ofPushMatrix();
 	ofScale(scale_x, scale_y, 1.0);
 	ofTranslate(mtrx, mtry, 1.0);
-
-	ofPushStyle();
-	// testing fluids
-
-	const float colorMult = 100;
-	const float velocityMult = 30;
-	Vec2f pos = Vec2f (100.0,100.0);
-	Vec2f vel = Vec2f (0.001,0.001);
-	pos.x = constrain(pos.x, 0.0f, 1.0f);
-	pos.y = constrain(pos.y, 0.0f, 1.0f);
-	int index = fluidSolver.getIndexForPos(pos);
-	Color drawColor( CM_HSV, ( getElapsedFrames() % 360 ) / 360.0f, 1, 1 );
-	fluidSolver.addColorAtIndex(index, drawColor * colorMult);
-	
-	particleSystem.addParticles( pos , 10 );
-	fluidSolver.addForceAtIndex(index, vel * velocityMult);
-	
-	fluidDrawer.draw(0, 0, getWindowWidth(), getWindowHeight());
-	particleSystem.updateAndDraw( true );
-	
-	ofPopStyle();
 	
 	if (box) {
 		ofPushStyle();
@@ -233,7 +212,7 @@ void sonosApp::sonosDraw()
 		ofPopStyle();
 		
 		// test AVATAR
-		if (avatar) curr_blob.drawAvatar();
+		if (avatar) curr_blob.drawAvatar(particleSystem);
 	}
 	
 	ofPopMatrix();
