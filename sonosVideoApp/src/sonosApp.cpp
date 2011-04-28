@@ -138,12 +138,30 @@ void sonosApp::update(){
 //--------------------------------------------------------------
 void sonosApp::draw(){
 	
+	// background
+	sonosApp::background(BckColor);
 }
 
 //--------------------------------------------------------------
 void sonosApp::exit(){
 	//magari c'è da chiudere la cam o i video da verificare;
 	OF_EXIT_APP(0);
+}
+
+//--------------------------------------------------------------
+void sonosApp::background(int color){
+	
+	switch (color)
+	{
+		case 1:
+			ofBackground(100, 100, 100);
+			break;
+			
+		case 2:
+			ofBackground(0, 0, 0);
+			break;
+	}	
+	
 }
 
 //--------------------------------------------------------------
