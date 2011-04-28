@@ -62,6 +62,7 @@ public:
 	bool        debug;
 	bool        rectangle;
 	bool        box;
+	bool		avatar;
 	
 	// containers 
 	map<int ,sonosBlob>  sonosblobs;

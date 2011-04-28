@@ -74,6 +74,7 @@ void sonosApp::setup()
 	debug = false;
 	rectangle = false;
 	box = true;
+	avatar = false;
 	
 }
 
@@ -138,10 +139,6 @@ void sonosApp::update()
 			
 			sonosBlob myblob = contourFinder.blobs[i];
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
-			// myblob ha area quindi e' figlio di ofxCvBlob
-			// std::cout << "AREA: " << myblob.area << std::endl;
-			// myblob ha anche Z
-			std::cout << "Blobx: " << myblob.avatar_y << std::endl;
 		}
 	}
 }
@@ -201,8 +198,10 @@ void sonosApp::sonosDraw()
 		
 		if (circle) curr_blob.circle();
 		if (rectangle) curr_blob.rectangle();
-		
 		ofPopStyle();
+		
+		// test AVATAR
+		if (avatar) curr_blob.drawAvatar();
 	}
 	
 	ofPopMatrix();
@@ -235,7 +234,7 @@ void sonosApp::drawInterface(float x, float y)
 	ofSetColor(255, 255, 255);
 	ofDrawBitmapString("INTERFACE (press: h to hide)", x, y);
 	char reportStr[1024];
-	char help[1024] = "fps: %f\nnum blobs found %i\n(< >) MaxBlobs: %i\n(+ -) Threshold %i\nSPACEBAR: learn background\n(t y) ContourMinSize: %i\nf: fullscreen\nARROWS: translate (%i, %i)\n[a : z] scale (%.2f, %.2f)\nr : reset scale and translate\nb: hide/show boxTESTS: colors (1-n), circle (c), rectangle (r)";
+	char help[1024] = "fps: %f\nnum blobs found %i\n(< >) MaxBlobs: %i\n(+ -) Threshold %i\nSPACEBAR: learn background\n(t y) ContourMinSize: %i\nf: fullscreen\nARROWS: translate (%i, %i)\n[a : z] scale (%.2f, %.2f)\nr : reset scale and translate\nb: hide/show box\n\nTESTS: colors (1-n), avatar (p), circle (c), rectangle (r)";
 	sprintf(reportStr, help , ofGetFrameRate(),contourFinder.nBlobs, blobMax, Threshold, contour_min, mtrx, mtry, scale_x, scale_y);
 	ofDrawBitmapString(reportStr, x, y + 20);
 }
@@ -383,7 +382,9 @@ void sonosApp::keyPressed(int key)
 		case 'q':
 			rectangle = !rectangle;
 			break;
-			
+		case 'p':
+			avatar = !avatar;
+			break;
 		// arrows
 		case OF_KEY_UP:
 			mtry--;

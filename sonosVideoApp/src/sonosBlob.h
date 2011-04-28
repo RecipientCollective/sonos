@@ -20,8 +20,8 @@ public:
 	double z;        // Z-POSITION
 	float avatar_x;
 	float avatar_y;
-	int   avatar_space;
 	int	  mycolor;
+	int   avatar_color;
 	
 	// costruttore (vuoto)
 	sonosBlob() : ofxCvBlob() 
@@ -41,16 +41,17 @@ public:
 		
 		// No info on Z when I copy the blob
 		z            = 0.0;
-		avatar_space = 100;
 		
 		// default color
 		mycolor = 0;
+		avatar_color = 0;
 		
 		// avatar position
 		setAvatar();
 	}
 	
 	void setAvatar();
+	void drawAvatar();
 	void drawPixels();
 	void setBlobColor(int color);
 	void drawRect();
