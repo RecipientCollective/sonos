@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		553A27BE1369E1A700292B8D /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 553A27BA1369E1A700292B8D /* Particle.cpp */; };
 		553A27BF1369E1A700292B8D /* ParticleSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 553A27BC1369E1A700292B8D /* ParticleSystem.cpp */; };
+		553A28221369E21900292B8D /* MSAFluidDrawerBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 553A28121369E21900292B8D /* MSAFluidDrawerBase.cpp */; };
+		553A28231369E21900292B8D /* MSAFluidSolver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 553A28171369E21900292B8D /* MSAFluidSolver.cpp */; };
+		553A284D1369E25F00292B8D /* Color.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 553A284A1369E25F00292B8D /* Color.cpp */; };
 		55689029136976D10050D22B /* glew.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55689028136976D10050D22B /* glew.a */; };
 		55689128136978710050D22B /* libopencv_calib3d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556890AA136978710050D22B /* libopencv_calib3d.a */; };
 		55689129136978710050D22B /* libopencv_contrib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556890AB136978710050D22B /* libopencv_contrib.a */; };
@@ -169,6 +172,22 @@
 		553A27BB1369E1A700292B8D /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Particle.h; sourceTree = "<group>"; };
 		553A27BC1369E1A700292B8D /* ParticleSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ParticleSystem.cpp; sourceTree = "<group>"; };
 		553A27BD1369E1A700292B8D /* ParticleSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticleSystem.h; sourceTree = "<group>"; };
+		553A27C31369E21900292B8D /* changelog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changelog.txt; sourceTree = "<group>"; };
+		553A280E1369E21900292B8D /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		553A280F1369E21900292B8D /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		553A28111369E21900292B8D /* MSAFluid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAFluid.h; sourceTree = "<group>"; };
+		553A28121369E21900292B8D /* MSAFluidDrawerBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MSAFluidDrawerBase.cpp; sourceTree = "<group>"; };
+		553A28131369E21900292B8D /* MSAFluidDrawerBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAFluidDrawerBase.h; sourceTree = "<group>"; };
+		553A28141369E21900292B8D /* MSAFluidDrawerGl-Cinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MSAFluidDrawerGl-Cinder.h"; sourceTree = "<group>"; };
+		553A28151369E21900292B8D /* MSAFluidDrawerGl-OF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MSAFluidDrawerGl-OF.h"; sourceTree = "<group>"; };
+		553A28161369E21900292B8D /* MSAFluidParticleUpdater.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAFluidParticleUpdater.h; sourceTree = "<group>"; };
+		553A28171369E21900292B8D /* MSAFluidSolver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MSAFluidSolver.cpp; sourceTree = "<group>"; };
+		553A28181369E21900292B8D /* MSAFluidSolver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAFluidSolver.h; sourceTree = "<group>"; };
+		553A28481369E25F00292B8D /* ChanTraits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChanTraits.h; sourceTree = "<group>"; };
+		553A28491369E25F00292B8D /* CinderMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CinderMath.h; sourceTree = "<group>"; };
+		553A284A1369E25F00292B8D /* Color.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Color.cpp; sourceTree = "<group>"; };
+		553A284B1369E25F00292B8D /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
+		553A284C1369E25F00292B8D /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		55689028136976D10050D22B /* glew.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = glew.a; path = ../../../libs/glew/lib/osx/glew.a; sourceTree = SOURCE_ROOT; };
 		55689053136978710050D22B /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		55689058136978710050D22B /* cv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cv.h; sourceTree = "<group>"; };
@@ -502,6 +521,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		553A27C21369E21900292B8D /* MSAFluid */ = {
+			isa = PBXGroup;
+			children = (
+				553A27C31369E21900292B8D /* changelog.txt */,
+				553A280E1369E21900292B8D /* install.xml */,
+				553A280F1369E21900292B8D /* LICENSE.txt */,
+				553A28101369E21900292B8D /* src */,
+			);
+			name = MSAFluid;
+			path = ../../../addons/msalibs/MSAFluid;
+			sourceTree = SOURCE_ROOT;
+		};
+		553A28101369E21900292B8D /* src */ = {
+			isa = PBXGroup;
+			children = (
+				553A28111369E21900292B8D /* MSAFluid.h */,
+				553A28121369E21900292B8D /* MSAFluidDrawerBase.cpp */,
+				553A28131369E21900292B8D /* MSAFluidDrawerBase.h */,
+				553A28141369E21900292B8D /* MSAFluidDrawerGl-Cinder.h */,
+				553A28151369E21900292B8D /* MSAFluidDrawerGl-OF.h */,
+				553A28161369E21900292B8D /* MSAFluidParticleUpdater.h */,
+				553A28171369E21900292B8D /* MSAFluidSolver.cpp */,
+				553A28181369E21900292B8D /* MSAFluidSolver.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		553A28471369E25F00292B8D /* cinder-lite */ = {
+			isa = PBXGroup;
+			children = (
+				553A28481369E25F00292B8D /* ChanTraits.h */,
+				553A28491369E25F00292B8D /* CinderMath.h */,
+				553A284A1369E25F00292B8D /* Color.cpp */,
+				553A284B1369E25F00292B8D /* Color.h */,
+				553A284C1369E25F00292B8D /* Vector.h */,
+			);
+			name = "cinder-lite";
+			path = "../../../addons/msalibs/MSACore/src/cinder-lite";
+			sourceTree = SOURCE_ROOT;
+		};
 		55689026136976BE0050D22B /* libs */ = {
 			isa = PBXGroup;
 			children = (
@@ -930,6 +989,8 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				553A28471369E25F00292B8D /* cinder-lite */,
+				553A27C21369E21900292B8D /* MSAFluid */,
 				55689052136978710050D22B /* ofxOpenCv */,
 			);
 			name = addons;
@@ -1099,6 +1160,9 @@
 				556893A713698C340050D22B /* sonosBlob.cpp in Sources */,
 				553A27BE1369E1A700292B8D /* Particle.cpp in Sources */,
 				553A27BF1369E1A700292B8D /* ParticleSystem.cpp in Sources */,
+				553A28221369E21900292B8D /* MSAFluidDrawerBase.cpp in Sources */,
+				553A28231369E21900292B8D /* MSAFluidSolver.cpp in Sources */,
+				553A284D1369E25F00292B8D /* Color.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
