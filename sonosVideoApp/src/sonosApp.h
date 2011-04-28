@@ -40,6 +40,7 @@ public:
 	void drawDebugInterface(float x, float y);
 	void drawInterface(float x, float y);
 	void setFullScreen(bool sflag);
+	void sonosDraw();
 	
 	// Our vars
 	std::string filename;
@@ -60,6 +61,7 @@ public:
 	bool        circle;
 	bool        debug;
 	bool        rectangle;
+	bool        box;
 	
 	// containers 
 	map<int ,sonosBlob>  sonosblobs;

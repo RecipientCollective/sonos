@@ -73,6 +73,7 @@ void sonosApp::setup()
 	circle = false;
 	debug = false;
 	rectangle = false;
+	box = true;
 	
 }
 
@@ -151,13 +152,86 @@ void sonosApp::draw()
 	if (debug) {
 		debugDraw();
 	} else {
-		// background
-		sonosApp::background(BckColor);
+		sonosDraw();
 	}
 	
 	if (interface) {
 		drawInterface(20, 20);
 	}
+}
+
+void sonosApp::sonosDraw()
+{
+	// background
+	sonosApp::background(BckColor);
+	
+	ofPushMatrix();
+	ofScale(scale_x, scale_y, 1.0);
+	ofTranslate(mtrx, mtry, 1.0);
+	
+	if (box) {
+		ofPushStyle();
+		ofSetColor(255, 255, 255);
+		ofNoFill();
+		ofRect(0, 0, camWidth, camHeight);
+		ofPopStyle();
+	}
+	
+	// in draw we iterate in the map
+	for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
+	{
+		sonosBlob curr_blob = i->second;
+		
+		// get some data
+		float cx = curr_blob.centroid.x;
+		float cy = curr_blob.centroid.y;
+		//float blobarea = curr_blob.area;
+		float blobheight = curr_blob.boundingRect.height;	
+		float blobwidth = curr_blob.boundingRect.width;	
+		float rectx = curr_blob.boundingRect.x;
+		float recty = curr_blob.boundingRect.y;
+		
+		//drawing only pixels form blobs, extracted from conturfinder
+		ofPushStyle();
+		ofSetHexColor(BlobColor);
+		ofBeginShape();
+		for( int j=0; j<curr_blob.nPts; j++ ) {
+			ofVertex( curr_blob.pts[j].x, curr_blob.pts[j].y );
+		}
+		ofEndShape();
+		ofPopStyle();
+		
+		if(interface){
+			ofPushStyle();
+			ofNoFill();
+			ofSetColor(255,0,0);
+			ofRect(rectx,recty,blobwidth,blobheight);
+			ofPopStyle();
+		}
+		
+		ofPushStyle();
+		if (i->first == 0) {
+			ofSetColor(255, 0, 0);
+		} else if (i->first == 1) {
+			ofSetColor(0, 255, 0);
+		} else if (i->first == 2) {
+			ofSetColor(0, 0, 255);
+		} else {
+			ofSetColor(100, 100, 150);
+		}
+		
+		if (circle) {
+			float raggio = (blobheight >= blobwidth ? blobheight : blobwidth) / 1.5;
+			ofCircle( cx, cy, raggio);
+		}
+		
+		if (rectangle) {
+			ofRect(rectx,0,blobwidth, 480);
+		}
+		ofPopStyle();
+	}
+	
+	ofPopMatrix();
 }
 
 //--------------------------------------------------------------
@@ -187,7 +261,7 @@ void sonosApp::drawInterface(float x, float y)
 	ofSetColor(255, 255, 255);
 	ofDrawBitmapString("INTERFACE (press: h to hide)", x, y);
 	char reportStr[1024];
-	char help[1024] = "fps: %f\nnum blobs found %i\nMaxBlobs: %i (< >)\nThreshold %i (+ -)\nSPACEBAR: learn background\nContourMinSize: %i (t y)\nf: fullscreen\nARROWS: translate (%i, %i)\n[a : z] scale (%.2f, %.2f)\nr : reset scale and translate\nTESTS: colors (1-n), circle (c), rectangle (r)";
+	char help[1024] = "fps: %f\nnum blobs found %i\n(< >) MaxBlobs: %i\n(+ -) Threshold %i\nSPACEBAR: learn background\n(t y) ContourMinSize: %i\nf: fullscreen\nARROWS: translate (%i, %i)\n[a : z] scale (%.2f, %.2f)\nr : reset scale and translate\nb: hide/show boxTESTS: colors (1-n), circle (c), rectangle (r)";
 	sprintf(reportStr, help , ofGetFrameRate(),contourFinder.nBlobs, blobMax, Threshold, contour_min, mtrx, mtry, scale_x, scale_y);
 	ofDrawBitmapString(reportStr, x, y + 20);
 }
@@ -245,9 +319,14 @@ void sonosApp::background(int color)
 		case 1:
 			ofBackground(100, 100, 100);
 			break;
-			
 		case 2:
 			ofBackground(0, 0, 0);
+			break;
+		case 3:
+			ofBackground(128,100,40);
+			break;
+		case 4:
+			ofBackground(40, 150, 130, 50);
 			break;
 		default:
 			break;
@@ -265,8 +344,17 @@ void sonosApp::keyPressed(int key)
 		case '2':
 			BckColor=2;
 			break;
+		case '3':
+			BckColor=3;
+			break;
+		case '4':
+			BckColor=4;
+			break;
 		case 'd':
 			debug = !debug;
+			break;
+		case 'b':
+			box = !box;
 			break;
 		case 'h':
 			interface = !interface;
