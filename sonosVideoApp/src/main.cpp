@@ -4,7 +4,7 @@
 
 //========================================================================
 int main( ){
-
+	
     ofAppGlutWindow window;
 	ofSetupOpenGL(&window, OUTPUT_WIDTH, OUTPUT_HEIGHT, OF_WINDOW);			// <-------- setup the GL context
 	
@@ -15,5 +15,5 @@ int main( ){
 	// can be OF_WINDOW or OF_FULLSCREEN
 	// pass in width and height too:
 	ofRunApp( new sonosApp());
-
+	
 }
