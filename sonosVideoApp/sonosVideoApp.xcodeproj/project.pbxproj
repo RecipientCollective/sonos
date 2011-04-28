@@ -1130,6 +1130,7 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					"../../../addons/msalibs/**",
 					"../../../libs/openFrameworks/**",
 					../../../libs/freetype/include/,
 					../../../libs/freetype/include/freetype2,

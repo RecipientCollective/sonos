@@ -11,7 +11,8 @@
 #define _SONOS_BLOB
 
 #include "ofxOpenCv.h"
-
+#include "MSAFluid.h"
+#include "MSATimer.h"
 
 class sonosBlob : public ofxCvBlob 
 {
