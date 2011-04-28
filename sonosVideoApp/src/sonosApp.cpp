@@ -82,6 +82,7 @@ void sonosApp::setup()
 	fluidDrawer.setup( &fluidSolver );
 	particleSystem.setFluidSolver( &fluidSolver );
 	
+	windowResized(ofGetWidth(), ofGetHeight());		// force this at start (cos I don't think it is called)
 }
 
 //--------------------------------------------------------------
@@ -99,6 +100,9 @@ void sonosApp::update()
 #endif
 	
 	if (bNewFrame){
+		
+		fluidSolver.update();
+		
 		// 1. SET IMAGE from current pixels, move to greyImg, if learn background do it
 #ifdef _USE_LIVE_VIDEO
 		colorImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
@@ -165,6 +169,22 @@ void sonosApp::draw()
 
 void sonosApp::sonosDraw()
 {
+	// testing fluids
+	const float colorMult = 100;
+	const float velocityMult = 30;
+	Vec2f pos;
+	Vec2f vel = Vec2f (0.0001,0.00001);
+	pos.x = constrain(pos.x, 0.0f, 1.0f);
+	pos.y = constrain(pos.y, 0.0f, 1.0f);
+	int index = fluidSolver.getIndexForPos(pos);
+	Color drawColor( CM_HSV, ( getElapsedFrames() % 360 ) / 360.0f, 1, 1 );
+	fluidSolver.addColorAtIndex(index, drawColor * colorMult);
+	
+	particleSystem.addParticles( pos * Vec2f( getWindowSize() ), 10 );
+	fluidSolver.addForceAtIndex(index, vel * velocityMult);
+
+	fluidDrawer.draw(0, 0, getWindowWidth(), getWindowHeight());
+	particleSystem.updateAndDraw( true );
 	// background
 	sonosApp::background(BckColor);
 	
@@ -448,7 +468,7 @@ void sonosApp::mouseReleased(int x, int y, int button)
 //--------------------------------------------------------------
 void sonosApp::windowResized(int w, int h)
 {
-	
+	particleSystem.setWindowSize( Vec2f( w, h ) );
 }
 
 //--------------------------------------------------------------
