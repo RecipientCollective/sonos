@@ -53,7 +53,9 @@ public:
 	void setAvatar();
 	void drawPixels();
 	void setBlobColor(int color);
-	
+	void drawRect();
+	void circle();
+	void rectangle();
 };
 
 #endif

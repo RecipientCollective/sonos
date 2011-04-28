@@ -184,35 +184,10 @@ void sonosApp::sonosDraw()
 		curr_blob.setBlobColor(BlobColor);
 		curr_blob.drawPixels();
 		
-		// get some data
-		float cx = curr_blob.centroid.x;
-		float cy = curr_blob.centroid.y;
-		//float blobarea = curr_blob.area;
-		float blobheight = curr_blob.boundingRect.height;	
-		float blobwidth = curr_blob.boundingRect.width;	
-		float rectx = curr_blob.boundingRect.x;
-		float recty = curr_blob.boundingRect.y;
-		
-		//drawing only pixels form blobs, extracted from conturfinder
-		//ofPushStyle();
-//		ofSetHexColor(BlobColor);
-//		ofBeginShape();
-//		for( int j=0; j<curr_blob.nPts; j++ ) {
-//			ofVertex( curr_blob.pts[j].x, curr_blob.pts[j].y );
-//		}
-//		ofEndShape();
-//		ofPopStyle();
-		
 		// IF interface: draw rectangle around 
-		if(interface){
-			ofPushStyle();
-			ofNoFill();
-			ofSetColor(255,0,0);
-			ofRect(rectx,recty,blobwidth,blobheight);
-			ofPopStyle();
-		}
+		if(interface) curr_blob.drawRect();
 		
-		
+		// set color by position (TEST)
 		ofPushStyle();
 		if (i->first == 0) {
 			ofSetColor(255, 0, 0);
@@ -224,14 +199,9 @@ void sonosApp::sonosDraw()
 			ofSetColor(100, 100, 150);
 		}
 		
-		if (circle) {
-			float raggio = (blobheight >= blobwidth ? blobheight : blobwidth) / 1.5;
-			ofCircle( cx, cy, raggio);
-		}
+		if (circle) curr_blob.circle();
+		if (rectangle) curr_blob.rectangle();
 		
-		if (rectangle) {
-			ofRect(rectx,0,blobwidth, 480);
-		}
 		ofPopStyle();
 	}
 	

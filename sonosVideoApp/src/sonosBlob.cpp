@@ -31,3 +31,23 @@ void sonosBlob::setBlobColor(int color)
 {
 	mycolor = color;
 }
+
+void sonosBlob::drawRect()
+{
+	ofPushStyle();
+	ofNoFill();
+	ofSetColor(255,0,0);
+	ofRect(boundingRect.x,boundingRect.y,boundingRect.width,boundingRect.height);
+	ofPopStyle();	
+}
+
+void sonosBlob::circle()
+{
+	float raggio = (boundingRect.height >= boundingRect.width ? boundingRect.height : boundingRect.width) / 1.5;
+	ofCircle( centroid.x, centroid.y, raggio);
+}
+
+void sonosBlob::rectangle()
+{
+	ofRect(boundingRect.x,0,boundingRect.width, 480);
+}
