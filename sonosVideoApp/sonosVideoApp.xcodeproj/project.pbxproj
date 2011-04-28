@@ -111,6 +111,7 @@
 		5568918C136978730050D22B /* ofxCvHaarFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55689120136978710050D22B /* ofxCvHaarFinder.cpp */; };
 		5568918D136978730050D22B /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55689122136978710050D22B /* ofxCvImage.cpp */; };
 		5568918E136978730050D22B /* ofxCvShortImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55689125136978710050D22B /* ofxCvShortImage.cpp */; };
+		5568939613698B790050D22B /* functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5568939513698B790050D22B /* functions.cpp */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
 		E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */; };
 		E45BE97D0E8CC7DD009D7055 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9730E8CC7DD009D7055 /* AudioToolbox.framework */; };
@@ -347,6 +348,8 @@
 		55689125136978710050D22B /* ofxCvShortImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCvShortImage.cpp; sourceTree = "<group>"; };
 		55689126136978710050D22B /* ofxCvShortImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCvShortImage.h; sourceTree = "<group>"; };
 		55689127136978710050D22B /* ofxOpenCv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOpenCv.h; sourceTree = "<group>"; };
+		5568937313698A040050D22B /* functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = functions.h; sourceTree = "<group>"; };
+		5568939513698B790050D22B /* functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = functions.cpp; sourceTree = "<group>"; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		E45BE9730E8CC7DD009D7055 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
@@ -962,6 +965,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* sonosApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* sonosApp.h */,
+				5568937313698A040050D22B /* functions.h */,
+				5568939513698B790050D22B /* functions.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1075,6 +1080,7 @@
 				5568918C136978730050D22B /* ofxCvHaarFinder.cpp in Sources */,
 				5568918D136978730050D22B /* ofxCvImage.cpp in Sources */,
 				5568918E136978730050D22B /* ofxCvShortImage.cpp in Sources */,
+				5568939613698B790050D22B /* functions.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

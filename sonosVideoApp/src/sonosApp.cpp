@@ -69,6 +69,58 @@ void sonosApp::setup(){
 
 //--------------------------------------------------------------
 void sonosApp::update(){
+	
+	// IS A NEW FRAME?
+	bool bNewFrame = false;
+#ifdef _USE_LIVE_VIDEO
+	vidGrabber.grabFrame();
+	bNewFrame = vidGrabber.isFrameNew();
+#else
+	vidPlayer.idleMovie();
+	bNewFrame = vidPlayer.isFrameNew();
+#endif
+	
+	if (bNewFrame){
+		// 1. SET IMAGE from current pixels, move to greyImg, if learn background do it
+#ifdef _USE_LIVE_VIDEO
+		colorImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
+#else
+		colorImg.setFromPixels(vidPlayer.getPixels(), camWidth,camHeight);
+#endif		
+		grayImage = colorImg;
+		if (bLearnBakground == true){
+			grayBg = grayImage;		// the = sign copys the pixels from grayImage into grayBg (operator overloading)
+			bLearnBakground = false;
+		}
+		
+		// take the abs value of the difference between background and incoming and then threshold:
+		grayDiff.absDiff(grayBg, grayImage);
+		grayDiff.threshold(Threshold);
+
+		//flag updated the cv image
+		grayImage.flagImageChanged();
+		grayDiff.flagImageChanged();
+		
+		/* COUNTOUR FINDER FUNCTION
+		 
+		ofxCvContourFinder::findContours( 
+		 ofxCvGrayscaleImage&  input,
+		 int minArea,
+		 int maxArea,
+		 int nConsidered,
+		 bool bFindHoles,
+		 bool bUseApproximation
+		)
+		 
+		find contours which are between the size of 20 pixels and 1/3 the w*h pixels.
+		also, find holes is set to true so we will get interior contours as well...  */
+		contourFinder.findContours(grayDiff, contour_min, (camWidth*camHeight)/3, blobMax, false, true);
+			
+		// sort by centrid
+		std::sort(contourFinder.blobs.begin(),contourFinder.blobs.end(), sortByCentroid);
+		
+	}
+	
 }
 
 //--------------------------------------------------------------
@@ -125,10 +177,4 @@ void sonosApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void sonosApp::dragEvent(ofDragInfo dragInfo){ 
 	
-}
-
-//--------------------------------------------------------------
-bool sonosApp::sortByCentroid(const ofxCvBlob& d1, const ofxCvBlob& d2)
-{
-	return d1.centroid.x < d2.centroid.x;
 }

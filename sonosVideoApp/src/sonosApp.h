@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxOpenCv.h"
+#include "functions.h"
 
 //#define _USE_LIVE_VIDEO
 
@@ -30,14 +31,10 @@ public:
 	ofxCvGrayscaleImage 	grayBg;
 	ofxCvGrayscaleImage 	grayDiff;
 	ofxCvContourFinder		contourFinder;
-	
-	// openFrameworks stuffs
-	
-	
+		
 	// Our methods
 	void drawPointCloud();
 	void background(int color);
-	bool sortByCentroid(const ofxCvBlob& d1, const ofxCvBlob& d2);
 	
 	// Our vars
 	std::string filename;
