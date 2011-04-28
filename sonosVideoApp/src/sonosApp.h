@@ -41,8 +41,25 @@ public:
 	
 	// Our vars
 	std::string filename;
-	int 				camWidth;
-	int 				camHeight;
+	int 		camWidth;
+	int 		camHeight;
+	int 		Threshold;
+	bool		bThreshWithOpenCV;
+	bool		bFullscreen;
+	bool        bLearnBakground;
+	int			blobMax;
+	int			BlobColor;
+	int			BckColor;
+	int			colorz;
+	int         contour_min;
+	float       scale_x;
+	float       scale_y;
+	float		mtrx;
+	float		mtry;
+	bool        interface;
+	bool        circle;
+	bool        debug;
+	bool        rectangle;
 	
 	// Events
 	void keyPressed  (int key);

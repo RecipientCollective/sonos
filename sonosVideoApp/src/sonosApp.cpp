@@ -2,7 +2,6 @@
 
 //--------------------------------------------------------------
 void sonosApp::setup(){
-	filename = "videos/retro-ir.mov";
 	
 #ifdef _USE_LIVE_VIDEO
 	camWidth = 640;
@@ -10,6 +9,9 @@ void sonosApp::setup(){
 	vidGrabber.setVerbose(true);
 	vidGrabber.initGrabber(camWidth, camHeight, false);
 #else
+	// FILENAME
+	filename = "videos/retro-ir.mov";
+	
 	//check if file exists
 	bool bFileThere = false;
 	fstream fin;
@@ -29,8 +31,40 @@ void sonosApp::setup(){
 		cerr << "File " << fileNameInOF << " is not here!" << endl;
 		sonosApp:exit();
 	}
-	
 #endif
+	
+	// ALLOCATE IMAGES SIZES
+	colorImg.allocate(camWidth, camHeight);
+	grayImage.allocate(camWidth, camHeight);
+	grayBg.allocate(camWidth,camHeight);
+	grayDiff.allocate(camWidth,camHeight);
+	
+	// SETUP DEFAULT PARAMETERS
+	bLearnBakground = true;
+	Threshold = 50;
+	bThreshWithOpenCV = true;      //treshold with opencv or not
+	ofSetCircleResolution(40); 	   //set resolution of circle
+	ofEnableSmoothing();	
+	ofSetFrameRate(60);
+	
+	//for smooth animation, set vertical sync if we can
+	//ofSetVerticalSync(true);
+	
+	//colors setup
+	BckColor=1;
+	BlobColor=0xDD00CC;
+	colorz=1;
+	blobMax=2;
+	contour_min = 350;
+	scale_x = 1.0;
+	scale_y = 1.0;
+	mtrx = 1.0;
+	mtry = 1.0;
+	interface = true;
+	circle = true;
+	debug = false;
+	rectangle = false;
+	
 }
 
 //--------------------------------------------------------------
