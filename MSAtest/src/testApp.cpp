@@ -1,5 +1,7 @@
 #include "testApp.h"
 #include "MSAPhysics3D.h"
+#include "GLUT/glut.h"
+
 using namespace MSA;
 
 #define	SPRING_MIN_STRENGTH		0.005
