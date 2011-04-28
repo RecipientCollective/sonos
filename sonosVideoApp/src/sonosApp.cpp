@@ -1,59 +1,59 @@
-#include "testApp.h"
+#include "sonosApp.h"
 
 //--------------------------------------------------------------
-void testApp::setup(){
+void sonosApp::setup(){
 }
 
 //--------------------------------------------------------------
-void testApp::update(){
+void sonosApp::update(){
 }
 
 //--------------------------------------------------------------
-void testApp::draw(){
-
-}
-
-//--------------------------------------------------------------
-void testApp::keyPressed(int key){
+void sonosApp::draw(){
 
 }
 
 //--------------------------------------------------------------
-void testApp::keyReleased(int key){
+void sonosApp::keyPressed(int key){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseMoved(int x, int y ){
+void sonosApp::keyReleased(int key){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseDragged(int x, int y, int button){
+void sonosApp::mouseMoved(int x, int y ){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mousePressed(int x, int y, int button){
+void sonosApp::mouseDragged(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
-void testApp::mouseReleased(int x, int y, int button){
+void sonosApp::mousePressed(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
-void testApp::windowResized(int w, int h){
+void sonosApp::mouseReleased(int x, int y, int button){
 
 }
 
 //--------------------------------------------------------------
-void testApp::gotMessage(ofMessage msg){
+void sonosApp::windowResized(int w, int h){
 
 }
 
 //--------------------------------------------------------------
-void testApp::dragEvent(ofDragInfo dragInfo){ 
+void sonosApp::gotMessage(ofMessage msg){
+
+}
+
+//--------------------------------------------------------------
+void sonosApp::dragEvent(ofDragInfo dragInfo){ 
 
 }
