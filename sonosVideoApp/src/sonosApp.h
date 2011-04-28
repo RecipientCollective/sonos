@@ -7,8 +7,8 @@
 
 //#define _USE_LIVE_VIDEO
 
-#define OUTPUT_HEIGHT 768
-#define OUTPUT_WIDTH 1024
+#define OUTPUT_HEIGHT 768.0
+#define OUTPUT_WIDTH 1024.0
 
 class sonosApp : public ofBaseApp{
 	
@@ -49,7 +49,6 @@ public:
 	int			blobMax;
 	int			BlobColor;
 	int			BckColor;
-	int			colorz;
 	int         contour_min;
 	float       scale_x;
 	float       scale_y;

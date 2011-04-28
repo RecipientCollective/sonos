@@ -62,7 +62,6 @@ void sonosApp::setup(){
 	//colors setup
 	BckColor=1;
 	BlobColor=0xDD00CC;
-	colorz=1;
 	
 	blobMax=2;
 	contour_min = 350;
@@ -71,8 +70,8 @@ void sonosApp::setup(){
 	mtrx = 1.0;
 	mtry = 1.0;
 	interface = true;
-	circle = true;
-	debug = true;
+	circle = false;
+	debug = false;
 	rectangle = false;
 	
 }
@@ -163,13 +162,30 @@ void sonosApp::exit(){
 
 //--------------------------------------------------------------
 void sonosApp::debugDraw(){
+
+	float sx = camWidth / OUTPUT_WIDTH;
+	
+//#ifdef DEBUG
+//	std::cerr << "Scale factor = " << sx << " CamWidth =" << camWidth << std::endl;
+//#endif
+	
 	ofPushMatrix();
-	ofScale(0.5, 0.5, 1.0);
+	ofScale(sx, sx, 1.0);
 	ofBackground(0, 0, 0);
 	colorImg.draw(20,20);
 	grayImage.draw((camWidth+20),20);
 	grayBg.draw(20,(camHeight+20));
 	grayDiff.draw((camWidth+20),(camHeight+20));
+	
+	// then draw the contours:
+	ofFill();
+	ofSetHexColor(0x333333);
+	ofRect((camWidth+20),(camHeight+20),camWidth,camHeight);
+	ofSetHexColor(0xffffff);
+	
+	// draw the whole contour finder
+	contourFinder.draw((camWidth+20),(camHeight+20));
+	
 	ofPopMatrix();
 }
 
@@ -191,6 +207,22 @@ void sonosApp::background(int color){
 
 //--------------------------------------------------------------
 void sonosApp::keyPressed(int key){
+	switch (key) {
+		case '1':
+			BckColor = 1;
+			break;
+		case '2':
+			BckColor = 2;
+			break;
+#ifdef _USE_LIVE_VIDEO
+		case ',':
+
+			vidGrabber.videoSettings();
+			break;
+#endif			
+		default:
+			break;
+	}
 	
 }
 
