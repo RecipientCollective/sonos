@@ -4,6 +4,9 @@
 #include "ofMain.h"
 
 #include "ofxOpenCv.h"
+#include "sonosBlob.h"
+#include "ofxDirList.h"
+#include <fstream>
 
 
 //#define _USE_LIVE_VIDEO	
@@ -13,36 +16,46 @@
 
 class testApp : public ofBaseApp
 {
-
-	public:
-
-		void setup();
-		void update();
-		void draw();
-		void exit();
 	
-		void drawPointCloud();
+public:
+	
+	void setup();
+	void update();
+	void draw();
+	void exit();
+	
+	void drawPointCloud();
+	
+	void background(int color);
+	
+	void keyPressed  (int key);
+	void mouseMoved(int x, int y );
+	void mouseDragged(int x, int y, int button);
+	void mousePressed(int x, int y, int button);
+	void mouseReleased(int x, int y, int button);
+	void windowResized(int w, int h);
+	
+	ofxCvColorImage		colorImg;
+	ofxCvGrayscaleImage 	grayImage;
+	ofxCvGrayscaleImage 	grayBg;
+	ofxCvGrayscaleImage 	grayDiff;
+	
+	ofxCvContourFinder 	contourFinder;
+	
 
-		void keyPressed  (int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void windowResized(int w, int h);
-
-		ofxCvColorImage		colorImg;
-		ofxCvGrayscaleImage 	grayImage;
-		ofxCvGrayscaleImage 	grayBg;
-		ofxCvGrayscaleImage 	grayDiff;
-
-		ofxCvContourFinder 	contourFinder;
-		
-		bool				bThreshWithOpenCV;
-		bool				bFullscreen;
-
-		int					colorz;
-		int					blobMax;
-
+	ofxDirList   DIR;
+	int 		nVideos;
+	int         currentVideo;
+	
+	bool				bThreshWithOpenCV;
+	bool				bFullscreen;
+	
+	int					BlobColor;
+	int					BckColor;
+	int					colorz;
+	int					blobMax;
+	
+	
 #ifdef _USE_LIVE_VIDEO
 	ofVideoGrabber 		vidGrabber;
 #else
@@ -53,7 +66,6 @@ class testApp : public ofBaseApp
 	int 				camWidth;
 	int 				camHeight;
 	int 				Threshold;
-	
 	float scale_x;
 	float scale_y;
 	float mtrx;
@@ -65,6 +77,11 @@ class testApp : public ofBaseApp
 	bool videosurce;
 	bool bLearnBakground;
 	int contour_min;
-		};
+	std::string filename;
+	
+	// testing sonoBLobs as map
+	map<int ,sonosBlob>  sonosblobs;
+	
+};
 
 #endif
