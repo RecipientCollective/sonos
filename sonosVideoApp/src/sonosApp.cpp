@@ -1,12 +1,18 @@
 #include "ofxPUI.h"
 #include "sonosApp.h"
 
+void button_cb ( puObject * ) {
+	fprintf ( stderr, "Hello World.\n" ) ;
+}
+
 //--------------------------------------------------------------
 void sonosApp::setup()
 {
 	// PUI setup
 	ofxpuInit () ;
 	ofxpuSetDefaultStyle(PUSTYLE_BOXED);
+	ofxpuButton *button1 = new ofxpuButton(10.0, 400.0, "Button 1");
+	button1->setCallback(button_cb);
 	
 #ifdef _USE_LIVE_VIDEO
 	camWidth = 640;
@@ -170,6 +176,21 @@ void sonosApp::draw()
 	if (interface) {
 		drawInterface(20, 20);
 	}
+
+	ofPushStyle();
+	ofPushMatrix();
+	// test draw PUI interface
+	EXACT_PIXEL_BEGIN
+	
+	ofNoFill();
+	ofSetHexColor(0xff0000);
+	
+	EXACT_PIXEL_END
+	
+
+	ofxpuDisplay ();
+	ofPopMatrix();
+	ofPopStyle();
 }
 
 void sonosApp::sonosDraw()
@@ -433,25 +454,25 @@ void sonosApp::keyReleased(int key)
 //--------------------------------------------------------------
 void sonosApp::mouseMoved(int x, int y )
 {
-	
+	ofxpuMouse ( x, y );
 }
 
 //--------------------------------------------------------------
 void sonosApp::mouseDragged(int x, int y, int button)
 {
-	
+	ofxpuMouse ( x, y );
 }
 
 //--------------------------------------------------------------
 void sonosApp::mousePressed(int x, int y, int button)
 {
-	
+	ofxpuMouse ( button, GLUT_DOWN, x, y );
 }
 
 //--------------------------------------------------------------
 void sonosApp::mouseReleased(int x, int y, int button)
 {
-	
+	ofxpuMouse ( button, GLUT_UP, x, y );		
 }
 
 //--------------------------------------------------------------
@@ -463,7 +484,7 @@ void sonosApp::windowResized(int w, int h)
 //--------------------------------------------------------------
 void sonosApp::gotMessage(ofMessage msg)
 {
-	
+
 }
 
 //--------------------------------------------------------------
