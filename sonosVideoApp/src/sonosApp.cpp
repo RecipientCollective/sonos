@@ -107,132 +107,6 @@ char *button_box_entries [] = { "0", "1", "2","3", NULL } ;
 
 
 //--------------------------------------------------------------
-//  DRAW INTERFACE METHDOS
-//--------------------------------------------------------------
-
-//--------------------------------------------------------------
-void sonosApp::setupInterface()
-{
-	// helper vars for PUI interface
-	int align_top = OUTPUT_HEIGHT - 200;
-	int align_left= 20;
-	int spacer_bt = 30;
-	int slider_correction = 20;
-	int column_spacer = 100;
-	int slider_box = column_spacer * 3; // COLUMN 4
-	int slider_spacer = 90;
-	
-	// PUI setup
-	ofxpuInit () ;
-	ofxpuSetDefaultStyle(PUSTYLE_BOXED);
-	
-	// COLUMN 1
-	ofxpuButton *fullScreenBt= new ofxpuButton(align_left, align_top, "FullScreen");
-	fullScreenBt->setCallback(toggleFullScreen);
-	
-	ofxpuButton *backGroundBt= new ofxpuButton(align_left, align_top + spacer_bt, "Background");
-	backGroundBt->setCallback(learnBackground);
-
-	ofxpuButton *resetBt= new ofxpuButton(align_left, align_top + spacer_bt*2, "ResetVideo");
-	resetBt->setCallback(resetAction);
-	
-	ofxpuButton *debugBt= new ofxpuButton(align_left, align_top + spacer_bt*3, "DebugVideo");
-	debugBt->setCallback(toggleDebug);
-
-	// COLUMN 2
-	ofxpuButton *circleBt= new ofxpuButton(align_left + column_spacer, align_top, "Circle");
-	circleBt->setCallback(toggleCircle);
-	
-	ofxpuButton *lineBt= new ofxpuButton(align_left + column_spacer, align_top + spacer_bt, " Line ");
-	lineBt->setCallback(toggleLine);
-	
-	ofxpuButton *avatarBt= new ofxpuButton(align_left + column_spacer, align_top + spacer_bt*2, "Avatar");
-	avatarBt->setCallback(toggleAvatar);
-	
-	
-	// COLUMN 3
-	ofxpuaSpinBox * spinBlobs = new ofxpuaSpinBox (align_left + column_spacer * 2, align_top, 60, 30);
-	spinBlobs->setLabel("maxBlobs");
-	spinBlobs->setLabelPlace(OFXPUPLACE_BOTTOM_CENTERED);
-	spinBlobs->setMaxValue ( 20 ) ;
-	spinBlobs->setValue ( blobMax ) ;
-	spinBlobs->setMinValue( 0 );
-	spinBlobs->setCallback(setMaxBlobs);
-	
-	ofxpuButtonBox * backGroundBox = new ofxpuButtonBox ( align_left + column_spacer * 2, align_top + spacer_bt + 10, 60.0, 100.0, button_box_entries, TRUE ) ;
-	backGroundBox->setLabel("BackGround");
-	backGroundBox->setLabelPlace(PUPLACE_BOTTOM_CENTER);
-	backGroundBox->setCallback(setBackground);
-	
-	// SLIDERS
-	ofxpuaSliderWithInput * sliderThreshold= new ofxpuaSliderWithInput ( slider_box, align_top - slider_correction, 70, 150, FALSE ) ;
-	sliderThreshold->setLabelPlace(PUPLACE_BOTTOM_CENTERED) ;
-	sliderThreshold->setLabel ( "Threshold" ) ;
-	sliderThreshold->setMaxValue ( 255 ) ;
-	sliderThreshold->setValue ( Threshold ) ;
-	sliderThreshold->setMinValue( 0 );
-	sliderThreshold->setCallback(setThreshold);
-	
-	ofxpuaSliderWithInput * sliderContour= new ofxpuaSliderWithInput (slider_box + slider_spacer, align_top - slider_correction, 70, 150, FALSE ) ;
-	sliderContour->setLabelPlace(PUPLACE_BOTTOM_CENTERED) ;
-	sliderContour->setLabel ( "ContourMin" ) ;
-	sliderContour->setMaxValue ( 10000 ) ;
-	sliderContour->setValue ( contour_min ) ;
-	sliderContour->setMinValue( 0 );
-	sliderContour->setCallback(setContour);
-	
-	ofxpuaSliderWithInput *sliderTrx = new ofxpuaSliderWithInput(slider_box + slider_spacer*2, align_top - slider_correction, 70, 150, FALSE);
-	sliderTrx->setLabelPlace(PUPLACE_BOTTOM_CENTERED);
-	sliderTrx->setLabel ( "Translate X" );
-	sliderTrx->setMinValue(-1000);
-	sliderTrx->setMaxValue(+1000);
-	sliderTrx->setValue(mtrx);
-	sliderTrx->setCallback(setTrx);
-	
-	ofxpuaSliderWithInput *sliderTry = new ofxpuaSliderWithInput(slider_box + slider_spacer*3, align_top - slider_correction, 70, 150, FALSE);
-	sliderTry->setLabelPlace(PUPLACE_BOTTOM_CENTERED);
-	sliderTry->setLabel ( "Translate Y" );
-	sliderTry->setMinValue(-1000);
-	sliderTry->setMaxValue(+1000);
-	sliderTry->setValue(mtry);
-	sliderTry->setCallback(setTry);
-	
-	ofxpuaSliderWithInput *sliderScaleX = new ofxpuaSliderWithInput(slider_box + slider_spacer*4, align_top - slider_correction, 70, 150, FALSE);
-	sliderScaleX->setLabelPlace(PUPLACE_BOTTOM_CENTERED);
-	sliderScaleX->setLabel ( "Scale XY" );
-	sliderScaleX->setMinValue(0.0);
-	sliderScaleX->setMaxValue(5.0);
-	sliderScaleX->setValue(scale_x);
-	sliderScaleX->setCallback(setScale);
-	
-}
-
-//--------------------------------------------------------------
-void sonosApp::drawInterface(float x, float y)
-{
-	ofSetColor(255, 255, 255);
-	ofDrawBitmapString("INTERFACE (press: h to hide/show)", x, y);
-	char reportStr[1024];
-	char help[1024] = "fps: %f\nnum blobs found %i, MaxBlobs: %i\nThreshold %i\nContourMinSize: %i\ntranslate (%i, %i)\nscale (%.2f, %.2f)\nCamWidth: %i, CamHeight: %i";
-	sprintf(reportStr, help , ofGetFrameRate(),contourFinder.nBlobs, blobMax, Threshold, contour_min, mtrx, mtry, scale_x, scale_y, camWidth, camHeight);
-	ofDrawBitmapString(reportStr, x, y + 25);
-	
-	ofPushStyle();
-	ofPushMatrix();
-
-	EXACT_PIXEL_BEGIN
-	
-	ofNoFill();
-	ofSetHexColor(0xff0000);
-	
-	EXACT_PIXEL_END	
-	
-	ofxpuDisplay ();
-	ofPopMatrix();
-	ofPopStyle();
-}
-
-//--------------------------------------------------------------
 // OpenFramework METHODS
 //--------------------------------------------------------------
 
@@ -422,9 +296,15 @@ void sonosApp::dragEvent(ofDragInfo dragInfo)
 
 
 //--------------------------------------------------------------
-//   INTERNAL METHODS of sonosApp
 //
+//   ****************************
+//   INTERNAL METHODS of sonosApp
+//   ****************************
 //   
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+//  SETUP and LOAD
 //--------------------------------------------------------------
 
 //--------------------------------------------------------------
@@ -506,6 +386,137 @@ void sonosApp::setDefaults()
 	bBox = true;
 	bAvatar = false;
 }
+
+
+//--------------------------------------------------------------
+//  SETUP/DRAW INTERFACE 
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+void sonosApp::setupInterface()
+{
+	// helper vars for PUI interface
+	int align_top = OUTPUT_HEIGHT - 200;
+	int align_left= 20;
+	int spacer_bt = 30;
+	int slider_correction = 20;
+	int column_spacer = 100;
+	int slider_box = column_spacer * 3; // COLUMN 4
+	int slider_spacer = 90;
+	
+	// PUI setup
+	ofxpuInit () ;
+	ofxpuSetDefaultStyle(PUSTYLE_BOXED);
+	
+	// COLUMN 1
+	ofxpuButton *fullScreenBt= new ofxpuButton(align_left, align_top, "FullScreen");
+	fullScreenBt->setCallback(toggleFullScreen);
+	
+	ofxpuButton *backGroundBt= new ofxpuButton(align_left, align_top + spacer_bt, "Background");
+	backGroundBt->setCallback(learnBackground);
+	
+	ofxpuButton *resetBt= new ofxpuButton(align_left, align_top + spacer_bt*2, "ResetVideo");
+	resetBt->setCallback(resetAction);
+	
+	ofxpuButton *debugBt= new ofxpuButton(align_left, align_top + spacer_bt*3, "DebugVideo");
+	debugBt->setCallback(toggleDebug);
+	
+	// COLUMN 2
+	ofxpuButton *circleBt= new ofxpuButton(align_left + column_spacer, align_top, "Circle");
+	circleBt->setCallback(toggleCircle);
+	
+	ofxpuButton *lineBt= new ofxpuButton(align_left + column_spacer, align_top + spacer_bt, " Line ");
+	lineBt->setCallback(toggleLine);
+	
+	ofxpuButton *avatarBt= new ofxpuButton(align_left + column_spacer, align_top + spacer_bt*2, "Avatar");
+	avatarBt->setCallback(toggleAvatar);
+	
+	
+	// COLUMN 3
+	ofxpuaSpinBox * spinBlobs = new ofxpuaSpinBox (align_left + column_spacer * 2, align_top, 60, 30);
+	spinBlobs->setLabel("maxBlobs");
+	spinBlobs->setLabelPlace(OFXPUPLACE_BOTTOM_CENTERED);
+	spinBlobs->setMaxValue ( 20 ) ;
+	spinBlobs->setValue ( blobMax ) ;
+	spinBlobs->setMinValue( 0 );
+	spinBlobs->setCallback(setMaxBlobs);
+	
+	ofxpuButtonBox * backGroundBox = new ofxpuButtonBox ( align_left + column_spacer * 2, align_top + spacer_bt + 10, 60.0, 100.0, button_box_entries, TRUE ) ;
+	backGroundBox->setLabel("BackGround");
+	backGroundBox->setLabelPlace(PUPLACE_BOTTOM_CENTER);
+	backGroundBox->setCallback(setBackground);
+	
+	// SLIDERS
+	ofxpuaSliderWithInput * sliderThreshold= new ofxpuaSliderWithInput ( slider_box, align_top - slider_correction, 70, 150, FALSE ) ;
+	sliderThreshold->setLabelPlace(PUPLACE_BOTTOM_CENTERED) ;
+	sliderThreshold->setLabel ( "Threshold" ) ;
+	sliderThreshold->setMaxValue ( 255 ) ;
+	sliderThreshold->setValue ( Threshold ) ;
+	sliderThreshold->setMinValue( 0 );
+	sliderThreshold->setCallback(setThreshold);
+	
+	ofxpuaSliderWithInput * sliderContour= new ofxpuaSliderWithInput (slider_box + slider_spacer, align_top - slider_correction, 70, 150, FALSE ) ;
+	sliderContour->setLabelPlace(PUPLACE_BOTTOM_CENTERED) ;
+	sliderContour->setLabel ( "ContourMin" ) ;
+	sliderContour->setMaxValue ( 10000 ) ;
+	sliderContour->setValue ( contour_min ) ;
+	sliderContour->setMinValue( 0 );
+	sliderContour->setCallback(setContour);
+	
+	ofxpuaSliderWithInput *sliderTrx = new ofxpuaSliderWithInput(slider_box + slider_spacer*2, align_top - slider_correction, 70, 150, FALSE);
+	sliderTrx->setLabelPlace(PUPLACE_BOTTOM_CENTERED);
+	sliderTrx->setLabel ( "Translate X" );
+	sliderTrx->setMinValue(-1000);
+	sliderTrx->setMaxValue(+1000);
+	sliderTrx->setValue(mtrx);
+	sliderTrx->setCallback(setTrx);
+	
+	ofxpuaSliderWithInput *sliderTry = new ofxpuaSliderWithInput(slider_box + slider_spacer*3, align_top - slider_correction, 70, 150, FALSE);
+	sliderTry->setLabelPlace(PUPLACE_BOTTOM_CENTERED);
+	sliderTry->setLabel ( "Translate Y" );
+	sliderTry->setMinValue(-1000);
+	sliderTry->setMaxValue(+1000);
+	sliderTry->setValue(mtry);
+	sliderTry->setCallback(setTry);
+	
+	ofxpuaSliderWithInput *sliderScaleX = new ofxpuaSliderWithInput(slider_box + slider_spacer*4, align_top - slider_correction, 70, 150, FALSE);
+	sliderScaleX->setLabelPlace(PUPLACE_BOTTOM_CENTERED);
+	sliderScaleX->setLabel ( "Scale XY" );
+	sliderScaleX->setMinValue(0.0);
+	sliderScaleX->setMaxValue(5.0);
+	sliderScaleX->setValue(scale_x);
+	sliderScaleX->setCallback(setScale);
+	
+}
+
+//--------------------------------------------------------------
+void sonosApp::drawInterface(float x, float y)
+{
+	ofSetColor(255, 255, 255);
+	ofDrawBitmapString("INTERFACE (press: h to hide/show)", x, y);
+	char reportStr[1024];
+	char help[1024] = "fps: %f\nnum blobs found %i, MaxBlobs: %i\nThreshold %i\nContourMinSize: %i\ntranslate (%i, %i)\nscale (%.2f, %.2f)\nCamWidth: %i, CamHeight: %i";
+	sprintf(reportStr, help , ofGetFrameRate(),contourFinder.nBlobs, blobMax, Threshold, contour_min, mtrx, mtry, scale_x, scale_y, camWidth, camHeight);
+	ofDrawBitmapString(reportStr, x, y + 25);
+	
+	ofPushStyle();
+	ofPushMatrix();
+	
+	EXACT_PIXEL_BEGIN
+	
+	ofNoFill();
+	ofSetHexColor(0xff0000);
+	
+	EXACT_PIXEL_END	
+	
+	ofxpuDisplay ();
+	ofPopMatrix();
+	ofPopStyle();
+}
+
+//--------------------------------------------------------------
+//  SONOS UPDATE/DRAW
+//--------------------------------------------------------------
 
 //--------------------------------------------------------------
 void sonosApp::sonosUpdate()
@@ -611,15 +622,8 @@ void sonosApp::sonosDraw()
 }
 
 //--------------------------------------------------------------
-void sonosApp::setFullScreen(bool full)
-{
-	if (full) {
-		ofSetFullscreen(true);
-	} else {
-		ofSetWindowShape(OUTPUT_WIDTH,OUTPUT_HEIGHT);
-		ofSetFullscreen(false);
-	}
-}
+//  DEBUG DRAW and HELPERS
+//--------------------------------------------------------------
 
 //--------------------------------------------------------------
 void sonosApp::debugDraw()
@@ -648,6 +652,17 @@ void sonosApp::debugDraw()
 	contourFinder.draw(spacerx, spacery);
 	
 	ofPopMatrix();	
+}
+
+//--------------------------------------------------------------
+void sonosApp::setFullScreen(bool full)
+{
+	if (full) {
+		ofSetFullscreen(true);
+	} else {
+		ofSetWindowShape(OUTPUT_WIDTH,OUTPUT_HEIGHT);
+		ofSetFullscreen(false);
+	}
 }
 
 //--------------------------------------------------------------
