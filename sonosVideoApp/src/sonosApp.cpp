@@ -175,7 +175,7 @@ void sonosApp::draw()
 	
 	if (interface) {
 		drawInterface(20, 20);
-	}
+	
 
 	ofPushStyle();
 	ofPushMatrix();
@@ -191,6 +191,7 @@ void sonosApp::draw()
 	ofxpuDisplay ();
 	ofPopMatrix();
 	ofPopStyle();
+	}
 }
 
 void sonosApp::sonosDraw()
