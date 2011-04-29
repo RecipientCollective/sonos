@@ -67,6 +67,7 @@ private:
 	void sonosDraw();
 	void inputSetup();
 	void setDefaults();
+	void sonosUpdate();
 
 private:
 	// Our vars
