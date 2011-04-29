@@ -12,7 +12,7 @@
 #include "ofMain.h"
 
 
-#define DEBUG
+//#define DEBUG
 #ifndef DEBUG
 #define DPRINT(...)
 #else
