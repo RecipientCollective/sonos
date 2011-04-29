@@ -14,6 +14,8 @@ void sonosApp::setup()
 	ofxpuButton *button1 = new ofxpuButton(10.0, 400.0, "Button 1");
 	button1->setCallback(button_cb);
 	
+	inputSetup();
+	
 #ifdef _USE_LIVE_VIDEO
 	camWidth = 640;
 	camHeight = 480;
@@ -194,6 +196,26 @@ void sonosApp::draw()
 	}
 }
 
+//--------------------------------------------------------------
+void sonosApp::exit()
+{
+	//magari c'è da chiudere la cam o i video da verificare;
+	OF_EXIT_APP(0);
+}
+
+
+//--------------------------------------------------------------
+//   INTERNAL METHODS
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+void sonosApp::inputSetup()
+{
+	
+}
+
+
+//--------------------------------------------------------------
 void sonosApp::sonosDraw()
 {	
 	// background
@@ -259,13 +281,8 @@ void sonosApp::setFullScreen(bool full)
 	}
 }
 
-//--------------------------------------------------------------
-void sonosApp::exit()
-{
-	//magari c'è da chiudere la cam o i video da verificare;
-	OF_EXIT_APP(0);
-}
 
+//--------------------------------------------------------------
 void sonosApp::drawInterface(float x, float y)
 {
 	ofSetColor(255, 255, 255);
