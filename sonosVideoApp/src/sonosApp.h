@@ -84,12 +84,9 @@ private:
 	std::string filename;
 	int 		camWidth;
 	int 		camHeight;
-	int 		Threshold;
 	bool		bFullscreen;
-	int			blobMax;
 	int			BlobColor;
 	int			BckColor;
-	int         contour_min;
 	int			mtrx;
 	int			mtry;
 	float       scale_x;

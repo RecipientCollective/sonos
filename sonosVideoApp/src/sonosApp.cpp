@@ -14,13 +14,34 @@
 //  PUI objects and global toggle vars
 //--------------------------------------------------------------
 bool bLearnBackground;
+int	 blobMax;
+int  Threshold;
+int  contour_min;
 
 void learnBackground ( puObject * ob ) 
 {
 	bLearnBackground = true;
 }
 
+void setMaxBlobs ( puObject * ob ) 
+{
+	blobMax = ob->getValue();
+}
 
+void setThreshold ( puObject * ob ) 
+{
+	Threshold = ob->getValue();
+}
+
+void setContour ( puObject * ob ) 
+{
+	contour_min = ob->getValue();
+}
+
+void toggleFullScreen ()
+{
+	
+}
 //--------------------------------------------------------------
 //  DRAW INTERFACE METHDOS
 //--------------------------------------------------------------
@@ -36,8 +57,36 @@ void sonosApp::setupInterface()
 	ofxpuInit () ;
 	ofxpuSetDefaultStyle(PUSTYLE_BOXED);
 	
-	ofxpuButton *backGroundBt= new ofxpuButton(align_left, align_top, "Background");
+	ofxpuButton *backGroundBt= new ofxpuButton(align_left, align_top, "FullScreen");
 	backGroundBt->setCallback(learnBackground);
+	
+	ofxpuButton *fullScreenBt= new ofxpuButton(align_left, align_top + 30, "Background");
+	backGroundBt->setCallback(learnBackground);
+	
+	ofxpuaSpinBox * spinBlobs = new ofxpuaSpinBox (align_left + 100, align_top, 60, 30);
+	spinBlobs->setLabel("maxBlobs");
+	spinBlobs->setLabelPlace(OFXPUPLACE_BOTTOM_CENTERED);
+	spinBlobs->setMaxValue ( 20 ) ;
+	spinBlobs->setValue ( blobMax ) ;
+	spinBlobs->setMinValue( 0 );
+	spinBlobs->setCallback(setMaxBlobs);
+	
+	ofxpuaSliderWithInput * sliderThreshold= new ofxpuaSliderWithInput ( align_left + 200, align_top - 50, 50, 100, FALSE ) ;
+	sliderThreshold->setLabelPlace(PUPLACE_BOTTOM_CENTERED) ;
+	sliderThreshold->setLabel ( "Threshold" ) ;
+	sliderThreshold->setMaxValue ( 255 ) ;
+	sliderThreshold->setValue ( Threshold ) ;
+	sliderThreshold->setMinValue( 0 );
+	sliderThreshold->setCallback(setThreshold);
+	
+	ofxpuaSliderWithInput * sliderContour= new ofxpuaSliderWithInput ( align_left + 300, align_top - 50, 70, 100, FALSE ) ;
+	sliderContour->setLabelPlace(PUPLACE_BOTTOM_CENTERED) ;
+	sliderContour->setLabel ( "ContourMin" ) ;
+	sliderContour->setMaxValue ( 10000 ) ;
+	sliderContour->setValue ( contour_min ) ;
+	sliderContour->setMinValue( 0 );
+	sliderContour->setCallback(setContour);
+	
 }
 
 //--------------------------------------------------------------
@@ -47,9 +96,9 @@ void sonosApp::drawInterface(float x, float y)
 	ofDrawBitmapString("INTERFACE (press: h to hide/show)", x, y);
 	char reportStr[1024];
 //	char help[1024] = "fps: %f\nnum blobs found %i\n(< >) MaxBlobs: %i\n(+ -) Threshold %i\nSPACEBAR: learn background\n(t y) ContourMinSize: %i\nf: fullscreen\nARROWS: translate (%i, %i)\n[a : z] scale (%.2f, %.2f)\nr : reset scale and translate\nb: hide/show box\n\nTESTS: colors (1-n), avatar (p), circle (c), rectangle (r)";
-	char help[1024] = "fps: %f\nnum blobs found %i\n";
+	char help[1024] = "fps: %f\nnum blobs found %i, MaxBlobs: %i\nThreshold %i\nContourMinSize: %i\n";
 	sprintf(reportStr, help , ofGetFrameRate(),contourFinder.nBlobs, blobMax, Threshold, contour_min, mtrx, mtry, scale_x, scale_y);
-	ofDrawBitmapString(reportStr, x, y + 20);
+	ofDrawBitmapString(reportStr, x, y + 25);
 	
 	ofPushStyle();
 	ofPushMatrix();
@@ -123,6 +172,8 @@ void sonosApp::update()
 //--------------------------------------------------------------
 void sonosApp::draw()
 {
+	setFullScreen(bFullscreen);
+	
 	if (debug) {
 		debugDraw();
 	} else {
@@ -183,7 +234,6 @@ void sonosApp::keyPressed(int key)
 			break;
 		case 'f':
 			bFullscreen = !bFullscreen;
-			sonosApp::setFullScreen(bFullscreen);
 			break;
 		case 'a':
 			scale_x+=0.01;
@@ -487,10 +537,6 @@ void sonosApp::setFullScreen(bool full)
 	} else {
 		ofSetWindowShape(OUTPUT_WIDTH,OUTPUT_HEIGHT);
 		ofSetFullscreen(false);
-		// figure out how to put the window in the center:
-		int screenW = ofGetScreenWidth();
-		int screenH = ofGetScreenHeight();
-		ofSetWindowPosition(screenW/2-OUTPUT_WIDTH/2, screenH/2-OUTPUT_HEIGHT/2);
 	}
 }
 
