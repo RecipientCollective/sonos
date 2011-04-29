@@ -30,7 +30,6 @@ int	 BckColor;
 float scale_x;
 float scale_y;
 
-
 void learnBackground ( puObject * ob ) 
 {
 	bLearnBackground = true;
@@ -300,89 +299,56 @@ void sonosApp::exit()
 }
 
 //--------------------------------------------------------------
+
+// GLUT key modifiers
+bool ofKeyAlt() {  
+    return (glutGetModifiers() & GLUT_ACTIVE_ALT);  
+}  
+
+bool ofKeyShift() {  
+    return (glutGetModifiers() & GLUT_ACTIVE_SHIFT);  
+}  
+
+bool ofKeyControl() {  
+    return (glutGetModifiers() & GLUT_ACTIVE_CTRL);  
+}
+
+//--------------------------------------------------------------
 void sonosApp::keyPressed(int key)
-{
-	ofxpuKeyboard ( key, PU_DOWN ) ;
+{	
+	/* 
+	 *  MAP KEY 
+	 *  arrows to translate/scale (MAIUSC) 
+	 *  h: hide interface 
+	 *  f: fullscreen
+	 *  , LiveVideo options
+	 */
 	
 	switch (key) {
-		case '1':
-			BckColor=1;
-			break;
-		case '2':
-			BckColor=2;
-			break;
-		case '3':
-			BckColor=3;
-			break;
-		case '4':
-			BckColor=4;
-			break;
-		case 'd':
-			bDebug = !bDebug;
-			break;
+			
 		case 'h':
 			bInterface = !bInterface;
 			bBox = !bBox;
 			break;
-		case '+':
-			Threshold ++;
-			if (Threshold > 255) Threshold = 255;
-			break;
-		case '-':
-			Threshold --;
-			if (Threshold < 0) Threshold = 0;
-			break;
-		case ' ':
-			bLearnBackground = true;
-			break;
-		case '>':
-			blobMax ++;
-			break;
-		case '<':	
-			blobMax --;
-			if (blobMax < 0) blobMax = 0;
-			break;
 		case 'f':
 			bFullscreen = !bFullscreen;
 			break;
-		case 'a':
-			scale_x+=0.01;
-			scale_y+=0.01;
-			break;
-		case 'z':
-			scale_x-=0.01;
-			scale_y-=0.01;
-			break;
-		case 'r':
-			scale_x = 1.0;
-			scale_y = 1.0;
-			mtrx = 1.0;
-			mtry = 1.0;
-			break;
-		case 't':
-			contour_min--;
-			break;
-		case 'y':
-			contour_min++;
-			break;
 			
-		// TEST
-		case 'c':
-			bCircle = !bCircle;
-			break;
-		case 'q':
-			bLine = !bLine;
-			break;
-		case 'p':
-			bAvatar = !bAvatar;
-			break;
-			
-		// arrows
 		case OF_KEY_UP:
-			mtry--;
+			if (ofKeyShift()) {
+				scale_x+=0.01;
+				scale_y+=0.01;
+			} else {
+				mtry--;
+			}
 			break;
 		case OF_KEY_DOWN:
-			mtry++;	
+			if (ofKeyShift()) {
+				scale_x-=0.01;
+				scale_y-=0.01;
+			} else {
+				mtry++;
+			}
 			break;
 		case OF_KEY_LEFT:
 			mtrx--;		
@@ -390,15 +356,16 @@ void sonosApp::keyPressed(int key)
 		case OF_KEY_RIGHT:
 			mtrx++;
 			break;
+			
 #ifdef _USE_LIVE_VIDEO
 		case ',':
 			vidGrabber.videoSettings();
 			break;
 #endif			
 		default:
+			ofxpuKeyboard ( key, PU_DOWN ) ;
 			break;
 	}
-	
 }
 
 //--------------------------------------------------------------

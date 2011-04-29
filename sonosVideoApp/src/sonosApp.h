@@ -17,7 +17,7 @@
 #include "MSATimer.h"
 #include "ParticleSystem.h"
 
-
+// Uncomment to activate VideoLive
 //#define _USE_LIVE_VIDEO
 
 #define OUTPUT_HEIGHT 768.0
