@@ -53,7 +53,8 @@ public:
 	}
 	
 	void setAvatar();
-	void drawAvatar(ParticleSystem p);
+	void drawAvatar();
+	void drawParticles(ParticleSystem p, FluidSolver f, FluidDrawerGl d, int w, int h);
 	void drawPixels();
 	void setBlobColor(int color);
 	void drawRect();

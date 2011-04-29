@@ -21,6 +21,7 @@ bool bCircle;
 bool bLine;
 bool bBox;
 bool bAvatar;
+bool bParticles;
 int	 blobMax;
 int  Threshold;
 int  contour_min;
@@ -73,6 +74,11 @@ void toggleLine ( puObject * ob )
 void toggleAvatar ( puObject * ob )
 {
 	bAvatar	= !bAvatar;
+}
+
+void toggleParticles ( puObject * ob )
+{
+	bParticles = !bParticles;
 }
 
 void setTrx (puObject * ob)
@@ -376,6 +382,7 @@ void sonosApp::setDefaults()
 	bLine = false;
 	bBox = true;
 	bAvatar = false;
+	bParticles = false;
 }
 
 //--------------------------------------------------------------
@@ -433,6 +440,9 @@ void sonosApp::setupInterface()
 	
 	ofxpuButton *avatarBt= new ofxpuButton(align_left + column_spacer, align_top + spacer_bt*2, "Avatar");
 	avatarBt->setCallback(toggleAvatar);
+	
+	ofxpuButton *particlesBt= new ofxpuButton(align_left + column_spacer, align_top + spacer_bt*3, "Particles");
+	particlesBt->setCallback(toggleParticles);
 	
 	
 	// COLUMN 3
@@ -598,7 +608,7 @@ void sonosApp::sonosDraw()
 		curr_blob.setBlobColor(BlobColor);
 		curr_blob.drawPixels();
 		
-		// IF interface: draw rectangle around 
+		// IF interface: draw rectangle around blob
 		if(bInterface) curr_blob.drawRect();
 		
 		// set color by position (TEST)
@@ -617,8 +627,8 @@ void sonosApp::sonosDraw()
 		if (bLine) curr_blob.rectangle();
 		ofPopStyle();
 		
-		// test AVATAR
-		if (bAvatar) curr_blob.drawAvatar(particleSystem);
+		if (bAvatar) curr_blob.drawAvatar();
+		if (bParticles) curr_blob.drawParticles(particleSystem, fluidSolver, fluidDrawer, camWidth, camHeight);
 	}
 	
 	ofPopMatrix();
