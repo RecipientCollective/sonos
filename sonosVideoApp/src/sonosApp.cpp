@@ -1,12 +1,68 @@
 #include "ofxPUI.h"
 #include "sonosApp.h"
 
+/*
+ * SONOS APP INTERFACE (NOTA: ofxPUI.h DEVE essere incluso qui e solo qui. Quindi l'interfaccia va messa tutta qui.
+ * 
+ * Metodi "interni" di sonoApp vanno in sonoAppMethods.cpp
+ *
+ */
+
+//--------------------------------------------------------------
+//  PUI objects
+//--------------------------------------------------------------
+
 void button_cb ( puObject * ) 
 {
 	fprintf ( stderr, "Hello World.\n" ) ;
 }
 
 
+//--------------------------------------------------------------
+//  DRAW INTERFACE METHDOS
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+void sonosApp::drawInterface(float x, float y)
+{
+	ofSetColor(255, 255, 255);
+	ofDrawBitmapString("INTERFACE (press: h to hide)", x, y);
+	char reportStr[1024];
+	char help[1024] = "fps: %f\nnum blobs found %i\n(< >) MaxBlobs: %i\n(+ -) Threshold %i\nSPACEBAR: learn background\n(t y) ContourMinSize: %i\nf: fullscreen\nARROWS: translate (%i, %i)\n[a : z] scale (%.2f, %.2f)\nr : reset scale and translate\nb: hide/show box\n\nTESTS: colors (1-n), avatar (p), circle (c), rectangle (r)";
+	sprintf(reportStr, help , ofGetFrameRate(),contourFinder.nBlobs, blobMax, Threshold, contour_min, mtrx, mtry, scale_x, scale_y);
+	ofDrawBitmapString(reportStr, x, y + 20);
+	
+	ofPushStyle();
+	ofPushMatrix();
+	// test draw PUI interface
+	EXACT_PIXEL_BEGIN
+	
+	ofNoFill();
+	ofSetHexColor(0xff0000);
+	
+	EXACT_PIXEL_END
+	
+	
+	ofxpuDisplay ();
+	ofPopMatrix();
+	ofPopStyle();
+}
+
+//--------------------------------------------------------------
+void sonosApp::drawDebugInterface(float x, float y)
+{
+	char reportStr[1024];
+	ofSetColor(255, 255, 255);
+	ofDrawBitmapString("DEBUG INTERFACE", x, y);
+	sprintf(reportStr, "CamWidth: %i, CamHeight: %i\nfps: %f\nnum blobs found %i", camWidth, camHeight, ofGetFrameRate(),contourFinder.nBlobs);
+	ofDrawBitmapString(reportStr, x, y + 20);
+}
+
+
+
+//--------------------------------------------------------------
+// OF METHODS
+//--------------------------------------------------------------
 
 //--------------------------------------------------------------
 void sonosApp::setup()
@@ -64,20 +120,7 @@ void sonosApp::draw()
 		drawInterface(20, 20);
 	
 
-	ofPushStyle();
-	ofPushMatrix();
-	// test draw PUI interface
-	EXACT_PIXEL_BEGIN
 	
-	ofNoFill();
-	ofSetHexColor(0xff0000);
-	
-	EXACT_PIXEL_END
-	
-
-	ofxpuDisplay ();
-	ofPopMatrix();
-	ofPopStyle();
 	}
 }
 
@@ -88,26 +131,6 @@ void sonosApp::exit()
 	OF_EXIT_APP(0);
 }
 
-
-//--------------------------------------------------------------
-void sonosApp::drawInterface(float x, float y)
-{
-	ofSetColor(255, 255, 255);
-	ofDrawBitmapString("INTERFACE (press: h to hide)", x, y);
-	char reportStr[1024];
-	char help[1024] = "fps: %f\nnum blobs found %i\n(< >) MaxBlobs: %i\n(+ -) Threshold %i\nSPACEBAR: learn background\n(t y) ContourMinSize: %i\nf: fullscreen\nARROWS: translate (%i, %i)\n[a : z] scale (%.2f, %.2f)\nr : reset scale and translate\nb: hide/show box\n\nTESTS: colors (1-n), avatar (p), circle (c), rectangle (r)";
-	sprintf(reportStr, help , ofGetFrameRate(),contourFinder.nBlobs, blobMax, Threshold, contour_min, mtrx, mtry, scale_x, scale_y);
-	ofDrawBitmapString(reportStr, x, y + 20);
-}
-
-void sonosApp::drawDebugInterface(float x, float y)
-{
-	char reportStr[1024];
-	ofSetColor(255, 255, 255);
-	ofDrawBitmapString("DEBUG INTERFACE", x, y);
-	sprintf(reportStr, "CamWidth: %i, CamHeight: %i\nfps: %f\nnum blobs found %i", camWidth, camHeight, ofGetFrameRate(),contourFinder.nBlobs);
-	ofDrawBitmapString(reportStr, x, y + 20);
-}
 
 
 //--------------------------------------------------------------
@@ -129,11 +152,9 @@ void sonosApp::keyPressed(int key)
 		case 'd':
 			debug = !debug;
 			break;
-		case 'b':
-			box = !box;
-			break;
 		case 'h':
 			interface = !interface;
+			box = !box;
 			break;
 		case '+':
 			Threshold ++;
