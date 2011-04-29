@@ -85,7 +85,6 @@ private:
 	int 		camWidth;
 	int 		camHeight;
 	int			BlobColor;
-	int			BckColor;
 		
 	// containers 
 	map<int ,sonosBlob>  sonosblobs;

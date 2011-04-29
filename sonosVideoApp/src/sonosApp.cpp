@@ -26,6 +26,7 @@ int  Threshold;
 int  contour_min;
 int	 mtrx;
 int	 mtry;
+int	 BckColor;
 float scale_x;
 float scale_y;
 
@@ -100,10 +101,10 @@ void setScale (puObject * ob)
 
 void setBackground (puObject * ob)
 {
-	cout << ob->getValue();
+	BckColor = ob->getIntegerValue();
 }
 
-char *button_box_entries [] = { "1", "2", "3","4", NULL } ;
+char *button_box_entries [] = { "0", "1", "2","3", NULL } ;
 
 
 //--------------------------------------------------------------
@@ -519,7 +520,7 @@ void sonosApp::setDefaults()
 	//ofSetVerticalSync(true);
 	
 	//colors setup
-	BckColor=1;
+	BckColor=0;
 	BlobColor=0xDD00CC;
 	
 	blobMax=2;
@@ -684,16 +685,16 @@ void sonosApp::background(int color)
 {
 	switch (color)
 	{
-		case 1:
+		case 0:
 			ofBackground(100, 100, 100);
 			break;
-		case 2:
+		case 1:
 			ofBackground(0, 0, 0);
 			break;
-		case 3:
+		case 2:
 			ofBackground(128,100,40);
 			break;
-		case 4:
+		case 3:
 			ofBackground(40, 150, 130, 50);
 			break;
 		default:
