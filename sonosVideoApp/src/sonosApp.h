@@ -78,7 +78,7 @@ private:
 	void setDefaults();
 	void sonosUpdate();
 	void setupInterface();
-
+	
 private:
 	// Our vars
 	std::string filename;
@@ -86,7 +86,6 @@ private:
 	int 		camHeight;
 	int 		Threshold;
 	bool		bFullscreen;
-	bool        bLearnBakground;
 	int			blobMax;
 	int			BlobColor;
 	int			BckColor;
