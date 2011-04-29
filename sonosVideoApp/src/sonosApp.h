@@ -1,3 +1,12 @@
+/*
+ *  
+ *  sonosVideoApp
+ *
+ *  Created by tucano on 4/28/11.
+ *  Copyright 2011. All rights reserved.
+ *
+ */
+
 #pragma once
 
 #include "ofMain.h"

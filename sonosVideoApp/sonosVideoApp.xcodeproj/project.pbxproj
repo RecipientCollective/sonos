@@ -64,6 +64,7 @@
 		5553E3CF136AC5DD00474EA6 /* ulLinkedList.cxx in Sources */ = {isa = PBXBuildFile; fileRef = 5553E399136AC5DD00474EA6 /* ulLinkedList.cxx */; };
 		5553E3D0136AC5DD00474EA6 /* ulList.cxx in Sources */ = {isa = PBXBuildFile; fileRef = 5553E39A136AC5DD00474EA6 /* ulList.cxx */; };
 		5553E3D1136AC5DD00474EA6 /* ulRTTI.cxx in Sources */ = {isa = PBXBuildFile; fileRef = 5553E39C136AC5DD00474EA6 /* ulRTTI.cxx */; };
+		5553E547136ADF6C00474EA6 /* sonosAppMethods.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5553E546136ADF6C00474EA6 /* sonosAppMethods.cpp */; };
 		55689029136976D10050D22B /* glew.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55689028136976D10050D22B /* glew.a */; };
 		55689128136978710050D22B /* libopencv_calib3d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556890AA136978710050D22B /* libopencv_calib3d.a */; };
 		55689129136978710050D22B /* libopencv_contrib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 556890AB136978710050D22B /* libopencv_contrib.a */; };
@@ -323,6 +324,7 @@
 		5553E39B136AC5DD00474EA6 /* ulLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ulLocal.h; sourceTree = "<group>"; };
 		5553E39C136AC5DD00474EA6 /* ulRTTI.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ulRTTI.cxx; sourceTree = "<group>"; };
 		5553E39D136AC5DD00474EA6 /* ulRTTI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ulRTTI.h; sourceTree = "<group>"; };
+		5553E546136ADF6C00474EA6 /* sonosAppMethods.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sonosAppMethods.cpp; sourceTree = "<group>"; };
 		55689028136976D10050D22B /* glew.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = glew.a; path = ../../../libs/glew/lib/osx/glew.a; sourceTree = SOURCE_ROOT; };
 		55689053136978710050D22B /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
 		55689058136978710050D22B /* cv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cv.h; sourceTree = "<group>"; };
@@ -1304,6 +1306,7 @@
 				553A27BC1369E1A700292B8D /* ParticleSystem.cpp */,
 				553A27BD1369E1A700292B8D /* ParticleSystem.h */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
+				5553E546136ADF6C00474EA6 /* sonosAppMethods.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* sonosApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* sonosApp.h */,
 				5568937313698A040050D22B /* functions.h */,
@@ -1482,6 +1485,7 @@
 				5553E3CF136AC5DD00474EA6 /* ulLinkedList.cxx in Sources */,
 				5553E3D0136AC5DD00474EA6 /* ulList.cxx in Sources */,
 				5553E3D1136AC5DD00474EA6 /* ulRTTI.cxx in Sources */,
+				5553E547136ADF6C00474EA6 /* sonosAppMethods.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
