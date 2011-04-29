@@ -98,6 +98,14 @@ void setScale (puObject * ob)
 	scale_x = scale_y = ob->getFloatValue();
 }
 
+void setBackground (puObject * ob)
+{
+	cout << ob->getValue();
+}
+
+char *button_box_entries [] = { "1", "2", "3","4", NULL } ;
+
+
 //--------------------------------------------------------------
 //  DRAW INTERFACE METHDOS
 //--------------------------------------------------------------
@@ -150,6 +158,11 @@ void sonosApp::setupInterface()
 	spinBlobs->setValue ( blobMax ) ;
 	spinBlobs->setMinValue( 0 );
 	spinBlobs->setCallback(setMaxBlobs);
+	
+	ofxpuButtonBox * backGroundBox = new ofxpuButtonBox ( align_left + column_spacer * 2, align_top + spacer_bt + 10, 60.0, 100.0, button_box_entries, TRUE ) ;
+	backGroundBox->setLabel("BackGround");
+	backGroundBox->setLabelPlace(PUPLACE_BOTTOM_CENTER);
+	backGroundBox->setCallback(setBackground);
 	
 	// SLIDERS
 	ofxpuaSliderWithInput * sliderThreshold= new ofxpuaSliderWithInput ( slider_box, align_top - slider_correction, 70, 150, FALSE ) ;
