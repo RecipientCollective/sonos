@@ -16,38 +16,7 @@ void sonosApp::setup()
 	
 	inputSetup();
 	
-	// ALLOCATE IMAGES SIZES
-	colorImg.allocate(camWidth, camHeight);
-	grayImage.allocate(camWidth, camHeight);
-	grayBg.allocate(camWidth,camHeight);
-	grayDiff.allocate(camWidth,camHeight);
-	
-	// SETUP DEFAULT PARAMETERS
-	bLearnBakground = true;
-	Threshold = 50;
-	ofSetCircleResolution(40); 	   //set resolution of circle
-	ofEnableSmoothing();	
-	ofSetFrameRate(60);
-	
-	//for smooth animation, set vertical sync if we can
-	//ofSetVerticalSync(true);
-	
-	//colors setup
-	BckColor=1;
-	BlobColor=0xDD00CC;
-	
-	blobMax=2;
-	contour_min = 350;
-	scale_x = 1.0;
-	scale_y = 1.0;
-	mtrx = 1;
-	mtry = 1;
-	interface = true;
-	circle = false;
-	debug = false;
-	rectangle = false;
-	box = true;
-	avatar = false;
+	setDefaults();
 	
 	// setup fluid stuff
 	fluidSolver.setup(100, 100);
@@ -56,7 +25,7 @@ void sonosApp::setup()
 	particleSystem.setFluidSolver( &fluidSolver );
 	ofEnableAlphaBlending();
 	ofSetBackgroundAuto(true);
-	windowResized(ofGetWidth(), ofGetHeight());		// force this at start (cos I don't think it is called)
+	windowResized(ofGetWidth(), ofGetHeight());		// force this at start (cos I don't think it is called)	
 }
 
 //--------------------------------------------------------------
@@ -212,6 +181,43 @@ void sonosApp::inputSetup()
 #endif	
 }
 
+//--------------------------------------------------------------
+
+void sonosApp::setDefaults()
+{
+	// ALLOCATE IMAGES SIZES
+	colorImg.allocate(camWidth, camHeight);
+	grayImage.allocate(camWidth, camHeight);
+	grayBg.allocate(camWidth,camHeight);
+	grayDiff.allocate(camWidth,camHeight);
+	
+	// SETUP DEFAULT PARAMETERS
+	bLearnBakground = true;
+	Threshold = 50;
+	ofSetCircleResolution(40); 	   //set resolution of circle
+	ofEnableSmoothing();	
+	ofSetFrameRate(60);
+	
+	//for smooth animation, set vertical sync if we can
+	//ofSetVerticalSync(true);
+	
+	//colors setup
+	BckColor=1;
+	BlobColor=0xDD00CC;
+	
+	blobMax=2;
+	contour_min = 350;
+	scale_x = 1.0;
+	scale_y = 1.0;
+	mtrx = 1;
+	mtry = 1;
+	interface = true;
+	circle = false;
+	debug = false;
+	rectangle = false;
+	box = true;
+	avatar = false;
+}
 
 //--------------------------------------------------------------
 void sonosApp::sonosDraw()

@@ -66,6 +66,7 @@ private:
 	void setFullScreen(bool sflag);
 	void sonosDraw();
 	void inputSetup();
+	void setDefaults();
 
 private:
 	// Our vars
