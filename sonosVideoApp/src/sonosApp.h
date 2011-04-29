@@ -60,9 +60,9 @@ private:
 	ofxCvContourFinder		contourFinder;
 	
 	// MSAFluids
-	MSA::FluidSolver	fluidSolver;
-	MSA::FluidDrawerGl	fluidDrawer;	
-	ParticleSystem		particleSystem;
+	//MSA::FluidSolver	fluidSolver;
+//	MSA::FluidDrawerGl	fluidDrawer;	
+//	ParticleSystem		particleSystem;
 
 // INTERAL STUFFS
 private:

@@ -144,7 +144,7 @@ void sonosApp::update()
 #endif
 	
 	if (bNewFrame){
-		fluidSolver.update();
+//		fluidSolver.update();
 		sonosUpdate();
 	}
 }
@@ -277,7 +277,7 @@ void sonosApp::mouseReleased(int x, int y, int button)
 //--------------------------------------------------------------
 void sonosApp::windowResized(int w, int h)
 {
-	particleSystem.setWindowSize( Vec2f( w, h ) );
+	//particleSystem.setWindowSize( Vec2f( w, h ) );
 }
 
 //--------------------------------------------------------------
@@ -389,13 +389,13 @@ void sonosApp::setDefaults()
 void sonosApp::setupParticleSystem()
 {
 	// setup fluid stuff
-	fluidSolver.setup(100, 100);
-    fluidSolver.enableRGB(true).setFadeSpeed(0.002).setDeltaT(0.5).setVisc(0.00015).setColorDiffusion(0);
-	fluidDrawer.setup( &fluidSolver );
-	particleSystem.setFluidSolver( &fluidSolver );
-	ofEnableAlphaBlending();
-	ofSetBackgroundAuto(true);
-	windowResized(ofGetWidth(), ofGetHeight());		// force this at start (cos I don't think it is called)	
+	//fluidSolver.setup(100, 100);
+//    fluidSolver.enableRGB(true).setFadeSpeed(0.002).setDeltaT(0.5).setVisc(0.00015).setColorDiffusion(0);
+//	fluidDrawer.setup( &fluidSolver );
+//	particleSystem.setFluidSolver( &fluidSolver );
+//	ofEnableAlphaBlending();
+//	ofSetBackgroundAuto(true);
+//	windowResized(ofGetWidth(), ofGetHeight());		// force this at start (cos I don't think it is called)	
 }
 
 //--------------------------------------------------------------
@@ -628,7 +628,7 @@ void sonosApp::sonosDraw()
 		ofPopStyle();
 		
 		if (bAvatar) curr_blob.drawAvatar();
-		if (bParticles) curr_blob.drawParticles(particleSystem, fluidSolver, fluidDrawer, camWidth, camHeight);
+		//if (bParticles) curr_blob.drawParticles(particleSystem, fluidSolver, fluidDrawer, camWidth, camHeight);
 	}
 	
 	ofPopMatrix();

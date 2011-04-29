@@ -180,7 +180,7 @@ void msaFluidParticlesApp::keyPressed  (int key){
 			
 		case 'b': {
 			Timer timer;
-			const int ITERS = 3000;
+			const int ITERS = 100;
 			timer.start();
 			for( int i = 0; i < ITERS; ++i ) fluidSolver.update();
 			timer.stop();
