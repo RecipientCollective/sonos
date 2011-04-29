@@ -120,14 +120,7 @@ void sonosApp::setup()
 
 	setupInterface();
 	
-	// setup fluid stuff
-	fluidSolver.setup(100, 100);
-    fluidSolver.enableRGB(true).setFadeSpeed(0.002).setDeltaT(0.5).setVisc(0.00015).setColorDiffusion(0);
-	fluidDrawer.setup( &fluidSolver );
-	particleSystem.setFluidSolver( &fluidSolver );
-	ofEnableAlphaBlending();
-	ofSetBackgroundAuto(true);
-	windowResized(ofGetWidth(), ofGetHeight());		// force this at start (cos I don't think it is called)	
+	setupParticleSystem();
 }
 
 //--------------------------------------------------------------
@@ -293,8 +286,6 @@ void sonosApp::dragEvent(ofDragInfo dragInfo)
 	
 }
 
-
-
 //--------------------------------------------------------------
 //
 //   ****************************
@@ -387,6 +378,18 @@ void sonosApp::setDefaults()
 	bAvatar = false;
 }
 
+//--------------------------------------------------------------
+void sonosApp::setupParticleSystem()
+{
+	// setup fluid stuff
+	fluidSolver.setup(100, 100);
+    fluidSolver.enableRGB(true).setFadeSpeed(0.002).setDeltaT(0.5).setVisc(0.00015).setColorDiffusion(0);
+	fluidDrawer.setup( &fluidSolver );
+	particleSystem.setFluidSolver( &fluidSolver );
+	ofEnableAlphaBlending();
+	ofSetBackgroundAuto(true);
+	windowResized(ofGetWidth(), ofGetHeight());		// force this at start (cos I don't think it is called)	
+}
 
 //--------------------------------------------------------------
 //  SETUP/DRAW INTERFACE 

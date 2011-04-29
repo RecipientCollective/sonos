@@ -78,7 +78,7 @@ private:
 	void setDefaults();
 	void sonosUpdate();
 	void setupInterface();
-	
+	void setupParticleSystem();
 private:
 	// Our vars
 	std::string filename;
