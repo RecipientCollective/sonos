@@ -1,8 +1,12 @@
+#include "ofxPUI.h"
 #include "sonosApp.h"
 
 //--------------------------------------------------------------
 void sonosApp::setup()
 {
+	// PUI setup
+	ofxpuInit () ;
+	ofxpuSetDefaultStyle(PUSTYLE_BOXED);
 	
 #ifdef _USE_LIVE_VIDEO
 	camWidth = 640;
