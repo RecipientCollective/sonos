@@ -84,20 +84,9 @@ private:
 	std::string filename;
 	int 		camWidth;
 	int 		camHeight;
-	bool		bFullscreen;
 	int			BlobColor;
 	int			BckColor;
-	int			mtrx;
-	int			mtry;
-	float       scale_x;
-	float       scale_y;
-	bool        interface;
-	bool        circle;
-	bool        debug;
-	bool        rectangle;
-	bool        box;
-	bool		avatar;
-	
+		
 	// containers 
 	map<int ,sonosBlob>  sonosblobs;
 	

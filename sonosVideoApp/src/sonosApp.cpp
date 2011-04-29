@@ -14,9 +14,21 @@
 //  PUI objects and global toggle vars
 //--------------------------------------------------------------
 bool bLearnBackground;
+bool bFullscreen;
+bool bDebug;
+bool bInterface;
+bool bCircle;
+bool bLine;
+bool bBox;
+bool bAvatar;
 int	 blobMax;
 int  Threshold;
 int  contour_min;
+int	 mtrx;
+int	 mtry;
+float scale_x;
+float scale_y;
+
 
 void learnBackground ( puObject * ob ) 
 {
@@ -38,10 +50,54 @@ void setContour ( puObject * ob )
 	contour_min = ob->getValue();
 }
 
-void toggleFullScreen ()
+void toggleFullScreen ( puObject * ob )
 {
-	
+	bFullscreen = !bFullscreen;
 }
+
+void toggleDebug ( puObject * ob )
+{
+	bDebug = !bDebug;
+}
+
+void toggleCircle ( puObject * ob )
+{
+	bCircle = !bCircle;
+}
+
+void toggleLine ( puObject * ob )
+{
+	bLine = !bLine;
+}
+
+void toggleAvatar ( puObject * ob )
+{
+	bAvatar	= !bAvatar;
+}
+
+void setTrx (puObject * ob)
+{
+	mtrx = ob->getIntegerValue();
+}
+
+void setTry (puObject * ob)
+{
+	mtry = ob->getIntegerValue();
+}
+
+void resetAction(puObject * ob)
+{
+	scale_x = 1.0;
+	scale_y = 1.0;
+	mtrx = 1;
+	mtry = 1;
+}
+
+void setScale (puObject * ob)
+{
+	scale_x = scale_y = ob->getFloatValue();
+}
+
 //--------------------------------------------------------------
 //  DRAW INTERFACE METHDOS
 //--------------------------------------------------------------
@@ -50,20 +106,44 @@ void toggleFullScreen ()
 void sonosApp::setupInterface()
 {
 	// helper vars for PUI interface
-	int align_top = OUTPUT_HEIGHT - 100;
+	int align_top = OUTPUT_HEIGHT - 200;
 	int align_left= 20;
+	int spacer_bt = 30;
+	int slider_correction = 20;
+	int column_spacer = 100;
+	int slider_box = column_spacer * 3; // COLUMN 4
+	int slider_spacer = 90;
 	
 	// PUI setup
 	ofxpuInit () ;
 	ofxpuSetDefaultStyle(PUSTYLE_BOXED);
 	
-	ofxpuButton *backGroundBt= new ofxpuButton(align_left, align_top, "FullScreen");
-	backGroundBt->setCallback(learnBackground);
+	// COLUMN 1
+	ofxpuButton *fullScreenBt= new ofxpuButton(align_left, align_top, "FullScreen");
+	fullScreenBt->setCallback(toggleFullScreen);
 	
-	ofxpuButton *fullScreenBt= new ofxpuButton(align_left, align_top + 30, "Background");
+	ofxpuButton *backGroundBt= new ofxpuButton(align_left, align_top + spacer_bt, "Background");
 	backGroundBt->setCallback(learnBackground);
+
+	ofxpuButton *resetBt= new ofxpuButton(align_left, align_top + spacer_bt*2, "ResetVideo");
+	resetBt->setCallback(resetAction);
 	
-	ofxpuaSpinBox * spinBlobs = new ofxpuaSpinBox (align_left + 100, align_top, 60, 30);
+	ofxpuButton *debugBt= new ofxpuButton(align_left, align_top + spacer_bt*3, "DebugVideo");
+	debugBt->setCallback(toggleDebug);
+
+	// COLUMN 2
+	ofxpuButton *circleBt= new ofxpuButton(align_left + column_spacer, align_top, "Circle");
+	circleBt->setCallback(toggleCircle);
+	
+	ofxpuButton *lineBt= new ofxpuButton(align_left + column_spacer, align_top + spacer_bt, " Line ");
+	lineBt->setCallback(toggleLine);
+	
+	ofxpuButton *avatarBt= new ofxpuButton(align_left + column_spacer, align_top + spacer_bt*2, "Avatar");
+	avatarBt->setCallback(toggleAvatar);
+	
+	
+	// COLUMN 3
+	ofxpuaSpinBox * spinBlobs = new ofxpuaSpinBox (align_left + column_spacer * 2, align_top, 60, 30);
 	spinBlobs->setLabel("maxBlobs");
 	spinBlobs->setLabelPlace(OFXPUPLACE_BOTTOM_CENTERED);
 	spinBlobs->setMaxValue ( 20 ) ;
@@ -71,7 +151,8 @@ void sonosApp::setupInterface()
 	spinBlobs->setMinValue( 0 );
 	spinBlobs->setCallback(setMaxBlobs);
 	
-	ofxpuaSliderWithInput * sliderThreshold= new ofxpuaSliderWithInput ( align_left + 200, align_top - 50, 50, 100, FALSE ) ;
+	// SLIDERS
+	ofxpuaSliderWithInput * sliderThreshold= new ofxpuaSliderWithInput ( slider_box, align_top - slider_correction, 70, 150, FALSE ) ;
 	sliderThreshold->setLabelPlace(PUPLACE_BOTTOM_CENTERED) ;
 	sliderThreshold->setLabel ( "Threshold" ) ;
 	sliderThreshold->setMaxValue ( 255 ) ;
@@ -79,13 +160,37 @@ void sonosApp::setupInterface()
 	sliderThreshold->setMinValue( 0 );
 	sliderThreshold->setCallback(setThreshold);
 	
-	ofxpuaSliderWithInput * sliderContour= new ofxpuaSliderWithInput ( align_left + 300, align_top - 50, 70, 100, FALSE ) ;
+	ofxpuaSliderWithInput * sliderContour= new ofxpuaSliderWithInput (slider_box + slider_spacer, align_top - slider_correction, 70, 150, FALSE ) ;
 	sliderContour->setLabelPlace(PUPLACE_BOTTOM_CENTERED) ;
 	sliderContour->setLabel ( "ContourMin" ) ;
 	sliderContour->setMaxValue ( 10000 ) ;
 	sliderContour->setValue ( contour_min ) ;
 	sliderContour->setMinValue( 0 );
 	sliderContour->setCallback(setContour);
+	
+	ofxpuaSliderWithInput *sliderTrx = new ofxpuaSliderWithInput(slider_box + slider_spacer*2, align_top - slider_correction, 70, 150, FALSE);
+	sliderTrx->setLabelPlace(PUPLACE_BOTTOM_CENTERED);
+	sliderTrx->setLabel ( "Translate X" );
+	sliderTrx->setMinValue(-1000);
+	sliderTrx->setMaxValue(+1000);
+	sliderTrx->setValue(mtrx);
+	sliderTrx->setCallback(setTrx);
+	
+	ofxpuaSliderWithInput *sliderTry = new ofxpuaSliderWithInput(slider_box + slider_spacer*3, align_top - slider_correction, 70, 150, FALSE);
+	sliderTry->setLabelPlace(PUPLACE_BOTTOM_CENTERED);
+	sliderTry->setLabel ( "Translate Y" );
+	sliderTry->setMinValue(-1000);
+	sliderTry->setMaxValue(+1000);
+	sliderTry->setValue(mtry);
+	sliderTry->setCallback(setTry);
+	
+	ofxpuaSliderWithInput *sliderScaleX = new ofxpuaSliderWithInput(slider_box + slider_spacer*4, align_top - slider_correction, 70, 150, FALSE);
+	sliderScaleX->setLabelPlace(PUPLACE_BOTTOM_CENTERED);
+	sliderScaleX->setLabel ( "Scale XY" );
+	sliderScaleX->setMinValue(0.0);
+	sliderScaleX->setMaxValue(5.0);
+	sliderScaleX->setValue(scale_x);
+	sliderScaleX->setCallback(setScale);
 	
 }
 
@@ -95,9 +200,8 @@ void sonosApp::drawInterface(float x, float y)
 	ofSetColor(255, 255, 255);
 	ofDrawBitmapString("INTERFACE (press: h to hide/show)", x, y);
 	char reportStr[1024];
-//	char help[1024] = "fps: %f\nnum blobs found %i\n(< >) MaxBlobs: %i\n(+ -) Threshold %i\nSPACEBAR: learn background\n(t y) ContourMinSize: %i\nf: fullscreen\nARROWS: translate (%i, %i)\n[a : z] scale (%.2f, %.2f)\nr : reset scale and translate\nb: hide/show box\n\nTESTS: colors (1-n), avatar (p), circle (c), rectangle (r)";
-	char help[1024] = "fps: %f\nnum blobs found %i, MaxBlobs: %i\nThreshold %i\nContourMinSize: %i\n";
-	sprintf(reportStr, help , ofGetFrameRate(),contourFinder.nBlobs, blobMax, Threshold, contour_min, mtrx, mtry, scale_x, scale_y);
+	char help[1024] = "fps: %f\nnum blobs found %i, MaxBlobs: %i\nThreshold %i\nContourMinSize: %i\ntranslate (%i, %i)\nscale (%.2f, %.2f)\nCamWidth: %i, CamHeight: %i";
+	sprintf(reportStr, help , ofGetFrameRate(),contourFinder.nBlobs, blobMax, Threshold, contour_min, mtrx, mtry, scale_x, scale_y, camWidth, camHeight);
 	ofDrawBitmapString(reportStr, x, y + 25);
 	
 	ofPushStyle();
@@ -113,16 +217,6 @@ void sonosApp::drawInterface(float x, float y)
 	ofxpuDisplay ();
 	ofPopMatrix();
 	ofPopStyle();
-}
-
-//--------------------------------------------------------------
-void sonosApp::drawDebugInterface(float x, float y)
-{
-	char reportStr[1024];
-	ofSetColor(255, 255, 255);
-	ofDrawBitmapString("DEBUG INTERFACE", x, y);
-	sprintf(reportStr, "CamWidth: %i, CamHeight: %i\nfps: %f\nnum blobs found %i", camWidth, camHeight, ofGetFrameRate(),contourFinder.nBlobs);
-	ofDrawBitmapString(reportStr, x, y + 20);
 }
 
 //--------------------------------------------------------------
@@ -174,12 +268,12 @@ void sonosApp::draw()
 {
 	setFullScreen(bFullscreen);
 	
-	if (debug) {
+	if (bDebug) {
 		debugDraw();
 	} else {
 		sonosDraw();
 	}
-	if (interface) {
+	if (bInterface) {
 		drawInterface(20, 20);
 	}
 }
@@ -194,6 +288,8 @@ void sonosApp::exit()
 //--------------------------------------------------------------
 void sonosApp::keyPressed(int key)
 {
+	ofxpuKeyboard ( key, PU_DOWN ) ;
+	
 	switch (key) {
 		case '1':
 			BckColor=1;
@@ -208,11 +304,11 @@ void sonosApp::keyPressed(int key)
 			BckColor=4;
 			break;
 		case 'd':
-			debug = !debug;
+			bDebug = !bDebug;
 			break;
 		case 'h':
-			interface = !interface;
-			box = !box;
+			bInterface = !bInterface;
+			bBox = !bBox;
 			break;
 		case '+':
 			Threshold ++;
@@ -258,14 +354,15 @@ void sonosApp::keyPressed(int key)
 			
 		// TEST
 		case 'c':
-			circle = !circle;
+			bCircle = !bCircle;
 			break;
 		case 'q':
-			rectangle = !rectangle;
+			bLine = !bLine;
 			break;
 		case 'p':
-			avatar = !avatar;
+			bAvatar = !bAvatar;
 			break;
+			
 		// arrows
 		case OF_KEY_UP:
 			mtry--;
@@ -418,12 +515,12 @@ void sonosApp::setDefaults()
 	scale_y = 1.0;
 	mtrx = 1;
 	mtry = 1;
-	interface = true;
-	circle = false;
-	debug = false;
-	rectangle = false;
-	box = true;
-	avatar = false;
+	bInterface = true;
+	bCircle = false;
+	bDebug = false;
+	bLine = false;
+	bBox = true;
+	bAvatar = false;
 }
 
 //--------------------------------------------------------------
@@ -488,7 +585,7 @@ void sonosApp::sonosDraw()
 	ofScale(scale_x, scale_y, 1.0);
 	ofTranslate(mtrx, mtry, 1.0);
 	
-	if (box) {
+	if (bBox) {
 		ofPushStyle();
 		ofSetColor(255, 255, 255);
 		ofNoFill();
@@ -504,7 +601,7 @@ void sonosApp::sonosDraw()
 		curr_blob.drawPixels();
 		
 		// IF interface: draw rectangle around 
-		if(interface) curr_blob.drawRect();
+		if(bInterface) curr_blob.drawRect();
 		
 		// set color by position (TEST)
 		ofPushStyle();
@@ -518,12 +615,12 @@ void sonosApp::sonosDraw()
 			ofSetColor(100, 100, 150);
 		}
 		
-		if (circle) curr_blob.circle();
-		if (rectangle) curr_blob.rectangle();
+		if (bCircle) curr_blob.circle();
+		if (bLine) curr_blob.rectangle();
 		ofPopStyle();
 		
 		// test AVATAR
-		if (avatar) curr_blob.drawAvatar(particleSystem);
+		if (bAvatar) curr_blob.drawAvatar(particleSystem);
 	}
 	
 	ofPopMatrix();
@@ -566,14 +663,7 @@ void sonosApp::debugDraw()
 	// draw the whole contour finder
 	contourFinder.draw(spacerx, spacery);
 	
-	ofPopMatrix();
-	
-	ofPushMatrix();
-	
-	drawDebugInterface(OUTPUT_WIDTH - 300, margin);
-	
-	ofPopMatrix();
-	
+	ofPopMatrix();	
 }
 
 //--------------------------------------------------------------
