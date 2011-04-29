@@ -1,6 +1,7 @@
 #include "ofMain.h"
 #include "sonosApp.h"
 #include "ofAppGlutWindow.h"
+#include "ofxPUI.h"
 
 //========================================================================
 int main( ){
