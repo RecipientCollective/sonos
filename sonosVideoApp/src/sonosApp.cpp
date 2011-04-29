@@ -23,25 +23,34 @@ void button_cb ( puObject * )
 //--------------------------------------------------------------
 
 //--------------------------------------------------------------
+void sonosApp::setupInterface()
+{
+	// PUI setup
+	ofxpuInit () ;
+	ofxpuSetDefaultStyle(PUSTYLE_BOXED);
+	ofxpuButton *button1 = new ofxpuButton(10.0, 400.0, "Button 1");
+	button1->setCallback(button_cb);
+}
+
+//--------------------------------------------------------------
 void sonosApp::drawInterface(float x, float y)
 {
-	ofSetColor(255, 255, 255);
-	ofDrawBitmapString("INTERFACE (press: h to hide)", x, y);
-	char reportStr[1024];
-	char help[1024] = "fps: %f\nnum blobs found %i\n(< >) MaxBlobs: %i\n(+ -) Threshold %i\nSPACEBAR: learn background\n(t y) ContourMinSize: %i\nf: fullscreen\nARROWS: translate (%i, %i)\n[a : z] scale (%.2f, %.2f)\nr : reset scale and translate\nb: hide/show box\n\nTESTS: colors (1-n), avatar (p), circle (c), rectangle (r)";
-	sprintf(reportStr, help , ofGetFrameRate(),contourFinder.nBlobs, blobMax, Threshold, contour_min, mtrx, mtry, scale_x, scale_y);
-	ofDrawBitmapString(reportStr, x, y + 20);
+//	ofSetColor(255, 255, 255);
+//	ofDrawBitmapString("INTERFACE (press: h to hide)", x, y);
+//	char reportStr[1024];
+//	char help[1024] = "fps: %f\nnum blobs found %i\n(< >) MaxBlobs: %i\n(+ -) Threshold %i\nSPACEBAR: learn background\n(t y) ContourMinSize: %i\nf: fullscreen\nARROWS: translate (%i, %i)\n[a : z] scale (%.2f, %.2f)\nr : reset scale and translate\nb: hide/show box\n\nTESTS: colors (1-n), avatar (p), circle (c), rectangle (r)";
+//	sprintf(reportStr, help , ofGetFrameRate(),contourFinder.nBlobs, blobMax, Threshold, contour_min, mtrx, mtry, scale_x, scale_y);
+//	ofDrawBitmapString(reportStr, x, y + 20);
 	
 	ofPushStyle();
 	ofPushMatrix();
-	// test draw PUI interface
+
 	EXACT_PIXEL_BEGIN
 	
 	ofNoFill();
 	ofSetHexColor(0xff0000);
 	
-	EXACT_PIXEL_END
-	
+	EXACT_PIXEL_END	
 	
 	ofxpuDisplay ();
 	ofPopMatrix();
@@ -67,11 +76,7 @@ void sonosApp::drawDebugInterface(float x, float y)
 //--------------------------------------------------------------
 void sonosApp::setup()
 {
-	// PUI setup
-	ofxpuInit () ;
-	ofxpuSetDefaultStyle(PUSTYLE_BOXED);
-	ofxpuButton *button1 = new ofxpuButton(10.0, 400.0, "Button 1");
-	button1->setCallback(button_cb);
+	setupInterface();
 	
 	inputSetup();
 	
@@ -118,9 +123,6 @@ void sonosApp::draw()
 	
 	if (interface) {
 		drawInterface(20, 20);
-	
-
-	
 	}
 }
 

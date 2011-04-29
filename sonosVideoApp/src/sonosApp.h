@@ -77,6 +77,7 @@ private:
 	void inputSetup();
 	void setDefaults();
 	void sonosUpdate();
+	void setupInterface();
 
 private:
 	// Our vars
