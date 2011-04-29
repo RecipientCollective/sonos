@@ -16,45 +16,6 @@ void sonosApp::setup()
 	
 	inputSetup();
 	
-#ifdef _USE_LIVE_VIDEO
-	camWidth = 640;
-	camHeight = 480;
-	vidGrabber.setVerbose(true);
-	vidGrabber.initGrabber(camWidth, camHeight, false);
-#else
-	// FILENAME
-	filename = "videos/retro-ir.mov";
-	
-	//check if file exists
-	bool bFileThere = false;
-	fstream fin;
-	string fileNameInOF = ofToDataPath(filename, false); // since OF files are in the data directory, we need to do this
-	fin.open(fileNameInOF.c_str(),ios::in);
-	if ( fin.is_open() ) {
-#ifdef DEBUG
-		cerr << "Founded file " << fileNameInOF << endl;
-#endif
-		bFileThere =true;
-	}
-	fin.close();
-	
-	if (bFileThere) {
-		vidPlayer.loadMovie(filename);
-		vidPlayer.play();
-		camWidth = vidPlayer.getWidth();
-		camHeight = vidPlayer.getHeight();
-	} else {
-#ifdef DEBUG		
-		cerr << "File " << fileNameInOF << " is not here!" << endl;
-#endif
-		sonosApp:exit();
-	}
-#endif
-
-#ifdef DEBUG		
-	cerr << "Input size: width =" << camWidth << " height = " << camHeight << endl;
-#endif
-	
 	// ALLOCATE IMAGES SIZES
 	colorImg.allocate(camWidth, camHeight);
 	grayImage.allocate(camWidth, camHeight);
@@ -211,7 +172,44 @@ void sonosApp::exit()
 //--------------------------------------------------------------
 void sonosApp::inputSetup()
 {
+#ifdef _USE_LIVE_VIDEO
+	camWidth = 640;
+	camHeight = 480;
+	vidGrabber.setVerbose(true);
+	vidGrabber.initGrabber(camWidth, camHeight, false);
+#else
+	// FILENAME
+	filename = "videos/retro-ir.mov";
 	
+	//check if file exists
+	bool bFileThere = false;
+	fstream fin;
+	string fileNameInOF = ofToDataPath(filename, false); // since OF files are in the data directory, we need to do this
+	fin.open(fileNameInOF.c_str(),ios::in);
+	if ( fin.is_open() ) {
+#ifdef DEBUG
+		cerr << "Founded file " << fileNameInOF << endl;
+#endif
+		bFileThere =true;
+	}
+	fin.close();
+	
+	if (bFileThere) {
+		vidPlayer.loadMovie(filename);
+		vidPlayer.play();
+		camWidth = vidPlayer.getWidth();
+		camHeight = vidPlayer.getHeight();
+	} else {
+#ifdef DEBUG		
+		cerr << "File " << fileNameInOF << " is not here!" << endl;
+#endif
+	sonosApp:exit();
+	}
+#endif
+	
+#ifdef DEBUG		
+	cerr << "Input size: width =" << camWidth << " height = " << camHeight << endl;
+#endif	
 }
 
 
