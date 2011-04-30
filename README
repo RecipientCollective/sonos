@@ -90,3 +90,8 @@ NOTE: aggiunta branch experimental per tenere un master di salvezza in caso di e
 |
 |
 ---------------------------
+
+### NOTE DEVELOPING ###
+
+* configurazione git su MAC OSX: http://www.arthurkoziel.com/2008/05/02/git-configuration/
+   Per avere autocomplete, colori, editor, etc...

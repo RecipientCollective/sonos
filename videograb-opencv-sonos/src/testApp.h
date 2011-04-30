@@ -4,8 +4,10 @@
 #include "ofMain.h"
 
 #include "ofxOpenCv.h"
+#include "sonosBlob.h"
 #include "ofxDirList.h"
 #include <fstream>
+
 
 //#define _USE_LIVE_VIDEO	
 
@@ -40,6 +42,7 @@ public:
 	
 	ofxCvContourFinder 	contourFinder;
 	
+
 	ofxDirList   DIR;
 	int 		nVideos;
 	int         currentVideo;
@@ -74,6 +77,11 @@ public:
 	bool videosurce;
 	bool bLearnBakground;
 	int contour_min;
+	std::string filename;
+	
+	// testing sonoBLobs as map
+	map<int ,sonosBlob>  sonosblobs;
+	
 };
 
 #endif

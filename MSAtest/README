@@ -1,0 +1,21 @@
+cd addons
+
+git clone https://github.com/memo/msalibs.git
+(clona in addons/msalibs/) e' ok.
+
+Nel progetto XCode metti:
+
+User Search paths --> ../../../addons/msalibs/   (recursive)
+
+
+#define MSA_HOST_OPENFRAMEWORKS   in MSACore.h
+
+
+Trascina in addons (progetto XCode) MSAObjCPointer e TOGLI tutto meno SRC (delete references non file)
+
+Quetso perche' per MSAObjCPointer deve compilare MSAObjCPointer.cpp
+
+E funziona
+
+
+

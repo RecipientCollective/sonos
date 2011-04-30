@@ -1,12 +1,16 @@
 #include "testApp.h"
 
+// grezzo test per grezzo man
+bool sortByCentroid(const ofxCvBlob& d1, const ofxCvBlob& d2)
+{
+	return d1.centroid.x < d2.centroid.x;
+}
 
 
 //--------------------------------------------------------------
 void testApp::setup()
 {
-	
-	
+	filename = "videos/retro-ir.mov";
 	
 #ifdef _USE_LIVE_VIDEO
 	camWidth = 640;
@@ -17,7 +21,7 @@ void testApp::setup()
 	//check if file exists
 	bool bFileThere = false;
 	fstream fin;
-	string fileNameInOF = ofToDataPath("videos/retro-ir.mov"); // since OF files are in the data directory, we need to do this
+	string fileNameInOF = ofToDataPath(filename); // since OF files are in the data directory, we need to do this
 	fin.open(fileNameInOF.c_str(),ios::in);
 	if ( fin.is_open() ) {
 		cout<<"file exists"<<endl;
@@ -26,29 +30,16 @@ void testApp::setup()
 	fin.close();
 	
 	if (bFileThere) {
-		vidPlayer.loadMovie("videos/retro-ir.mov");
+		vidPlayer.loadMovie(filename);
 		vidPlayer.play();
 		camWidth = vidPlayer.getWidth();
 		camHeight = vidPlayer.getHeight();
 	} else {
 		cout << "File" << fileNameInOF << " is not here!" << endl;
-		testApp:exit();
+	testApp:exit();
 	}
-	
-	/*if (nVideos > 0) {
-		vidPlayer.loadMovie(Videos[currentVideo]);
-		vidPlayer.play();
-		camWidth = vidPlayer.getWidth();
-		camHeight = vidPlayer.getHeight();
 		
-		
-	} else {
-		cout << "No File here!" << endl;
-		testApp:exit();
-	}*/
-
 #endif
-	
 	
 	colorImg.allocate(camWidth, camHeight);
 	grayImage.allocate(camWidth, camHeight);
@@ -108,7 +99,7 @@ void testApp::update()
 #else
 		colorImg.setFromPixels(vidPlayer.getPixels(), camWidth,camHeight);
 #endif						
-
+		
 		grayImage = colorImg;
 		if (bLearnBakground == true){
 			grayBg = grayImage;		// the = sign copys the pixels from grayImage into grayBg (operator overloading)
@@ -118,7 +109,7 @@ void testApp::update()
 		// take the abs value of the difference between background and incoming and then threshold:
 		grayDiff.absDiff(grayBg, grayImage);
 		grayDiff.threshold(Threshold);
-	
+		
 		//update the cv image
 		grayImage.flagImageChanged();
 		grayDiff.flagImageChanged();
@@ -138,16 +129,27 @@ void testApp::update()
 		// find contours which are between the size of 20 pixels and 1/3 the w*h pixels.
 		// also, find holes is set to true so we will get interior contours as well....
 		contourFinder.findContours(grayDiff, contour_min, (camWidth*camHeight)/3, blobMax, false, true);
-	
+		
+		//float max_x = 0;
+		std::sort(contourFinder.blobs.begin(),contourFinder.blobs.end(), sortByCentroid);
+		
+		// clean sonosblob map
+		sonosblobs.clear();
+		
+		// copy the blobs to sonosBlobs map
+		for(int i = 0; i < contourFinder.blobs.size(); i++) {
+			
+			sonosBlob myblob = contourFinder.blobs[i];
+			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
+			// myblob ha area quindi e' figlio di ofxCvBlob
+			// std::cout << "AREA: " << myblob.area << std::endl;
+			// myblob ha anche Z
+			// std::cout << "Z: " << myblob.z << std::endl;
+			
+		}
+		
 	}
 }
-
-// grezzo test per grezzo man
-bool sortByCentroid(const ofxCvBlob& d1, const ofxCvBlob& d2)
-{
-	return d1.centroid.x < d2.centroid.x;
-}
-
 
 
 //--------------------------------------------------------------
@@ -184,19 +186,15 @@ void testApp::draw()
 			contourFinder.blobs[i].draw(360,540);
 		}
 		
-		
-		
-		
-		
 	} else {
-				
 		
-		//float max_x = 0;
-		std::sort(contourFinder.blobs.begin(),contourFinder.blobs.end(), sortByCentroid);
 		
-		for(int i = 0; i < contourFinder.blobs.size(); i++) {
+		// in draw we iterate in the map
+		for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
+		{
+			int index = i->first;
+			sonosBlob curr_blob = i->second;
 			
-			ofxCvBlob curr_blob = contourFinder.blobs[i];
 			float cx = curr_blob.centroid.x;
 			float cy = curr_blob.centroid.y;
 			float blobarea = curr_blob.area;
@@ -206,78 +204,34 @@ void testApp::draw()
 			float recty = curr_blob.boundingRect.y;
 			
 			
-			
 			//drawing only pixels form blobs, extracted from conturfinder
 			ofPushStyle();
 			ofSetColor(BlobColor);
 			glPushMatrix();
-			for( int k=0; k<(int)contourFinder.blobs.size(); k++ ) {
-				ofBeginShape();
-				for( int j=0; j<contourFinder.blobs[i].nPts; j++ ) {
-					ofVertex( contourFinder.blobs[i].pts[j].x, contourFinder.blobs[i].pts[j].y );
-				}
-				ofEndShape();
-				
+			ofBeginShape();
+			for( int j=0; j<curr_blob.nPts; j++ ) {
+				ofVertex( curr_blob.pts[j].x, curr_blob.pts[j].y );
 			}
+			ofEndShape();
+				
 			glPopMatrix();
 			ofPopStyle();
 			
-
-			
-			/*
-			float unit = camWidth / 2;
-			if (contourFinder.blobs.size() > 1) {
-				if (cx <= unit) {
-					ofSetColor(0, 255, 0);
-				} else {
-					ofSetColor(0, 0, 255);
-				}
-			} else {
+			if (i->first == 0) {
 				ofSetColor(255, 0, 0);
-			}
-			*/
-
-			/*
-			 if (cx <= unit) {
-			 ofSetColor(255, 0, 0);
-			 } else if (cx > unit && cx <= unit*2) {
-			 ofSetColor(0, 255, 0);
-			 } else if (cx > unit*2) {
-			 ofSetColor(0, 0, 255);
-			 }
-			 */
-			
-			/*
-			switch(colorz){
-				case 1:
-					ofSetColor(255, 255, 100);
-					break;
-				case 2:
-					ofSetColor(255, 100, 255);
-					break;
-				case 3:
-					ofSetColor(100, 255, 255);
-					break;
-				case 4:
-					ofSetColor(100, 120, 150);
-					break;
-			}
-			 */
-			
-			if (i == 0) {
-				ofSetColor(255, 0, 0);
-			} else if (i == 1) {
+			} else if (i->first == 1) {
 				ofSetColor(0, 255, 0);
-			} else if (i == 2) {
+			} else if (i->first == 2) {
 				ofSetColor(0, 0, 255);
 			} else {
 				ofSetColor(100, 100, 150);
 			}
-
+			
+			
 			if(interface){
-			ofNoFill();
-			ofRect(rectx,recty,blobwidth,blobheight);
-			ofFill();
+				ofNoFill();
+				ofRect(rectx,recty,blobwidth,blobheight);
+				ofFill();
 			}
 			
 			if (circle) {
@@ -289,11 +243,6 @@ void testApp::draw()
 				ofRect(rectx,0,blobwidth, 480);
 			}
 			
-			
-			//if (interface) {
-			//ofSetColor(255, 255, 255);
-			//ofDrawBitmapString("blob "+ ofToString(i, 0) + ": try " + ofToString(cy, 2) + " /trx " + ofToString(cx, 2) + " /area " + ofToString(blobarea, 0) , 20, 200+i*10 );
-			//}
 		}
 		
 	}
@@ -340,7 +289,7 @@ void testApp::background(int color){
 			ofBackground(0, 0, 0);
 			break;
 	}	
-
+	
 }
 
 //--------------------------------------------------------------
@@ -414,7 +363,7 @@ void testApp::keyPressed (int key)
 				ofSetFullscreen(true);
 			}
 			break;
-		
+			
 		case 'a':
 			scale_x+=0.01;
 			scale_y+=0.01;
@@ -445,7 +394,7 @@ void testApp::keyPressed (int key)
 			}
 			setup();
 			break;
-
+			
 		case 'd':
 			debug = !debug;
 			break;
