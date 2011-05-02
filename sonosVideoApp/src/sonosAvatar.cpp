@@ -41,9 +41,10 @@ void sonosAvatar::drawParticles()
 	ofPushStyle();
 	int i = 0;
 	for (i=0; i<10; i++) {
-		int mrand = ofRandom(-30,30);
-		int mx = x + mrand;
-		int my = y + mrand;
+		int mrandx = ofRandom(-30,30);
+		int mrandy = ofRandom(-30,30);
+		int mx = x + mrandx;
+		int my = y + mrandy;
 		int r = ofRandom(0,255);
 		int g = ofRandom(0,255);
 		int b = ofRandom(0,255);

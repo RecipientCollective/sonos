@@ -20,7 +20,7 @@ public:
 	
 	sonosAvatar();
 	sonosAvatar(ofPoint c, ofRectangle br);
-	
+		
 	void setStyle(int color);
 	void draw();
 	void drawParticles();

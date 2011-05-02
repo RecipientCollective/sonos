@@ -79,7 +79,7 @@ void toggleAvatar ( puObject * ob )
 
 void toggleParticles ( puObject * ob )
 {
-	bDrawParticles = true;
+	bDrawParticles = !bDrawParticles;
 }
 
 void setTrx (puObject * ob)
@@ -621,7 +621,6 @@ void sonosApp::sonosDraw()
 		
 		if (bDrawParticles) {
 			curr_blob.avatar.drawParticles();
-			bDrawParticles = false;
 		}
 	}
 	
