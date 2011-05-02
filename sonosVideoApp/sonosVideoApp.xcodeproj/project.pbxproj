@@ -165,6 +165,7 @@
 		5568918E136978730050D22B /* ofxCvShortImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55689125136978710050D22B /* ofxCvShortImage.cpp */; };
 		5568939613698B790050D22B /* functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5568939513698B790050D22B /* functions.cpp */; };
 		556893A713698C340050D22B /* sonosBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556893A613698C340050D22B /* sonosBlob.cpp */; };
+		55E8C05B136EA1B20025583E /* sonosAvatar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55E8C05A136EA1B20025583E /* sonosAvatar.cpp */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
 		E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */; };
 		E45BE97D0E8CC7DD009D7055 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9730E8CC7DD009D7055 /* AudioToolbox.framework */; };
@@ -473,6 +474,8 @@
 		5568939513698B790050D22B /* functions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = functions.cpp; sourceTree = "<group>"; };
 		556893A513698C340050D22B /* sonosBlob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sonosBlob.h; sourceTree = "<group>"; };
 		556893A613698C340050D22B /* sonosBlob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sonosBlob.cpp; sourceTree = "<group>"; };
+		55E8C059136EA1B20025583E /* sonosAvatar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sonosAvatar.h; sourceTree = "<group>"; };
+		55E8C05A136EA1B20025583E /* sonosAvatar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sonosAvatar.cpp; sourceTree = "<group>"; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		E45BE9730E8CC7DD009D7055 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
@@ -1209,6 +1212,8 @@
 				5568939513698B790050D22B /* functions.cpp */,
 				556893A513698C340050D22B /* sonosBlob.h */,
 				556893A613698C340050D22B /* sonosBlob.cpp */,
+				55E8C059136EA1B20025583E /* sonosAvatar.h */,
+				55E8C05A136EA1B20025583E /* sonosAvatar.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1376,6 +1381,7 @@
 				5553E3CF136AC5DD00474EA6 /* ulLinkedList.cxx in Sources */,
 				5553E3D0136AC5DD00474EA6 /* ulList.cxx in Sources */,
 				5553E3D1136AC5DD00474EA6 /* ulRTTI.cxx in Sources */,
+				55E8C05B136EA1B20025583E /* sonosAvatar.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
