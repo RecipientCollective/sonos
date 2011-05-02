@@ -11,6 +11,7 @@
 #define _SONOS_BLOB
 
 #include "ofxOpenCv.h"
+#include "sonosAvatar.h"
 
 class sonosBlob : public ofxCvBlob 
 {
@@ -21,6 +22,9 @@ public:
 	float avatar_y;
 	int	  mycolor;
 	int   avatar_color;
+	
+	// AVATAR
+	sonosAvatar avatar;
 	
 	// costruttore (vuoto)
 	sonosBlob() : ofxCvBlob() 

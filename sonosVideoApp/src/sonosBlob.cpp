@@ -24,7 +24,9 @@ sonosBlob::sonosBlob(const ofxCvBlob &other)
 	centroid     = other.centroid;
 	boundingRect = other.boundingRect;
 	
-	// set avatar position
+	// init avatar
+	//avatar = new sonosAvatar(centroid.x, centroid.y);
+	
 	setAvatar();
 }
 

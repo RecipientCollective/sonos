@@ -9,3 +9,12 @@
 
 #include "sonosAvatar.h"
 
+sonosAvatar::sonosAvatar()
+{
+}
+
+sonosAvatar::sonosAvatar(float ax, float ay)
+{
+	x = ax;
+	y = ay;
+}
