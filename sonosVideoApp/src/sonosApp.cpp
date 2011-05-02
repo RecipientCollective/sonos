@@ -126,7 +126,6 @@ void sonosApp::setup()
 
 	setupInterface();
 	
-	setupParticleSystem();
 }
 
 //--------------------------------------------------------------
@@ -144,7 +143,6 @@ void sonosApp::update()
 #endif
 	
 	if (bNewFrame){
-//		fluidSolver.update();
 		sonosUpdate();
 	}
 }
@@ -385,18 +383,6 @@ void sonosApp::setDefaults()
 	bParticles = false;
 }
 
-//--------------------------------------------------------------
-void sonosApp::setupParticleSystem()
-{
-	// setup fluid stuff
-	//fluidSolver.setup(100, 100);
-//    fluidSolver.enableRGB(true).setFadeSpeed(0.002).setDeltaT(0.5).setVisc(0.00015).setColorDiffusion(0);
-//	fluidDrawer.setup( &fluidSolver );
-//	particleSystem.setFluidSolver( &fluidSolver );
-//	ofEnableAlphaBlending();
-//	ofSetBackgroundAuto(true);
-//	windowResized(ofGetWidth(), ofGetHeight());		// force this at start (cos I don't think it is called)	
-}
 
 //--------------------------------------------------------------
 //  SETUP/DRAW INTERFACE 
@@ -628,7 +614,6 @@ void sonosApp::sonosDraw()
 		ofPopStyle();
 		
 		if (bAvatar) curr_blob.drawAvatar();
-		//if (bParticles) curr_blob.drawParticles(particleSystem, fluidSolver, fluidDrawer, camWidth, camHeight);
 	}
 	
 	ofPopMatrix();

@@ -60,24 +60,3 @@ void sonosBlob::drawAvatar()
 	ofCircle( avatar_x, avatar_y, raggio);
 	ofPopStyle();
 }
-
-void sonosBlob::drawParticles(ParticleSystem p, FluidSolver f, FluidDrawerGl d, int w, int h)
-{
-	// testing particles
-//	const float velocityMult = 0.1;
-//	const float colorMult = 100;
-//	
-//	ofPushStyle();
-//	Vec2f pos = Vec2f (avatar_x,avatar_y);
-//	Vec2f vel = Vec2f (0.1,0.1);	
-//	p.addParticles(pos, 1 );
-//	int fluidindex = f.getIndexForPos(pos);
-//	f.addForceAtIndex(fluidindex, vel * velocityMult);
-//	p.updateAndDraw( true );	
-//	// to MOVE TODO
-//	Color drawColor( CM_HSV, ( getElapsedFrames() % 360 ) / 360.0f, 1, 1 );
-//	f.addColorAtIndex(fluidindex, drawColor * colorMult);	
-//	glColor3f(1, 1, 1);
-//	d.draw(0, 0, w, h);	
-//	ofPopStyle();
-}

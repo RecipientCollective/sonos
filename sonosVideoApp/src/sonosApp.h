@@ -13,9 +13,7 @@
 #include "ofxOpenCv.h"
 #include "sonosBlob.h"
 #include "functions.h"
-#include "MSAFluid.h"
-#include "MSATimer.h"
-#include "ParticleSystem.h"
+
 
 // Uncomment to activate VideoLive
 //#define _USE_LIVE_VIDEO
@@ -23,7 +21,6 @@
 #define OUTPUT_HEIGHT 768.0
 #define OUTPUT_WIDTH 1024.0
 
-using namespace MSA;
 
 class sonosApp : public ofBaseApp{
 	
@@ -59,10 +56,6 @@ private:
 	ofxCvGrayscaleImage 	grayDiff;
 	ofxCvContourFinder		contourFinder;
 	
-	// MSAFluids
-	//MSA::FluidSolver	fluidSolver;
-//	MSA::FluidDrawerGl	fluidDrawer;	
-//	ParticleSystem		particleSystem;
 
 // INTERAL STUFFS
 private:
@@ -78,14 +71,15 @@ private:
 	void setDefaults();
 	void sonosUpdate();
 	void setupInterface();
-	void setupParticleSystem();
+	
 private:
 	// Our vars
 	std::string filename;
 	int 		camWidth;
 	int 		camHeight;
 	int			BlobColor;
-		
+
+private:
 	// containers 
 	map<int ,sonosBlob>  sonosblobs;
 	
