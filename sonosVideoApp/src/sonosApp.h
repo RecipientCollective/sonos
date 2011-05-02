@@ -63,6 +63,9 @@ private:
 	//MSA::FluidSolver	fluidSolver;
 //	MSA::FluidDrawerGl	fluidDrawer;	
 //	ParticleSystem		particleSystem;
+	
+	//images containers
+	ofImage lettering1;
 
 // INTERAL STUFFS
 private:
