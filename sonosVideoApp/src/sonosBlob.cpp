@@ -8,6 +8,15 @@
 
 #include "sonosBlob.h"
 
+// COSTRUTTORE
+sonosBlob::sonosBlob() : ofxCvBlob()
+{
+	z = 0.0f;		
+	mycolor = 0;
+	avatar_color = 0;
+}
+
+
 /////////////////////////////////////////////////////////////////
 // copiatore da ofxCvBlob (a = ofCvBlob)
 // Questo metodo viene chiamata ad ogni update con contourFinder

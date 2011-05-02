@@ -26,14 +26,8 @@ public:
 	// AVATAR
 	sonosAvatar avatar;
 	
-	// costruttore (vuoto)
-	sonosBlob() : ofxCvBlob() 
-	{
-		z = 0.0f;		
-		mycolor = 0;
-		avatar_color = 0;
-	}
-	
+	// costruttori
+	sonosBlob();
 	sonosBlob(const ofxCvBlob &other);
 	
 	void setAvatar();
