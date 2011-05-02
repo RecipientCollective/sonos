@@ -29,9 +29,7 @@ public:
 	// costruttori
 	sonosBlob();
 	sonosBlob(const ofxCvBlob &other);
-	
-	void setAvatar();
-	void drawAvatar();
+
 	void drawPixels();
 	void setBlobColor(int color);
 	void drawRect();
