@@ -41,7 +41,7 @@ void sonosAvatar::drawParticles()
 	ofPushStyle();
 	int i = 0;
 	for (i=0; i<10; i++) {
-		vector<float> pos = randomScatter(x, y, 30);
+		vector<float> pos = randomScatter(x, y, 100);
 		vector<int> rgb = randomRgb();
 		ofSetColor(rgb[0], rgb[1], rgb[2]);
 		ofCircle(pos[0], pos[1], 4.0);

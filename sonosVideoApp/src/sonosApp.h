@@ -21,6 +21,10 @@
 #define OUTPUT_HEIGHT 768.0
 #define OUTPUT_WIDTH 1024.0
 
+// PHYSICS
+#define	GRAVITY	1
+#define SECTOR_COUNT 1		// currently there is a bug at sector borders
+
 using namespace MSA;
 
 class sonosApp : public ofBaseApp{
@@ -62,17 +66,19 @@ private:
 // INTERAL STUFFS
 private:
 	// Our methods
-	void drawPointCloud();
+	void inputSetup();
+	void setDefaults();
+	void setupInterface();
+	void setupPhysicsWorld();
+	void sonosDraw();
+	void sonosUpdate();
+	
 	void background(int color);
 	void debugDraw();
 	void drawDebugInterface(float x, float y);
 	void drawInterface(float x, float y);
 	void setFullScreen();
-	void sonosDraw();
-	void inputSetup();
-	void setDefaults();
-	void sonosUpdate();
-	void setupInterface();
+	
 	
 private:
 	// Our vars

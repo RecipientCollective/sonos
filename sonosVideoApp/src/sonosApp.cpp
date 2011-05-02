@@ -125,6 +125,8 @@ void sonosApp::setup()
 	
 	setDefaults();
 
+	setupPhysicsWorld();
+	
 	setupInterface();
 	
 }
@@ -387,6 +389,28 @@ void sonosApp::setDefaults()
 	bDrawParticles = false;
 }
 
+//--------------------------------------------------------------
+void sonosApp::setupPhysicsWorld()
+{
+#ifdef DEBUG
+	physics.verbose = true;			// dump activity to log
+	std::cerr << "Dumping Physics INFO to log" << std::endl;
+#endif
+	// gravita'
+	physics.setGravity(Vec2f(0,GRAVITY));
+	
+	// set world dimensions, not essential, but speeds up collision
+	physics.setWorldSize(Vec2f(0.0,0.0), Vec2f(camWidth, camHeight));
+	/* STRANGE SETS TODO FIXME */
+	physics.setSectorCount(SECTOR_COUNT);
+    physics.setDrag(0.97f);
+	physics.setDrag(1);		// FIXTHIS
+	physics.enableCollision();
+	
+	// clear all particles and springs etc
+	physics.clear();
+	
+}
 
 //--------------------------------------------------------------
 //  SETUP/DRAW INTERFACE 
