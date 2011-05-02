@@ -27,7 +27,9 @@ void sonosAvatar::setStyle(int mcolor)
 
 void sonosAvatar::draw()
 {
+#ifdef DEBUG
 	std::cerr << x << "," << y << "," << r << "." << std::endl;
+#endif
 	ofPushStyle();
 	ofSetHexColor(color);
 	ofCircle( x, y, r);
