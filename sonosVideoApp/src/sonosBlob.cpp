@@ -3,11 +3,30 @@
  *  sonosVideoApp
  *
  *  Created by tucano on 4/28/11.
- *  Copyright 2011 IFOM-FIRC. All rights reserved.
  *
  */
 
 #include "sonosBlob.h"
+
+/////////////////////////////////////////////////////////////////
+// copiatore da ofxCvBlob (a = ofCvBlob)
+// Questo metodo viene chiamata ad ogni update con contourFinder
+// quindi ogni frame ho un sonosBlob nuovo.
+/////////////////////////////////////////////////////////////////
+
+sonosBlob::sonosBlob(const ofxCvBlob &other)
+{
+	area 		 = other.area;
+	length 		 = other.length;
+	hole 		 = other.hole;
+	nPts         = other.nPts;
+	pts          = other.pts;
+	centroid     = other.centroid;
+	boundingRect = other.boundingRect;
+	
+	// set avatar position
+	setAvatar();
+}
 
 void sonosBlob::setAvatar()
 {

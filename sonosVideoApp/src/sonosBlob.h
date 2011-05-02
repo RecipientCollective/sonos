@@ -30,25 +30,7 @@ public:
 		avatar_color = 0;
 	}
 	
-	/////////////////////////////////////////////////////////////////
-	// copiatore da ofxCvBlob (a = ofCvBlob)
-	// Questo metodo viene chiamata ad ogni update con contourFinder
-	// quindi ogni frame ho un sonosBlob nuovo.
-	/////////////////////////////////////////////////////////////////
-	
-	sonosBlob(const ofxCvBlob &other)
-	{
-		area 		 = other.area;
-		length 		 = other.length;
-		hole 		 = other.hole;
-		nPts         = other.nPts;
-		pts          = other.pts;
-		centroid     = other.centroid;
-		boundingRect = other.boundingRect;
-		
-		// set avatar position
-		setAvatar();
-	}
+	sonosBlob(const ofxCvBlob &other);
 	
 	void setAvatar();
 	void drawAvatar();
