@@ -18,6 +18,7 @@ sonosAvatar::sonosAvatar(ofPoint c, ofRectangle br)
 	r = (br.height >= br.width ? br.height : br.width) / 5.0;
 	y  = br.y - (br.height / 2);
 	x = c.x;
+	
 }
 
 void sonosAvatar::setStyle(int mcolor)

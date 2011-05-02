@@ -8,8 +8,14 @@
  *  
  */
 
+#ifndef _SONOS_AVATAR
+#define _SONOS_AVATAR
+
+#include "MSAPhysics2D.h"
 #include "ofMain.h"
 #include "functions.h"
+
+using namespace MSA;
 
 class sonosAvatar
 {
@@ -25,4 +31,10 @@ public:
 	void setStyle(int color);
 	void draw();
 	void drawParticles();
+
+	// Physics
+	// Physics::Particle2D body;
+	
 };
+
+#endif
