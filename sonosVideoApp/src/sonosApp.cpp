@@ -618,6 +618,11 @@ void sonosApp::sonosDraw()
 			curr_blob.avatar.setStyle(BlobColor);
 			curr_blob.avatar.draw();
 		}
+		
+		if (bDrawParticles) {
+			curr_blob.avatar.drawParticles();
+			bDrawParticles = false;
+		}
 	}
 	
 	ofPopMatrix();

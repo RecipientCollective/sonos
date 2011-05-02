@@ -1023,8 +1023,8 @@
 				E4B69E1E0A3A1BDC003C02F2 /* sonosApp.cpp */,
 				556893A513698C340050D22B /* sonosBlob.h */,
 				556893A613698C340050D22B /* sonosBlob.cpp */,
-				554E87F3136F025600DAA14E /* sonosAvatar.cpp */,
 				554E87F4136F025600DAA14E /* sonosAvatar.h */,
+				554E87F3136F025600DAA14E /* sonosAvatar.cpp */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;

@@ -27,9 +27,6 @@ void sonosAvatar::setStyle(int mcolor)
 
 void sonosAvatar::draw()
 {
-#ifdef DEBUG
-	std::cerr << x << "," << y << "," << r << "." << std::endl;
-#endif
 	ofPushStyle();
 	ofSetHexColor(color);
 	ofCircle( x, y, r);
@@ -41,5 +38,20 @@ void sonosAvatar::draw()
 
 void sonosAvatar::drawParticles()
 {
-
+	ofPushStyle();
+	int i = 0;
+	for (i=0; i<10; i++) {
+		int mrand = ofRandom(-30,30);
+		int mx = x + mrand;
+		int my = y + mrand;
+		int r = ofRandom(0,255);
+		int g = ofRandom(0,255);
+		int b = ofRandom(0,255);
+		ofSetColor(r, g, b);
+		ofCircle(mx, my, 4.0);
+#ifdef DEBUG
+		std::cerr << "Drawing particle at: " << mx << "," << my << "." << std::endl;
+#endif
+	}
+	ofPopStyle();
 }
