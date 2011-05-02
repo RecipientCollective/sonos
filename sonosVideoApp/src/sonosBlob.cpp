@@ -34,9 +34,7 @@ sonosBlob::sonosBlob(const ofxCvBlob &other)
 	boundingRect = other.boundingRect;
 	
 	// init avatar
-	float raggio = (boundingRect.height >= boundingRect.width ? boundingRect.height : boundingRect.width) / 5.0;
-	float y_pos  = boundingRect.y - (boundingRect.height / 2);
-	avatar = sonosAvatar(centroid.x, y_pos, raggio);
+	avatar = sonosAvatar(centroid, boundingRect);
 }
 
 void sonosBlob::drawPixels()

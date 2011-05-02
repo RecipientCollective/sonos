@@ -8,7 +8,7 @@
  *  
  */
 
-#include "ofxOpenCv.h"
+#include "ofMain.h"
 
 class sonosAvatar
 {
@@ -19,7 +19,7 @@ public:
 	int color;
 	
 	sonosAvatar();
-	sonosAvatar(float ax, float ay, float ar);
+	sonosAvatar(ofPoint c, ofRectangle br);
 	
 	void setStyle(int color);
 	void draw();
