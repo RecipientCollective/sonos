@@ -23,5 +23,5 @@ public:
 	
 	void setStyle(int color);
 	void draw();
-	
+	void drawParticles();
 };

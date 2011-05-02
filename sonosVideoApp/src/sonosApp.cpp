@@ -22,7 +22,7 @@ bool bCircle;
 bool bLine;
 bool bBox;
 bool bAvatar;
-bool bParticles;
+bool bDrawParticles;
 int	 blobMax;
 int  Threshold;
 int  contour_min;
@@ -79,7 +79,7 @@ void toggleAvatar ( puObject * ob )
 
 void toggleParticles ( puObject * ob )
 {
-	bParticles = !bParticles;
+	bDrawParticles = true;
 }
 
 void setTrx (puObject * ob)
@@ -381,7 +381,7 @@ void sonosApp::setDefaults()
 	bLine = false;
 	bBox = true;
 	bAvatar = false;
-	bParticles = false;
+	bDrawParticles = false;
 }
 
 

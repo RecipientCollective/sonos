@@ -33,5 +33,13 @@ void sonosAvatar::draw()
 	ofPushStyle();
 	ofSetHexColor(color);
 	ofCircle( x, y, r);
+	ofSetHexColor(0);
+	// draw a black point at center of avatar
+	ofCircle(x, y, 1.0);
 	ofPopStyle();
+}
+
+void sonosAvatar::drawParticles()
+{
+
 }
