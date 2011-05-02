@@ -9,6 +9,7 @@
  */
 
 #include "ofMain.h"
+#include "functions.h"
 
 class sonosAvatar
 {

@@ -365,6 +365,9 @@ void sonosApp::setDefaults()
 	//for smooth animation, set vertical sync if we can
 	//ofSetVerticalSync(true);
 	
+	// random seed with Clock
+	ofSeedRandom();
+	
 	//colors setup
 	BckColor=0;
 	BlobColor=0xDD00CC;

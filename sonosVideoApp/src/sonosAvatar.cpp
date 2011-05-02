@@ -41,17 +41,12 @@ void sonosAvatar::drawParticles()
 	ofPushStyle();
 	int i = 0;
 	for (i=0; i<10; i++) {
-		int mrandx = ofRandom(-30,30);
-		int mrandy = ofRandom(-30,30);
-		int mx = x + mrandx;
-		int my = y + mrandy;
-		int r = ofRandom(0,255);
-		int g = ofRandom(0,255);
-		int b = ofRandom(0,255);
-		ofSetColor(r, g, b);
-		ofCircle(mx, my, 4.0);
+		vector<float> pos = randomScatter(x, y, 30);
+		vector<int> rgb = randomRgb();
+		ofSetColor(rgb[0], rgb[1], rgb[2]);
+		ofCircle(pos[0], pos[1], 4.0);
 #ifdef DEBUG
-		std::cerr << "Drawing particle at: " << mx << "," << my << "." << std::endl;
+		std::cerr << "Drawing particle at: " << pos[0] << "," << pos[1] << "." << std::endl;
 #endif
 	}
 	ofPopStyle();
