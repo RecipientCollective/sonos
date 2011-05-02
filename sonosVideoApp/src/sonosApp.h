@@ -65,7 +65,7 @@ private:
 	void debugDraw();
 	void drawDebugInterface(float x, float y);
 	void drawInterface(float x, float y);
-	void setFullScreen(bool sflag);
+	void setFullScreen();
 	void sonosDraw();
 	void inputSetup();
 	void setDefaults();

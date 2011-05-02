@@ -15,6 +15,7 @@
 //--------------------------------------------------------------
 bool bLearnBackground;
 bool bFullscreen;
+bool bToogleFullScreen;
 bool bDebug;
 bool bInterface;
 bool bCircle;
@@ -53,7 +54,7 @@ void setContour ( puObject * ob )
 
 void toggleFullScreen ( puObject * ob )
 {
-	bFullscreen = !bFullscreen;
+	bToogleFullScreen = true;
 }
 
 void toggleDebug ( puObject * ob )
@@ -150,7 +151,7 @@ void sonosApp::update()
 //--------------------------------------------------------------
 void sonosApp::draw()
 {
-	setFullScreen(bFullscreen);
+	setFullScreen();
 	
 	if (bDebug) {
 		debugDraw();
@@ -205,7 +206,7 @@ void sonosApp::keyPressed(int key)
 			bBox = !bBox;
 			break;
 		case 'f':
-			bFullscreen = !bFullscreen;
+			bToogleFullScreen = true;
 			break;
 			
 		case OF_KEY_UP:
@@ -653,11 +654,15 @@ void sonosApp::debugDraw()
 }
 
 //--------------------------------------------------------------
-void sonosApp::setFullScreen(bool full)
+void sonosApp::setFullScreen()
 {
-	if (full) {
+	if (bToogleFullScreen && !bFullscreen) {
 		ofSetFullscreen(true);
-	} else {
+		bFullscreen = true;
+		bToogleFullScreen = false;
+	} else if (bToogleFullScreen && bFullscreen) {
+		bFullscreen = false;
+		bToogleFullScreen = false;
 		ofSetWindowShape(OUTPUT_WIDTH,OUTPUT_HEIGHT);
 		ofSetFullscreen(false);
 	}
