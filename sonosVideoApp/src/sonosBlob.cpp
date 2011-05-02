@@ -13,6 +13,8 @@ void sonosBlob::setAvatar()
 {
 	avatar_x = centroid.x;
 	avatar_y = boundingRect.y - (boundingRect.height / 2);
+	// FIXME avatar colorb
+	avatar_color = mycolor;
 }
 
 void sonosBlob::drawPixels()
@@ -55,7 +57,7 @@ void sonosBlob::rectangle()
 void sonosBlob::drawAvatar()
 {
 	ofPushStyle();
-	ofSetHexColor(mycolor);
+	ofSetHexColor(avatar_color);
 	float raggio = (boundingRect.height >= boundingRect.width ? boundingRect.height : boundingRect.width) / 5.0;
 	ofCircle( avatar_x, avatar_y, raggio);
 	ofPopStyle();

@@ -25,14 +25,15 @@ public:
 	// costruttore (vuoto)
 	sonosBlob() : ofxCvBlob() 
 	{
+		z = 0.0f;		
+		mycolor = 0;
+		avatar_color = 0;
 	}
 	
 	/////////////////////////////////////////////////////////////////
 	// copiatore da ofxCvBlob (a = ofCvBlob)
 	// Questo metodo viene chiamata ad ogni update con contourFinder
 	// quindi ogni frame ho un sonosBlob nuovo.
-	// Z = futura z-position
-	// 
 	/////////////////////////////////////////////////////////////////
 	
 	sonosBlob(const ofxCvBlob &other)
@@ -44,13 +45,6 @@ public:
 		pts          = other.pts;
 		centroid     = other.centroid;
 		boundingRect = other.boundingRect;
-		
-		// No info on Z when I copy the blob
-		z            = 0.0;
-		
-		// default color
-		mycolor = 0;
-		avatar_color = 0;
 		
 		// set avatar position
 		setAvatar();
