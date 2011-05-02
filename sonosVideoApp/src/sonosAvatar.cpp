@@ -13,8 +13,23 @@ sonosAvatar::sonosAvatar()
 {
 }
 
-sonosAvatar::sonosAvatar(float ax, float ay)
+sonosAvatar::sonosAvatar(float ax, float ay, float ar)
 {
 	x = ax;
 	y = ay;
+	r = ar;
+}
+
+void sonosAvatar::setStyle(int mcolor)
+{
+	color = mcolor;
+}
+
+void sonosAvatar::draw()
+{
+	std::cerr << x << "," << y << "," << r << "." << std::endl;
+	ofPushStyle();
+	ofSetHexColor(color);
+	ofCircle( x, y, r);
+	ofPopStyle();
 }

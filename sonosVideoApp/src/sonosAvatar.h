@@ -8,15 +8,20 @@
  *  
  */
 
+#include "ofxOpenCv.h"
+
 class sonosAvatar
 {
 public:
 	float x;
 	float y;
+	float r;
+	int color;
 	
 	sonosAvatar();
-	sonosAvatar(float ax, float ay);
+	sonosAvatar(float ax, float ay, float ar);
 	
+	void setStyle(int color);
 	void draw();
 	
 };

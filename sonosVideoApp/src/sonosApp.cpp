@@ -614,7 +614,10 @@ void sonosApp::sonosDraw()
 		if (bLine) curr_blob.rectangle();
 		ofPopStyle();
 		
-		if (bAvatar) curr_blob.drawAvatar();
+		if (bAvatar) {
+			curr_blob.avatar.setStyle(BlobColor);
+			curr_blob.avatar.draw();
+		}
 	}
 	
 	ofPopMatrix();

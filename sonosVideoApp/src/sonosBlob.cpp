@@ -34,17 +34,9 @@ sonosBlob::sonosBlob(const ofxCvBlob &other)
 	boundingRect = other.boundingRect;
 	
 	// init avatar
-	//avatar = new sonosAvatar(centroid.x, centroid.y);
-	
-	setAvatar();
-}
-
-void sonosBlob::setAvatar()
-{
-	avatar_x = centroid.x;
-	avatar_y = boundingRect.y - (boundingRect.height / 2);
-	// FIXME avatar colorb
-	avatar_color = mycolor;
+	float raggio = (boundingRect.height >= boundingRect.width ? boundingRect.height : boundingRect.width) / 5.0;
+	float y_pos  = boundingRect.y - (boundingRect.height / 2);
+	avatar = sonosAvatar(centroid.x, y_pos, raggio);
 }
 
 void sonosBlob::drawPixels()
@@ -82,13 +74,4 @@ void sonosBlob::circle()
 void sonosBlob::rectangle()
 {
 	ofRect(boundingRect.x,0,boundingRect.width, 480);
-}
-
-void sonosBlob::drawAvatar()
-{
-	ofPushStyle();
-	ofSetHexColor(avatar_color);
-	float raggio = (boundingRect.height >= boundingRect.width ? boundingRect.height : boundingRect.width) / 5.0;
-	ofCircle( avatar_x, avatar_y, raggio);
-	ofPopStyle();
 }
