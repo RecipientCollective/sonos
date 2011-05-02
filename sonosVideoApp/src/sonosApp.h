@@ -13,7 +13,7 @@
 #include "ofxOpenCv.h"
 #include "sonosBlob.h"
 #include "functions.h"
-
+#include "MSAPhysics3D.h"
 
 // Uncomment to activate VideoLive
 //#define _USE_LIVE_VIDEO
@@ -21,6 +21,7 @@
 #define OUTPUT_HEIGHT 768.0
 #define OUTPUT_WIDTH 1024.0
 
+using namespace MSA;
 
 class sonosApp : public ofBaseApp{
 	
@@ -56,6 +57,7 @@ private:
 	ofxCvGrayscaleImage 	grayDiff;
 	ofxCvContourFinder		contourFinder;
 	
+	Physics::World3D		physics;
 
 // INTERAL STUFFS
 private:

@@ -114,6 +114,7 @@
 		5568939613698B790050D22B /* functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5568939513698B790050D22B /* functions.cpp */; };
 		556893A713698C340050D22B /* sonosBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 556893A613698C340050D22B /* sonosBlob.cpp */; };
 		55E8C215136EAED40025583E /* libcustomPUI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E8C1EE136EAE5F0025583E /* libcustomPUI.a */; };
+		55E8C253136EB20F0025583E /* MSAObjCPointer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55E8C251136EB20F0025583E /* MSAObjCPointer.cpp */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
 		E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */; };
 		E45BE97D0E8CC7DD009D7055 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9730E8CC7DD009D7055 /* AudioToolbox.framework */; };
@@ -369,6 +370,8 @@
 		556893A513698C340050D22B /* sonosBlob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sonosBlob.h; sourceTree = "<group>"; };
 		556893A613698C340050D22B /* sonosBlob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sonosBlob.cpp; sourceTree = "<group>"; };
 		55E8C1E9136EAE5F0025583E /* customPUI.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = customPUI.xcodeproj; path = libs/customPUI/customPUI.xcodeproj; sourceTree = "<group>"; };
+		55E8C251136EB20F0025583E /* MSAObjCPointer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MSAObjCPointer.cpp; sourceTree = "<group>"; };
+		55E8C252136EB20F0025583E /* MSAObjCPointer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSAObjCPointer.h; sourceTree = "<group>"; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		E45BE9730E8CC7DD009D7055 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = /System/Library/Frameworks/AudioToolbox.framework; sourceTree = "<absolute>"; };
@@ -947,9 +950,28 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		55E8C24F136EB20F0025583E /* MSAObjCPointer */ = {
+			isa = PBXGroup;
+			children = (
+				55E8C250136EB20F0025583E /* src */,
+			);
+			name = MSAObjCPointer;
+			path = ../../../addons/msalibs/MSAObjCPointer;
+			sourceTree = SOURCE_ROOT;
+		};
+		55E8C250136EB20F0025583E /* src */ = {
+			isa = PBXGroup;
+			children = (
+				55E8C251136EB20F0025583E /* MSAObjCPointer.cpp */,
+				55E8C252136EB20F0025583E /* MSAObjCPointer.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				55E8C24F136EB20F0025583E /* MSAObjCPointer */,
 				55689052136978710050D22B /* ofxOpenCv */,
 			);
 			name = addons;
@@ -1125,6 +1147,7 @@
 				5568918E136978730050D22B /* ofxCvShortImage.cpp in Sources */,
 				5568939613698B790050D22B /* functions.cpp in Sources */,
 				556893A713698C340050D22B /* sonosBlob.cpp in Sources */,
+				55E8C253136EB20F0025583E /* MSAObjCPointer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
