@@ -62,11 +62,21 @@ tutte le path sono relative,
 
 ### NOTE DEVELOPING ###
 
-* BRANCH MAP
+* openFrameworks edge:
+  https://github.com/openframeworks/openFrameworks.git
 
- - testPUI nuova interfaccia
- - sonos_blob: tucano
- - new_functions: man
+* msalibs
+  https://github.com/memo/msalibs.git
+  Nota:  #define MSA_HOST_OPENFRAMEWORKS   in MSACore.h
+
+* DIpendenze MSAObjCPointer, ofxOpenCv, MSACore
+
+* BRANCH MAP
+  [x] <-- branch che usano openFrameworks edge e msalibs
+
+ - testPUI nuova interfaccia [x]
+ - sonos_blob: tucano        [x]
+ - new_functions: man        [x]
  - meta_testing: metamatic
 
 * configurazione git su MAC OSX: http://www.arthurkoziel.com/2008/05/02/git-configuration/
