@@ -27,7 +27,14 @@ public:
 	{
 	}
 	
+	/////////////////////////////////////////////////////////////////
 	// copiatore da ofxCvBlob (a = ofCvBlob)
+	// Questo metodo viene chiamata ad ogni update con contourFinder
+	// quindi ogni frame ho un sonosBlob nuovo.
+	// Z = futura z-position
+	// 
+	/////////////////////////////////////////////////////////////////
+	
 	sonosBlob(const ofxCvBlob &other)
 	{
 		area 		 = other.area;
@@ -45,7 +52,7 @@ public:
 		mycolor = 0;
 		avatar_color = 0;
 		
-		// avatar position
+		// set avatar position
 		setAvatar();
 	}
 	
