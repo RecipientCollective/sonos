@@ -62,5 +62,12 @@ tutte le path sono relative,
 
 ### NOTE DEVELOPING ###
 
+* BRANCH MAP
+
+ - testPUI nuova interfaccia
+ - sonos_blob: tucano
+ - new_functions: man
+ - meta_testing: metamatic
+
 * configurazione git su MAC OSX: http://www.arthurkoziel.com/2008/05/02/git-configuration/
    Per avere autocomplete, colori, editor, etc...
