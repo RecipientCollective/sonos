@@ -139,14 +139,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 55E8C1E9136EAE5F0025583E /* customPUI.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC046055464E500DB518D /* libcustomPUI.a */;
+			remoteGlobalIDString = D2AAC046055464E500DB518D;
 			remoteInfo = customPUI;
 		};
 		55E8C20C136EAE9B0025583E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 55E8C1E9136EAE5F0025583E /* customPUI.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D /* customPUI */;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
 			remoteInfo = customPUI;
 		};
 		E4C2421D10CC549C004149E2 /* PBXContainerItemProxy */ = {
