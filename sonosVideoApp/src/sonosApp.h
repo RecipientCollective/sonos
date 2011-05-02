@@ -13,7 +13,7 @@
 #include "ofxOpenCv.h"
 #include "sonosBlob.h"
 #include "functions.h"
-#include "MSAPhysics3D.h"
+#include "MSAPhysics2D.h"
 
 // Uncomment to activate VideoLive
 //#define _USE_LIVE_VIDEO
@@ -57,7 +57,7 @@ private:
 	ofxCvGrayscaleImage 	grayDiff;
 	ofxCvContourFinder		contourFinder;
 	
-	Physics::World3D		physics;
+	Physics::World2D		physics;
 
 // INTERAL STUFFS
 private:
