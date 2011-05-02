@@ -241,18 +241,12 @@
 		553A284B1369E25F00292B8D /* Color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Color.h; sourceTree = "<group>"; };
 		553A284C1369E25F00292B8D /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		5553E347136AC5DD00474EA6 /* fnt.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fnt.cxx; sourceTree = "<group>"; };
-		5553E348136AC5DD00474EA6 /* fnt.dsp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fnt.dsp; sourceTree = "<group>"; };
 		5553E349136AC5DD00474EA6 /* fnt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fnt.h; sourceTree = "<group>"; };
 		5553E34A136AC5DD00474EA6 /* fntBitmap.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fntBitmap.cxx; sourceTree = "<group>"; };
 		5553E34B136AC5DD00474EA6 /* fntLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fntLocal.h; sourceTree = "<group>"; };
 		5553E34C136AC5DD00474EA6 /* fntTXF.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fntTXF.cxx; sourceTree = "<group>"; };
-		5553E34D136AC5DD00474EA6 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		5553E34E136AC5DD00474EA6 /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
 		5553E34F136AC5DD00474EA6 /* ofxPUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPUI.h; sourceTree = "<group>"; };
-		5553E351136AC5DD00474EA6 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		5553E352136AC5DD00474EA6 /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
 		5553E353136AC5DD00474EA6 /* puAux.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puAux.cxx; sourceTree = "<group>"; };
-		5553E354136AC5DD00474EA6 /* puAux.dsp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = puAux.dsp; sourceTree = "<group>"; };
 		5553E355136AC5DD00474EA6 /* puAux.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = puAux.h; sourceTree = "<group>"; };
 		5553E356136AC5DD00474EA6 /* puAuxBiSlider.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puAuxBiSlider.cxx; sourceTree = "<group>"; };
 		5553E357136AC5DD00474EA6 /* puAuxBiSliderWithEnds.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puAuxBiSliderWithEnds.cxx; sourceTree = "<group>"; };
@@ -269,8 +263,6 @@
 		5553E362136AC5DD00474EA6 /* puAuxSpinBox.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puAuxSpinBox.cxx; sourceTree = "<group>"; };
 		5553E363136AC5DD00474EA6 /* puAuxTriSlider.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puAuxTriSlider.cxx; sourceTree = "<group>"; };
 		5553E364136AC5DD00474EA6 /* puAuxVerticalMenu.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puAuxVerticalMenu.cxx; sourceTree = "<group>"; };
-		5553E366136AC5DD00474EA6 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		5553E367136AC5DD00474EA6 /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
 		5553E368136AC5DD00474EA6 /* pu.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pu.cxx; sourceTree = "<group>"; };
 		5553E369136AC5DD00474EA6 /* pu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pu.h; sourceTree = "<group>"; };
 		5553E36A136AC5DD00474EA6 /* puArrowButton.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puArrowButton.cxx; sourceTree = "<group>"; };
@@ -284,7 +276,6 @@
 		5553E372136AC5DD00474EA6 /* puFrame.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puFrame.cxx; sourceTree = "<group>"; };
 		5553E373136AC5DD00474EA6 /* puGLUT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = puGLUT.h; sourceTree = "<group>"; };
 		5553E374136AC5DD00474EA6 /* puGroup.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puGroup.cxx; sourceTree = "<group>"; };
-		5553E375136AC5DD00474EA6 /* pui.dsp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pui.dsp; sourceTree = "<group>"; };
 		5553E376136AC5DD00474EA6 /* puInput.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puInput.cxx; sourceTree = "<group>"; };
 		5553E377136AC5DD00474EA6 /* puInputBase.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puInputBase.cxx; sourceTree = "<group>"; };
 		5553E378136AC5DD00474EA6 /* puInterface.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puInterface.cxx; sourceTree = "<group>"; };
@@ -302,19 +293,13 @@
 		5553E384136AC5DD00474EA6 /* puSlider.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puSlider.cxx; sourceTree = "<group>"; };
 		5553E385136AC5DD00474EA6 /* puText.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puText.cxx; sourceTree = "<group>"; };
 		5553E386136AC5DD00474EA6 /* puValue.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = puValue.cxx; sourceTree = "<group>"; };
-		5553E388136AC5DD00474EA6 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		5553E389136AC5DD00474EA6 /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
 		5553E38A136AC5DD00474EA6 /* sg.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sg.cxx; sourceTree = "<group>"; };
-		5553E38B136AC5DD00474EA6 /* sg.dsp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sg.dsp; sourceTree = "<group>"; };
 		5553E38C136AC5DD00474EA6 /* sg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sg.h; sourceTree = "<group>"; };
 		5553E38D136AC5DD00474EA6 /* sgd.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgd.cxx; sourceTree = "<group>"; };
 		5553E38E136AC5DD00474EA6 /* sgdIsect.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgdIsect.cxx; sourceTree = "<group>"; };
 		5553E38F136AC5DD00474EA6 /* sgIsect.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgIsect.cxx; sourceTree = "<group>"; };
 		5553E390136AC5DD00474EA6 /* sgPerlinNoise.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sgPerlinNoise.cxx; sourceTree = "<group>"; };
-		5553E392136AC5DD00474EA6 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		5553E393136AC5DD00474EA6 /* Makefile.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
 		5553E394136AC5DD00474EA6 /* ul.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ul.cxx; sourceTree = "<group>"; };
-		5553E395136AC5DD00474EA6 /* ul.dsp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ul.dsp; sourceTree = "<group>"; };
 		5553E396136AC5DD00474EA6 /* ul.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ul.h; sourceTree = "<group>"; };
 		5553E397136AC5DD00474EA6 /* ulClock.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ulClock.cxx; sourceTree = "<group>"; };
 		5553E398136AC5DD00474EA6 /* ulError.cxx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ulError.cxx; sourceTree = "<group>"; };
@@ -714,13 +699,10 @@
 			isa = PBXGroup;
 			children = (
 				5553E347136AC5DD00474EA6 /* fnt.cxx */,
-				5553E348136AC5DD00474EA6 /* fnt.dsp */,
 				5553E349136AC5DD00474EA6 /* fnt.h */,
 				5553E34A136AC5DD00474EA6 /* fntBitmap.cxx */,
 				5553E34B136AC5DD00474EA6 /* fntLocal.h */,
 				5553E34C136AC5DD00474EA6 /* fntTXF.cxx */,
-				5553E34D136AC5DD00474EA6 /* Makefile.am */,
-				5553E34E136AC5DD00474EA6 /* Makefile.in */,
 			);
 			path = fnt;
 			sourceTree = "<group>";
@@ -728,10 +710,7 @@
 		5553E350136AC5DD00474EA6 /* puAux */ = {
 			isa = PBXGroup;
 			children = (
-				5553E351136AC5DD00474EA6 /* Makefile.am */,
-				5553E352136AC5DD00474EA6 /* Makefile.in */,
 				5553E353136AC5DD00474EA6 /* puAux.cxx */,
-				5553E354136AC5DD00474EA6 /* puAux.dsp */,
 				5553E355136AC5DD00474EA6 /* puAux.h */,
 				5553E356136AC5DD00474EA6 /* puAuxBiSlider.cxx */,
 				5553E357136AC5DD00474EA6 /* puAuxBiSliderWithEnds.cxx */,
@@ -755,8 +734,6 @@
 		5553E365136AC5DD00474EA6 /* pui */ = {
 			isa = PBXGroup;
 			children = (
-				5553E366136AC5DD00474EA6 /* Makefile.am */,
-				5553E367136AC5DD00474EA6 /* Makefile.in */,
 				5553E368136AC5DD00474EA6 /* pu.cxx */,
 				5553E369136AC5DD00474EA6 /* pu.h */,
 				5553E36A136AC5DD00474EA6 /* puArrowButton.cxx */,
@@ -770,7 +747,6 @@
 				5553E372136AC5DD00474EA6 /* puFrame.cxx */,
 				5553E373136AC5DD00474EA6 /* puGLUT.h */,
 				5553E374136AC5DD00474EA6 /* puGroup.cxx */,
-				5553E375136AC5DD00474EA6 /* pui.dsp */,
 				5553E376136AC5DD00474EA6 /* puInput.cxx */,
 				5553E377136AC5DD00474EA6 /* puInputBase.cxx */,
 				5553E378136AC5DD00474EA6 /* puInterface.cxx */,
@@ -795,10 +771,7 @@
 		5553E387136AC5DD00474EA6 /* sg */ = {
 			isa = PBXGroup;
 			children = (
-				5553E388136AC5DD00474EA6 /* Makefile.am */,
-				5553E389136AC5DD00474EA6 /* Makefile.in */,
 				5553E38A136AC5DD00474EA6 /* sg.cxx */,
-				5553E38B136AC5DD00474EA6 /* sg.dsp */,
 				5553E38C136AC5DD00474EA6 /* sg.h */,
 				5553E38D136AC5DD00474EA6 /* sgd.cxx */,
 				5553E38E136AC5DD00474EA6 /* sgdIsect.cxx */,
@@ -811,10 +784,7 @@
 		5553E391136AC5DD00474EA6 /* util */ = {
 			isa = PBXGroup;
 			children = (
-				5553E392136AC5DD00474EA6 /* Makefile.am */,
-				5553E393136AC5DD00474EA6 /* Makefile.in */,
 				5553E394136AC5DD00474EA6 /* ul.cxx */,
-				5553E395136AC5DD00474EA6 /* ul.dsp */,
 				5553E396136AC5DD00474EA6 /* ul.h */,
 				5553E397136AC5DD00474EA6 /* ulClock.cxx */,
 				5553E398136AC5DD00474EA6 /* ulError.cxx */,
