@@ -11,13 +11,17 @@
 
 sonosAvatar::sonosAvatar()
 {
+	x = 0.0;
+	y = 0.0;
+	r = 0.0;
+	color = 0;
 }
 
 void sonosAvatar::setPosition(ofPoint c, ofRectangle br)
 {
 	r = (br.height >= br.width ? br.height : br.width) / 5.0;
 	y = br.y - (br.height / 2);
-	x = c.x;	
+	x = c.x;
 }
 
 void sonosAvatar::setStyle(int mcolor)

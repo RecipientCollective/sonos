@@ -590,8 +590,7 @@ void sonosApp::sonosUpdate()
 	sonosblobs.clear();
 	
 	// copy the blobs to sonosBlobs map
-	for(int i = 0; i < contourFinder.blobs.size(); i++) {
-		
+	for(int i = 0; i < contourFinder.blobs.size(); i++) {		
 		sonosBlob myblob = contourFinder.blobs[i];
 		sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 	}	
