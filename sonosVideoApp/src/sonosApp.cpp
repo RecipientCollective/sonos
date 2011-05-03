@@ -585,57 +585,38 @@ void sonosApp::sonosUpdate()
 	
 	// sort by centroid
 	std::sort(contourFinder.blobs.begin(),contourFinder.blobs.end(), sortByCentroid);
-	
+
+	std::string status = "";
 	if (sonosblobs.size() == 0) {
-		
-#ifdef DEBUG
-		std::cerr << "sonosblobs is empty" << std::endl;
-#endif
-		// copy the blobs to sonosBlobs map
-		for(int i = 0; i < contourFinder.blobs.size(); i++) {		
-			sonosBlob myblob;
-			myblob = contourFinder.blobs[i];
+		for(int i = 0; i < contourFinder.blobs.size(); i++) {
+			sonosBlob myblob = contourFinder.blobs[i];
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 		}
-		
+		status = "EMPTY";
 	} else if (sonosblobs.size() == contourFinder.blobs.size()) {
-		
-#ifdef DEBUG
-		std::cerr << "sonosblobs is full: need update. Same size has before." << std::endl;
-#endif
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			sonosblobs[i].update(contourFinder.blobs[i]);
-#ifdef DEBUG
-			std::cerr << "sonosblob found:" << sonosblobs[i].code << std::endl;
-#endif			
 		}
-		
-	} else if (sonosblobs.size() > contourFinder.blobs.size()) {
-		
-#ifdef DEBUG
-		std::cerr << "sonosblobs is full: need update. An object disappear." << std::endl;
-#endif
-	//	sonosblobs.clear();
-//		// copy the blobs to sonosBlobs map
-//		for(int i = 0; i < contourFinder.blobs.size(); i++) {		
-//			sonosBlob myblob = contourFinder.blobs[i];
-//			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
-//		}
-		
+		status = "FULL";
+	} else if (sonosblobs.size() > contourFinder.blobs.size()) {		
+		sonosblobs.clear();
+		for(int i = 0; i < contourFinder.blobs.size(); i++) {		
+			sonosBlob myblob = contourFinder.blobs[i];
+			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
+		}
+		status = "LOSING OBJECTS";
 	} else if (sonosblobs.size() < contourFinder.blobs.size()) {
-		
-#ifdef DEBUG
-		std::cerr << "sonosblobs is full: need update. An object appear." << std::endl;
-#endif	
-//		sonosblobs.clear();
-//		// copy the blobs to sonosBlobs map
-//		for(int i = 0; i < contourFinder.blobs.size(); i++) {		
-//			sonosBlob myblob = contourFinder.blobs[i];
-//			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
-//		}
-		
+		sonosblobs.clear();
+		for(int i = 0; i < contourFinder.blobs.size(); i++) {		
+			sonosBlob myblob = contourFinder.blobs[i];
+			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
+		}
+		status = "GAINING OBJECTS";
 	}
-
+#ifdef DEBUG
+	std::cerr << "sonosblobs UPDATE STATUS: " << status << std::endl;
+#endif
+		
 }
 
 //--------------------------------------------------------------
