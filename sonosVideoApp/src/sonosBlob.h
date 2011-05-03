@@ -11,6 +11,7 @@
 #define _SONOS_BLOB
 
 #include "ofxOpenCv.h"
+#include "MSAPhysics2D.h"
 #include "sonosAvatar.h"
 
 class sonosBlob : public ofxCvBlob 

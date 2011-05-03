@@ -26,15 +26,14 @@ public:
 	int color;
 	
 	sonosAvatar();
-	sonosAvatar(ofPoint c, ofRectangle br);
-		
+	
+	void setPosition(ofPoint c, ofRectangle br);
 	void setStyle(int color);
 	void draw();
 	void drawParticles();
 
 	// Physics
-	// Physics::Particle2D body;
-	
+	Physics::Particle2D body;
 };
 
 #endif

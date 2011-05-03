@@ -33,8 +33,8 @@ sonosBlob::sonosBlob(const ofxCvBlob &other)
 	centroid     = other.centroid;
 	boundingRect = other.boundingRect;
 	
-	// init avatar
-	avatar = sonosAvatar(centroid, boundingRect);
+	// init avatar position
+	avatar.setPosition(centroid, boundingRect);
 }
 
 void sonosBlob::drawPixels()
