@@ -33,7 +33,7 @@ public:
 	void drawParticles();
 
 	// Physics
-	Physics::Particle2D body;
+	//Physics::Particle2D body;
 };
 
 #endif
