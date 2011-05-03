@@ -14,6 +14,7 @@
 // Random Functions
 vector<float> randomScatter(float x, float y, int range);
 vector<int> randomRgb();
+std::string randomString(int length, bool letters, bool numbers, bool symbols);
 
 //--------------------------------------------------------------
 // sort helper functions

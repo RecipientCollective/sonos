@@ -14,6 +14,7 @@ sonosBlob::sonosBlob() : ofxCvBlob()
 	z = 0.0f;		
 	mycolor = 0;
 	avatar_color = 0;
+	code = "";
 }
 
 
@@ -32,6 +33,25 @@ sonosBlob::sonosBlob(const ofxCvBlob &other)
 	pts          = other.pts;
 	centroid     = other.centroid;
 	boundingRect = other.boundingRect;
+	
+	// init avatar position
+	avatar.setPosition(centroid, boundingRect);
+	// prove of principle objectpersistency
+	code = randomString(10, false, false, true);
+#ifdef DEBUG
+	std::cerr << "generated code for sonosBlob: " << code << std::endl;
+#endif
+}
+
+void sonosBlob::update(const ofxCvBlob blob)
+{
+	area 		 = blob.area;
+	length 		 = blob.length;
+	hole 		 = blob.hole;
+	nPts         = blob.nPts;
+	pts          = blob.pts;
+	centroid     = blob.centroid;
+	boundingRect = blob.boundingRect;
 	
 	// init avatar position
 	avatar.setPosition(centroid, boundingRect);

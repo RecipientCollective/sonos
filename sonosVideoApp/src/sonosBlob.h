@@ -12,6 +12,7 @@
 
 #include "ofxOpenCv.h"
 #include "MSAPhysics2D.h"
+#include "functions.h"
 #include "sonosAvatar.h"
 
 class sonosBlob : public ofxCvBlob 
@@ -23,6 +24,7 @@ public:
 	float avatar_y;
 	int	  mycolor;
 	int   avatar_color;
+	string  code;
 	
 	// AVATAR
 	sonosAvatar avatar;
@@ -36,6 +38,7 @@ public:
 	void drawRect();
 	void circle();
 	void rectangle();
+	void update(const ofxCvBlob blob);
 };
 
 #endif
