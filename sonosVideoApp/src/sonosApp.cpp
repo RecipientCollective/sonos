@@ -129,6 +129,9 @@ void sonosApp::setup()
 	
 	setupInterface();
 	
+#ifdef DEBUG
+	std::cerr << "END SETUP" << std::endl;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -387,7 +390,9 @@ void sonosApp::setDefaults()
 	bBox = true;
 	bAvatar = false;
 	bDrawParticles = false;
-	mStatus = empty;
+	
+	pStatus = unknown;
+	mStatus = unknown;
 }
 
 //--------------------------------------------------------------
@@ -580,44 +585,83 @@ void sonosApp::sonosUpdate()
 	 bool bUseApproximation
 	 )
 	 
-	 find contours which are between the size of 20 pixels and 1/3 the w*h pixels.
-	 also, find holes is set to true so we will get interior contours as well...  */
+	find contours which are between the size of 20 pixels and 1/3 the w*h pixels.
+	also, find holes is set to true so we will get interior contours as well...  */
 	contourFinder.findContours(grayDiff, contour_min, (camWidth*camHeight)/3, blobMax, false, true);
 	
 	// sort by centroid
 	std::sort(contourFinder.blobs.begin(),contourFinder.blobs.end(), sortByCentroid);
 
-	std::string status = "";
-	if (sonosblobs.size() == 0) {
+	/* 
+	 * UPDATE with OBJECT PERSISTENCY 
+	 * 4 casi:
+	 *  - empty
+	 *  - full
+	 *  - lose
+	 *  - gain
+	 */
+	
+	if (sonosblobs.size() == 0 && contourFinder.blobs.size() > 0) {
+		
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			sonosBlob myblob = contourFinder.blobs[i];
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 		}
-		status = "EMPTY";
+		mStatus = empty;
+		
 	} else if (sonosblobs.size() == contourFinder.blobs.size()) {
+
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			sonosblobs[i].update(contourFinder.blobs[i]);
 		}
-		status = "FULL";
-	} else if (sonosblobs.size() > contourFinder.blobs.size()) {		
-		sonosblobs.clear();
-		for(int i = 0; i < contourFinder.blobs.size(); i++) {		
-			sonosBlob myblob = contourFinder.blobs[i];
-			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
-		}
-		status = "LOSING OBJECTS";
-	} else if (sonosblobs.size() < contourFinder.blobs.size()) {
-		sonosblobs.clear();
-		for(int i = 0; i < contourFinder.blobs.size(); i++) {		
-			sonosBlob myblob = contourFinder.blobs[i];
-			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
-		}
-		status = "GAINING OBJECTS";
-	}
-#ifdef DEBUG
-	std::cerr << "sonosblobs UPDATE STATUS: " << status << std::endl;
-#endif
+		mStatus = full;
 		
+	} else if (sonosblobs.size() > contourFinder.blobs.size()) {		
+		
+		sonosblobs.clear();
+		for(int i = 0; i < contourFinder.blobs.size(); i++) {		
+			sonosBlob myblob = contourFinder.blobs[i];
+			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
+		}
+		mStatus = lose;
+		
+	} else if (sonosblobs.size() < contourFinder.blobs.size()) {
+
+		sonosblobs.clear();
+		for(int i = 0; i < contourFinder.blobs.size(); i++) {		
+			sonosBlob myblob = contourFinder.blobs[i];
+			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
+		}
+		mStatus = gain;
+		
+	}
+	
+	/* TEST to CHECK STATUS CHANGES */
+	
+	// STATUS is changed
+	if (mStatus != pStatus) {
+#ifdef DEBUG
+		std::cerr << "sonosblobs UPDATE STATUS changed:" << std::endl;
+		std::cerr << "\tPreviuos was " << printStatus(pStatus) << " now is " << printStatus(mStatus) << std::endl;
+		if (mStatus == empty && sonosblobs.size() > 0) {
+			std::cerr << "\tSonosblobs was empty, but I found blobs with contourFinder." << std::endl;
+			std::cerr << "I have generated this sonosBlobs:" << std::endl;
+			for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
+			{
+				std::cerr << "\t" << i->second.code << std::endl;
+			}
+		} else if (mStatus == full) {
+			std::cerr << "sonosblobs have same size of contourFinder blobs. I remap using centroid position:" << std::endl;
+			for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
+			{
+				std::cerr << "\t" << i->second.code << " with blob at (centroid.x): " << contourFinder.blobs[i->first].centroid.x << std::endl;
+			}
+		}
+#endif
+	}
+	
+	// save pStatus (previuos frame memory)
+	pStatus = mStatus;
 }
 
 //--------------------------------------------------------------
@@ -746,4 +790,28 @@ void sonosApp::background(int color)
 			break;
 	}	
 	
+}
+
+//--------------------------------------------------------------
+std::string sonosApp::printStatus(UpdateStatus s)
+{
+	switch (s) {
+		case 0:
+			return("EMPTY");
+			break;
+		case 1:
+			return("FULL");
+			break;
+		case 2:
+			return("LOSE");
+			break;
+		case 3:
+			return("GAIN");
+			break;
+		case 4:
+			return("UNKNOWN");
+			break;
+		default:
+			break;
+	}
 }

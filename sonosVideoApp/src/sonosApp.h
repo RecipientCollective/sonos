@@ -28,6 +28,16 @@
 using namespace MSA;
 
 class sonosApp : public ofBaseApp{
+
+// STATUS UPDATE ENUM
+public:
+	enum UpdateStatus {
+		empty,
+		full,
+		lose,
+		gain,
+		unknown
+	};
 	
 // APP methods
 public:
@@ -78,15 +88,7 @@ private:
 	void drawDebugInterface(float x, float y);
 	void drawInterface(float x, float y);
 	void setFullScreen();
-
-// STATUS UPDATE
-public:
-	enum UpdateStatus {
-		empty,
-		full,
-		lose,
-		gain
-	};
+	std::string printStatus(UpdateStatus s);
 	
 private:
 	// Our vars
@@ -94,7 +96,8 @@ private:
 	int 		camWidth;
 	int 		camHeight;
 	int			BlobColor;
-	UpdateStatus mStatus;
+	UpdateStatus mStatus;  // CURRENT STATUS
+	UpdateStatus pStatus;  // STATUS of PREVIOUS FRAME
 	
 private:
 	// containers 
