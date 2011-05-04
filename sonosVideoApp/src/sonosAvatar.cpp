@@ -24,7 +24,7 @@ void sonosAvatar::setPosition(ofPoint c, ofRectangle br)
 	x = c.x;
 }
 
-void sonosAvatar::setStyle(int mcolor)
+void sonosAvatar::setStyle(ofColor mcolor)
 {
 	color = mcolor;
 }
@@ -32,9 +32,9 @@ void sonosAvatar::setStyle(int mcolor)
 void sonosAvatar::draw()
 {
 	ofPushStyle();
-	ofSetHexColor(color);
+	ofSetColor(color);
 	ofCircle( x, y, r);
-	ofSetHexColor(0);
+	ofSetColor(0,0,0);
 	// draw a black point at center of avatar
 	ofCircle(x, y, 1.0);
 	ofPopStyle();

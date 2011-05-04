@@ -35,6 +35,15 @@ vector<int> randomRgb()
 	
 }
 
+ofColor randOfColor()
+{
+	ofColor col;
+	col.r = ofRandom(255);
+	col.g = ofRandom(255);
+	col.b = ofRandom(255);
+	return(col);
+}
+
 /*
  * A method to generate a random string in C++
  * Author: Danny Battison

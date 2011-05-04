@@ -23,12 +23,12 @@ public:
 	float x;
 	float y;
 	float r;
-	int color;
+	ofColor color;
 	
 	sonosAvatar();
 	
 	void setPosition(ofPoint c, ofRectangle br);
-	void setStyle(int color);
+	void setStyle(ofColor color);
 	void draw();
 	void drawParticles();
 
