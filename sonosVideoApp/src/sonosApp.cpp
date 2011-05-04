@@ -652,17 +652,21 @@ void sonosApp::sonosUpdate()
 		std::cerr << "\tPreviuos was " << printStatus(pStatus) << " now is " << printStatus(mStatus) << std::endl;
 		if (mStatus == empty && sonosblobs.size() > 0) {
 			std::cerr << "\tSonosblobs was empty, but I found blobs with contourFinder." << std::endl;
-			std::cerr << "I have generated this sonosBlobs:" << std::endl;
+			std::cerr << "\tI have generated this sonosBlobs:" << std::endl;
 			for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
 			{
 				std::cerr << "\t" << i->second.code << std::endl;
 			}
 		} else if (mStatus == full) {
-			std::cerr << "sonosblobs have same size of contourFinder blobs. I remap using centroid position:" << std::endl;
+			std::cerr << "\tSonosblobs have same size of contourFinder blobs. I remap using centroid position:" << std::endl;
 			for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
 			{
 				std::cerr << "\t" << i->second.code << " with blob at (centroid.x): " << contourFinder.blobs[i->first].centroid.x << std::endl;
 			}
+		} else if (mStatus == gain) {
+			std::cerr << "\tSonosblobs have minor size of contourFinder blobs. I gain an object:" << std::endl;
+		} else if (mStatus == lose) {
+			std::cerr << "\tSonosblobs have major size of contourFinder blobs. I lose an object:" << std::endl;
 		}
 #endif
 	}
