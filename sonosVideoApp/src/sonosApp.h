@@ -78,7 +78,15 @@ private:
 	void drawDebugInterface(float x, float y);
 	void drawInterface(float x, float y);
 	void setFullScreen();
-	
+
+// STATUS UPDATE
+public:
+	enum UpdateStatus {
+		empty,
+		full,
+		lose,
+		gain
+	};
 	
 private:
 	// Our vars
@@ -86,7 +94,8 @@ private:
 	int 		camWidth;
 	int 		camHeight;
 	int			BlobColor;
-
+	UpdateStatus mStatus;
+	
 private:
 	// containers 
 	map<int ,sonosBlob>  sonosblobs;

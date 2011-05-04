@@ -387,6 +387,7 @@ void sonosApp::setDefaults()
 	bBox = true;
 	bAvatar = false;
 	bDrawParticles = false;
+	mStatus = empty;
 }
 
 //--------------------------------------------------------------
