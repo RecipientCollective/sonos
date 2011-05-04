@@ -214,11 +214,12 @@ void sonosApp::keyPressed(int key)
 		case 'f':
 			bToogleFullScreen = true;
 			break;
+#ifndef _USE_LIVE_VIDEO			
 		case ' ':
 			bPause = !bPause;
 			vidPlayer.setPaused(bPause);
 			break;
-	
+#endif	
 		case OF_KEY_UP:
 			if (ofKeyShift()) {
 				scale_x+=0.01;
@@ -633,7 +634,7 @@ void sonosApp::sonosUpdate()
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 		}
 #ifdef DEBUG
-		std::cerr << "BLOBS ON SCREEN, sonos empty" << std::endl << "FLAGS: ";
+		std::cerr << "Event: BLOBS ON SCREEN, sonos empty" << " FLAGS: ";
 		printf("%d", flags);
 		std::cerr << std::endl;
 #endif
@@ -657,7 +658,7 @@ void sonosApp::sonosUpdate()
 		}
 		
 #ifdef DEBUG		
-		std::cerr << "MORE BLOBS ON SCREEN than blobs in sonos." << std::endl << "FLAGS: ";
+		std::cerr << "Event: MORE BLOBS ON SCREEN than blobs in sonos." << " FLAGS: ";
 		printf("%d", flags);
 		std::cerr << std::endl;
 #endif
@@ -674,7 +675,7 @@ void sonosApp::sonosUpdate()
 		}
 		
 #ifdef DEBUG		
-		std::cerr << "LESS BLOBS ON SCREEN than blobs in sonos." << std::endl << "FLAGS: ";
+		std::cerr << "Event: LESS BLOBS ON SCREEN than blobs in sonos."  << " FLAGS: ";
 		printf("%d", flags);
 		std::cerr << std::endl;
 #endif
