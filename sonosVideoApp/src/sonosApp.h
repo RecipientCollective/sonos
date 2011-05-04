@@ -25,6 +25,13 @@
 #define	GRAVITY	1
 #define SECTOR_COUNT 1		// currently there is a bug at sector borders
 
+// BITMASK sonosUpdate
+#define SONOSEMPTY        1  // 2^0, bit 0
+#define BLOBSEMPTY        2  // 2^1, bit 1
+#define MORESONOS         4  // 2^2, bit 2
+#define MOREBLOBS         8  // 2^3, bit 3
+#define EQUALSIZE        16  // 2^4, bit 4
+
 using namespace MSA;
 
 class sonosApp : public ofBaseApp{

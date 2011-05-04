@@ -594,8 +594,27 @@ void sonosApp::sonosUpdate()
 	std::sort(contourFinder.blobs.begin(),contourFinder.blobs.end(), sortByCentroid);
 
 	/* 
-	 * UPDATE with OBJECT PERSISTENCY 
+	 * UPDATE with OBJECT PERSISTENCY
+	 * 
+	 * BITMASK (defined in sonosApp.h): (http://www.dylanleigh.net/notes/c-cpp-tricks.html#Using_"Bitflags")
+	 *  1 SONOSEMPTY
+	 *  2 BLOBSEMPTY
+	 *  4 MORESONOS
+	 *  8 MOREBLOBS
+	 * 16 EQUALSIZE
+	 *  
+	 * Es: BOTH EMPTY = 3, SONOS EMPTY but BLOBS on SCREEN = 9, SONOS NOT EMPTY BUT no blobs on SCREEN = 4
 	 */
+	
+	
+	// less than 8 flags/bits used, so a char is fine
+	unsigned char flags;
+	
+	if (sonosblobs.size() == 0) flags |= SONOSEMPTY;
+	if (contourFinder.blobs.size() == 0) flags |= BLOBSEMPTY;
+	if (contourFinder.blobs.size() > sonosblobs.size()) flags |= MOREBLOBS;
+	if (contourFinder.blobs.size() < sonosblobs.size()) flags |= MORESONOS;
+	if (contourFinder.blobs.size() == sonosblobs.size()) flags |= EQUALSIZE;
 	
 	// CASO 1: niente sullo schermo
 	if (sonosblobs.size() == 0 && contourFinder.blobs.size() == 0) {
@@ -623,7 +642,7 @@ void sonosApp::sonosUpdate()
 	} else if (sonosblobs.size() > contourFinder.blobs.size()) {		
 		
 		sonosblobs.clear();
-		for(int i = 0; i < contourFinder.blobs.size(); i++) {		
+		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			sonosBlob myblob = contourFinder.blobs[i];
 			myblob.avatar.setStyle(randOfColor());
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
@@ -643,13 +662,17 @@ void sonosApp::sonosUpdate()
 		
 	}
 	
-	/* TEST to CHECK STATUS CHANGES */
+	/* 
+	 * TEST to CHECK STATUS CHANGES
+	 */
 	
 	// STATUS is changed
 	if (mStatus != pStatus) {
 #ifdef DEBUG
 		std::cerr << "sonosblobs UPDATE STATUS changed:" << std::endl;
 		std::cerr << "\tPreviuos was " << printStatus(pStatus) << " now is " << printStatus(mStatus) << std::endl;
+		std::cerr << "FLASG STATUS: ";
+		printf("%d", flags);
 		if (mStatus == empty && sonosblobs.size() > 0) {
 			std::cerr << "\tSonosblobs was empty, but I found blobs with contourFinder." << std::endl;
 			std::cerr << "\tI have generated this sonosBlobs:" << std::endl;
