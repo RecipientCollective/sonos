@@ -360,6 +360,7 @@ void sonosApp::setDefaults()
 	grayBg.allocate(camWidth,camHeight);
 	grayDiff.allocate(camWidth,camHeight);
 	
+
 	// SETUP DEFAULT PARAMETERS
 	bLearnBackground = true;
 	Threshold = 50;
@@ -601,10 +602,21 @@ void sonosApp::sonosUpdate()
 	 *  - gain
 	 */
 	
+	// CASO 1: 
 	if (sonosblobs.size() == 0 && contourFinder.blobs.size() > 0) {
 		
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			sonosBlob myblob = contourFinder.blobs[i];
+			// MEMORY: by positon of centroid.x (sorted)
+			if (i == 0) {
+				myblob.avatar.setStyle(0xFF0000);
+			} else if (i == 1) {
+				myblob.avatar.setStyle(0x00FF00);
+			} else if (i == 2) {
+				myblob.avatar.setStyle(0x0000FF);
+			} else {
+				myblob.avatar.setStyle(0xF0F0F0);
+			}
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 		}
 		mStatus = empty;
@@ -621,6 +633,15 @@ void sonosApp::sonosUpdate()
 		sonosblobs.clear();
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {		
 			sonosBlob myblob = contourFinder.blobs[i];
+			if (i == 0) {
+				myblob.avatar.setStyle(0xFF0000);
+			} else if (i == 1) {
+				myblob.avatar.setStyle(0x00FF00);
+			} else if (i == 2) {
+				myblob.avatar.setStyle(0x0000FF);
+			} else {
+				myblob.avatar.setStyle(0xF0F0F0);
+			}
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 		}
 		mStatus = lose;
@@ -630,6 +651,15 @@ void sonosApp::sonosUpdate()
 		sonosblobs.clear();
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {		
 			sonosBlob myblob = contourFinder.blobs[i];
+			if (i == 0) {
+				myblob.avatar.setStyle(0xFF0000);
+			} else if (i == 1) {
+				myblob.avatar.setStyle(0x00FF00);
+			} else if (i == 2) {
+				myblob.avatar.setStyle(0x0000FF);
+			} else {
+				myblob.avatar.setStyle(0xF0F0F0);
+			}
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 		}
 		mStatus = gain;
@@ -654,7 +684,7 @@ void sonosApp::sonosUpdate()
 			std::cerr << "sonosblobs have same size of contourFinder blobs. I remap using centroid position:" << std::endl;
 			for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
 			{
-				std::cerr << "\t" << i->second.code << " with blob at (centroid.x): " << contourFinder.blobs[i->first].centroid.x << std::endl;
+				std::cerr << "\t" << i->second.code << " color: " << i->second.avatar.color << " with blob at (centroid.x): " << contourFinder.blobs[i->first].centroid.x << std::endl;
 			}
 		}
 #endif
@@ -709,7 +739,7 @@ void sonosApp::sonosDraw()
 		ofPopStyle();
 		
 		if (bAvatar) {
-			curr_blob.avatar.setStyle(BlobColor);
+			//curr_blob.avatar.setStyle(BlobColor);
 			curr_blob.avatar.draw();
 		}
 		
