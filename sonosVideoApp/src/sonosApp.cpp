@@ -23,6 +23,7 @@ bool bLine;
 bool bBox;
 bool bAvatar;
 bool bDrawParticles;
+bool bPause;
 int	 blobMax;
 int  Threshold;
 int  contour_min;
@@ -213,7 +214,11 @@ void sonosApp::keyPressed(int key)
 		case 'f':
 			bToogleFullScreen = true;
 			break;
-			
+		case ' ':
+			bPause = !bPause;
+			vidPlayer.setPaused(bPause);
+			break;
+	
 		case OF_KEY_UP:
 			if (ofKeyShift()) {
 				scale_x+=0.01;
@@ -685,7 +690,7 @@ void sonosApp::sonosUpdate()
 		std::cerr << "sonosblobs UPDATE STATUS changed:" << std::endl;
 		std::cerr << "\tPreviuos status was: "; printf("%d", pflags); std::cerr << std::endl;
 		std::cerr << "\tCurrent status is: "; printf("%d", flags); std::cerr << std::endl;
-		std::cerr << "\tSTATUS" << std::endl;
+		std::cerr << "\tFLAG STATUS" << std::endl;
 		
 		// check single flags
 		if ((flags & SONOSEMPTY) == SONOSEMPTY) std::cerr << "\t\tSONOS EMPTY" << std::endl;
