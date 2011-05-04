@@ -49,9 +49,6 @@ void sonosAvatar::drawParticles()
 		vector<int> rgb = randomRgb();
 		ofSetColor(rgb[0], rgb[1], rgb[2]);
 		ofCircle(pos[0], pos[1], 4.0);
-#ifdef DEBUG
-		std::cerr << "Drawing particle at: " << pos[0] << "," << pos[1] << "." << std::endl;
-#endif
 	}
 	ofPopStyle();
 }

@@ -595,15 +595,14 @@ void sonosApp::sonosUpdate()
 
 	/* 
 	 * UPDATE with OBJECT PERSISTENCY 
-	 * 4 casi:
-	 *  - empty
-	 *  - full
-	 *  - lose
-	 *  - gain
 	 */
 	
-	// CASO 1: 
-	if (sonosblobs.size() == 0 && contourFinder.blobs.size() > 0) {
+	// CASO 1: niente sullo schermo
+	if (sonosblobs.size() == 0 && contourFinder.blobs.size() == 0) {
+		mStatus = unknown;
+	
+	// CASO 2: sonosblobs vuoto ma blobs on screen
+	} else if (sonosblobs.size() == 0 && contourFinder.blobs.size() > 0) {
 		
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			sonosBlob myblob = contourFinder.blobs[i];
@@ -620,14 +619,16 @@ void sonosApp::sonosUpdate()
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 		}
 		mStatus = empty;
-		
+
+	// CASO 3: sonosblobs pieno a blobs on screen: remapping
 	} else if (sonosblobs.size() == contourFinder.blobs.size()) {
 
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			sonosblobs[i].update(contourFinder.blobs[i]);
 		}
 		mStatus = full;
-		
+	
+	// CASO 4: sonosblobs piu' grande di blob on screen. Qualcosa e' sparito
 	} else if (sonosblobs.size() > contourFinder.blobs.size()) {		
 		
 		sonosblobs.clear();
@@ -646,6 +647,7 @@ void sonosApp::sonosUpdate()
 		}
 		mStatus = lose;
 		
+	// CASO 5: sonosblobs piu' piccolo di blobs on screen. Qualcosa e' apparito
 	} else if (sonosblobs.size() < contourFinder.blobs.size()) {
 
 		sonosblobs.clear();
