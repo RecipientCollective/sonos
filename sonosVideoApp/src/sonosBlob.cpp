@@ -38,9 +38,9 @@ sonosBlob::sonosBlob(const ofxCvBlob &other)
 	avatar.setPosition(centroid, boundingRect);
 	// prove of principle object persistency
 	code = randomString(10, true, false, false);
-#ifdef DEBUG
-	std::cerr << "generated code for sonosBlob: " << code << std::endl;
-#endif
+//#ifdef DEBUG
+//	std::cerr << "generated code for sonosBlob: " << code << std::endl;
+//#endif
 }
 
 void sonosBlob::update(const ofxCvBlob blob)

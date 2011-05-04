@@ -38,13 +38,8 @@ class sonosApp : public ofBaseApp{
 
 // STATUS UPDATE ENUM
 public:
-	enum UpdateStatus {
-		empty,
-		full,
-		lose,
-		gain,
-		unknown
-	};
+	unsigned char flags;    // 8-bit MAX flag
+	unsigned char pflags;   // 8-bit flags for previuous state
 	
 // APP methods
 public:
@@ -95,7 +90,6 @@ private:
 	void drawDebugInterface(float x, float y);
 	void drawInterface(float x, float y);
 	void setFullScreen();
-	std::string printStatus(UpdateStatus s);
 	
 private:
 	// Our vars
@@ -103,9 +97,7 @@ private:
 	int 		camWidth;
 	int 		camHeight;
 	int			BlobColor;
-	UpdateStatus mStatus;  // CURRENT STATUS
-	UpdateStatus pStatus;  // STATUS of PREVIOUS FRAME
-	
+		
 private:
 	// containers 
 	map<int ,sonosBlob>  sonosblobs;

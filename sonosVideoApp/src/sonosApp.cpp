@@ -392,8 +392,9 @@ void sonosApp::setDefaults()
 	bAvatar = false;
 	bDrawParticles = false;
 	
-	pStatus = unknown;
-	mStatus = unknown;
+	// flags
+	flags = 0;
+	pflags = 0;
 }
 
 //--------------------------------------------------------------
@@ -604,11 +605,8 @@ void sonosApp::sonosUpdate()
 	 * 16 EQUALSIZE
 	 *  
 	 * Es: BOTH EMPTY = 3, SONOS EMPTY but BLOBS on SCREEN = 9, SONOS NOT EMPTY BUT no blobs on SCREEN = 4
+	 *
 	 */
-	
-	
-	// less than 8 flags/bits used, so a char is fine
-	unsigned char flags;
 	
 	if (sonosblobs.size() == 0) flags |= SONOSEMPTY;
 	if (contourFinder.blobs.size() == 0) flags |= BLOBSEMPTY;
@@ -618,7 +616,7 @@ void sonosApp::sonosUpdate()
 	
 	// CASO 1: niente sullo schermo
 	if (sonosblobs.size() == 0 && contourFinder.blobs.size() == 0) {
-		mStatus = unknown;
+
 	
 	// CASO 2: sonosblobs vuoto ma blobs on screen
 	} else if (sonosblobs.size() == 0 && contourFinder.blobs.size() > 0) {
@@ -628,7 +626,6 @@ void sonosApp::sonosUpdate()
 			myblob.avatar.setStyle(randOfColor());
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 		}
-		mStatus = empty;
 
 	// CASO 3: sonosblobs pieno a blobs on screen: remapping
 	} else if (sonosblobs.size() == contourFinder.blobs.size()) {
@@ -636,7 +633,6 @@ void sonosApp::sonosUpdate()
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			sonosblobs[i].update(contourFinder.blobs[i]);
 		}
-		mStatus = full;
 	
 	// CASO 4: sonosblobs piu' grande di blob on screen. Qualcosa e' sparito
 	} else if (sonosblobs.size() > contourFinder.blobs.size()) {		
@@ -647,7 +643,6 @@ void sonosApp::sonosUpdate()
 			myblob.avatar.setStyle(randOfColor());
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 		}
-		mStatus = lose;
 		
 	// CASO 5: sonosblobs piu' piccolo di blobs on screen. Qualcosa e' apparito
 	} else if (sonosblobs.size() < contourFinder.blobs.size()) {
@@ -658,7 +653,6 @@ void sonosApp::sonosUpdate()
 			myblob.avatar.setStyle(randOfColor());
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 		}
-		mStatus = gain;
 		
 	}
 	
@@ -667,35 +661,43 @@ void sonosApp::sonosUpdate()
 	 */
 	
 	// STATUS is changed
-	if (mStatus != pStatus) {
+	if (flags != pflags) {
 #ifdef DEBUG
 		std::cerr << "sonosblobs UPDATE STATUS changed:" << std::endl;
-		std::cerr << "\tPreviuos was " << printStatus(pStatus) << " now is " << printStatus(mStatus) << std::endl;
-		std::cerr << "FLASG STATUS: ";
-		printf("%d", flags);
-		if (mStatus == empty && sonosblobs.size() > 0) {
-			std::cerr << "\tSonosblobs was empty, but I found blobs with contourFinder." << std::endl;
-			std::cerr << "\tI have generated this sonosBlobs:" << std::endl;
-			for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
-			{
-				std::cerr << "\t" << i->second.code << std::endl;
-			}
-		} else if (mStatus == full) {
-			std::cerr << "\tSonosblobs have same size of contourFinder blobs. I remap using centroid position:" << std::endl;
-			for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
-			{
-				std::cerr << "\t" << i->second.code << " with blob at (centroid.x): " << contourFinder.blobs[i->first].centroid.x << std::endl;
-			}
-		} else if (mStatus == gain) {
-			std::cerr << "\tSonosblobs have minor size of contourFinder blobs. I gain an object:" << std::endl;
-		} else if (mStatus == lose) {
-			std::cerr << "\tSonosblobs have major size of contourFinder blobs. I lose an object:" << std::endl;
-		}
+		std::cerr << "\tPreviuos status was: "; printf("%d", pflags); std::cerr << std::endl;
+		std::cerr << "\tCurrent status is: "; printf("%d", flags); std::cerr << std::endl;
+		std::cerr << "\tSTATUS" << std::endl;
+		
+		// check single flags
+		if ((flags & SONOSEMPTY) == SONOSEMPTY) std::cerr << "\t\tSONOS EMPTY" << std::endl;
+		if ((flags & BLOBSEMPTY) == BLOBSEMPTY) std::cerr << "\t\tBLOBS EMPTY" << std::endl;
+		if ((flags & MORESONOS) == MORESONOS) std::cerr << "\t\tMORE SONOS" << std::endl;
+		if ((flags & MOREBLOBS) == MOREBLOBS) std::cerr << "\t\tMORE BLOBS" << std::endl;
+		if ((flags & EQUALSIZE) == EQUALSIZE) std::cerr << "\t\tEQUALSIZE" << std::endl;
+		
+	//	if (mStatus p== empty && sonosblobs.size() > 0) {
+//			std::cerr << "\tSonosblobs was empty, but I found blobs with contourFinder." << std::endl;
+//			std::cerr << "\tI have generated this sonosBlobs:" << std::endl;
+//			for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
+//			{
+//				std::cerr << "\t" << i->second.code << std::endl;
+//			}
+//		} else if (mStatus == full) {
+//			std::cerr << "\tSonosblobs have same size of contourFinder blobs. I remap using centroid position:" << std::endl;
+//			for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
+//			{
+//				std::cerr << "\t" << i->second.code << " with blob at (centroid.x): " << contourFinder.blobs[i->first].centroid.x << std::endl;
+//			}
+//		} else if (mStatus == gain) {
+//			std::cerr << "\tSonosblobs have minor size of contourFinder blobs. I gain an object:" << std::endl;
+//		} else if (mStatus == lose) {
+//			std::cerr << "\tSonosblobs have major size of contourFinder blobs. I lose an object:" << std::endl;
+//		}
 #endif
 	}
 	
 	// save pStatus (previuos frame memory)
-	pStatus = mStatus;
+	pflags = flags;
 }
 
 //--------------------------------------------------------------
@@ -824,28 +826,4 @@ void sonosApp::background(int color)
 			break;
 	}	
 	
-}
-
-//--------------------------------------------------------------
-std::string sonosApp::printStatus(UpdateStatus s)
-{
-	switch (s) {
-		case 0:
-			return("EMPTY");
-			break;
-		case 1:
-			return("FULL");
-			break;
-		case 2:
-			return("LOSE");
-			break;
-		case 3:
-			return("GAIN");
-			break;
-		case 4:
-			return("UNKNOWN");
-			break;
-		default:
-			break;
-	}
 }
