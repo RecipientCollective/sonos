@@ -391,10 +391,7 @@ void sonosApp::setDefaults()
 	bBox = true;
 	bAvatar = false;
 	bDrawParticles = false;
-	
-	// flags
-	flags = 0;
-	pflags = 0;
+
 }
 
 //--------------------------------------------------------------
@@ -608,6 +605,9 @@ void sonosApp::sonosUpdate()
 	 *
 	 */
 	
+	// reset all flags
+	flags = 0;
+	
 	if (sonosblobs.size() == 0) flags |= SONOSEMPTY;
 	if (contourFinder.blobs.size() == 0) flags |= BLOBSEMPTY;
 	if (contourFinder.blobs.size() > sonosblobs.size()) flags |= MOREBLOBS;
@@ -615,28 +615,35 @@ void sonosApp::sonosUpdate()
 	if (contourFinder.blobs.size() == sonosblobs.size()) flags |= EQUALSIZE;
 	
 	// CASO 1: niente sullo schermo
-	if (sonosblobs.size() == 0 && contourFinder.blobs.size() == 0) {
-
-	
+	if ((flags & (SONOSEMPTY | BLOBSEMPTY)) == (SONOSEMPTY | BLOBSEMPTY)) {
+		
+		// niente da fare ...
+		
 	// CASO 2: sonosblobs vuoto ma blobs on screen
-	} else if (sonosblobs.size() == 0 && contourFinder.blobs.size() > 0) {
+	} else if ((flags & (SONOSEMPTY | MOREBLOBS)) == (SONOSEMPTY | MOREBLOBS)) {
 		
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			sonosBlob myblob = contourFinder.blobs[i];
 			myblob.avatar.setStyle(randOfColor());
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 		}
-
-	// CASO 3: sonosblobs pieno a blobs on screen: remapping
-	} else if (sonosblobs.size() == contourFinder.blobs.size()) {
-
+#ifdef DEBUG
+		std::cerr << "BLOBS ON SCREEN, sonos empty" << std::endl << "FLAGS: ";
+		printf("%d", flags);
+		std::cerr << std::endl;
+#endif
+		
+	// CASO 3: sonosblobs pieno e blobs on screen equal size: remapping
+	} else if ((flags & EQUALSIZE) == EQUALSIZE) {
+		
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			sonosblobs[i].update(contourFinder.blobs[i]);
 		}
-	
-	// CASO 4: sonosblobs piu' grande di blob on screen. Qualcosa e' sparito
-	} else if (sonosblobs.size() > contourFinder.blobs.size()) {		
 		
+	// CASO 4: sonosblobs piu' grande di blob on screen. Qualcosa e' sparito
+	} else if ((flags & MOREBLOBS) == MOREBLOBS) {
+
+		// FIXME per ora resetto tutto
 		sonosblobs.clear();
 		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			sonosBlob myblob = contourFinder.blobs[i];
@@ -644,18 +651,30 @@ void sonosApp::sonosUpdate()
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 		}
 		
+#ifdef DEBUG		
+		std::cerr << "MORE BLOBS ON SCREEN than blobs in sonos." << std::endl << "FLAGS: ";
+		printf("%d", flags);
+		std::cerr << std::endl;
+#endif
+		
 	// CASO 5: sonosblobs piu' piccolo di blobs on screen. Qualcosa e' apparito
-	} else if (sonosblobs.size() < contourFinder.blobs.size()) {
-
+	} else if ((flags & MORESONOS) == MORESONOS) {
+		
+		// FIXME per ora resetto tutto
 		sonosblobs.clear();
-		for(int i = 0; i < contourFinder.blobs.size(); i++) {		
+		for(int i = 0; i < contourFinder.blobs.size(); i++) {
 			sonosBlob myblob = contourFinder.blobs[i];
 			myblob.avatar.setStyle(randOfColor());
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 		}
 		
+#ifdef DEBUG		
+		std::cerr << "LESS BLOBS ON SCREEN than blobs in sonos." << std::endl << "FLAGS: ";
+		printf("%d", flags);
+		std::cerr << std::endl;
+#endif
 	}
-	
+		
 	/* 
 	 * TEST to CHECK STATUS CHANGES
 	 */
