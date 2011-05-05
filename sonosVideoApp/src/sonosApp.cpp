@@ -634,7 +634,7 @@ void sonosApp::sonosUpdate()
 			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
 		}
 #ifdef DEBUG
-		std::cerr << "Event: BLOBS ON SCREEN, sonos empty" << " FLAGS: ";
+		std::cerr << "Event: BLOBS ON SCREEN, SONOS EMPTY" << " FLAGS: ";
 		printf("%d", flags);
 		std::cerr << std::endl;
 #endif
@@ -669,20 +669,22 @@ void sonosApp::sonosUpdate()
 				}
 			}
 #ifdef DEBUG
-			std::cerr << "sonosBlob: " << i->second.centroid.x << " with code: " << i->second.code << " map with cvBlob: " << contourFinder.blobs[blobposition].centroid.x << std::endl;
+			std::cerr << "sonosBlob: " << i->second.centroid.x << " with code: " << i->second.code << " and id: " << i->first << " map with cvBlob: " << contourFinder.blobs[blobposition].centroid.x << std::endl;
 #endif
 			sonosblobs[i->first].update(contourFinder.blobs[blobposition]);
 			//erase this blob
 			contourFinder.blobs.erase(contourFinder.blobs.begin() + blobposition);
 		}
+		
 		// copy the remaining NEW blobs
-		for(int i = 0; i < contourFinder.blobs.size(); i++) {
-#ifdef DEBUG
-			std::cerr << "a ofCvBlobs remains: " << contourFinder.blobs[i].centroid.x << std::endl;
-#endif			
-			sonosBlob myblob = contourFinder.blobs[i];
+		for(int k = 0; k < contourFinder.blobs.size(); k++) {
+			sonosBlob myblob = contourFinder.blobs[k];
 			myblob.avatar.setStyle(randOfColor());
-			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
+			sonosblobs.insert(std::pair<int, sonosBlob>(k,myblob));
+#ifdef DEBUG
+			std::cerr << "a NEW ofCvBlobs remains: " << contourFinder.blobs[k].centroid.x << std::endl;
+			std::cerr << "copying it to new sonosBlob: " << myblob.code << "and id" << k << std::endl; 
+#endif						
 		}
 						
 	// CASO 5: sonosblobs piu' piccolo di blobs on screen. Qualcosa e' apparito
