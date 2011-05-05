@@ -25,6 +25,7 @@ public:
 	int	  mycolor;
 	int   avatar_color;
 	string  code;
+	bool  updated;
 	
 	// AVATAR
 	sonosAvatar avatar;

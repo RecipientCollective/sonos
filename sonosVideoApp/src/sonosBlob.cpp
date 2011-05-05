@@ -38,6 +38,9 @@ sonosBlob::sonosBlob(const ofxCvBlob &other)
 	avatar.setPosition(centroid, boundingRect);
 	// prove of principle object persistency
 	code = randomString(10, true, false, false);
+	// on start the blob is set as updated
+	updated = true;
+	
 //#ifdef DEBUG
 //	std::cerr << "generated code for sonosBlob: " << code << std::endl;
 //#endif
@@ -52,6 +55,8 @@ void sonosBlob::update(const ofxCvBlob blob)
 	pts          = blob.pts;
 	centroid     = blob.centroid;
 	boundingRect = blob.boundingRect;
+	
+	updated = true;
 	
 	// init avatar position
 	avatar.setPosition(centroid, boundingRect);

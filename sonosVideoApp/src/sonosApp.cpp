@@ -656,9 +656,30 @@ void sonosApp::sonosUpdate()
 	// CASO 4: sonosblobs piu' grande di blob on screen. Qualcosa e' sparito
 	} else if ((flags & MORESONOS) == MORESONOS) {
 		
-		// FIXME per ora resetto tutto
+		// FIXME 
 		sonosblobs.clear();
 		sonosBlobsInsert();
+//		// per ora: un gire per ettare tutti NOT updated
+//		for(map<string, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
+//		{
+//			sonosBlob curr_blob = i->second;
+//			std::cerr << "UPDATED: " << curr_blob.updated << std::endl;
+//			curr_blob.updated = false;
+//		}
+//		// update ...
+//		sonosBlobsUpdate();
+//		// cancella i NOT updated
+//		map<string, sonosBlob>::iterator i = sonosblobs.begin();
+//		while( i != sonosblobs.end() )
+//		{
+//			if (!i->second.updated) {
+//				map<string, sonosBlob>::iterator t = i;
+//				++i;
+//				sonosblobs.erase(t);
+//			} else {
+//				++i;
+//			}
+//		}
 		
 #ifdef DEBUG		
 		std::cerr << "Event: LESS BLOBS ON SCREEN than blobs in sonos."  << " FLAGS: ";
@@ -725,7 +746,7 @@ void sonosApp::sonosBlobsUpdate()
 		}
 		// update del sonosBlob con il CVblob piu' vicino (byCentroid)
 		sonosblobs[i->first].update(contourFinder.blobs[blobposition]);
-		//erase this blob
+		//erase this CVblob
 		contourFinder.blobs.erase(contourFinder.blobs.begin() + blobposition);
 	}
 	
