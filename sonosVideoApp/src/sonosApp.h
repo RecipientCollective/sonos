@@ -78,13 +78,14 @@ private:
 // INTERAL STUFFS
 private:
 	// Our methods
-	void inputSetup();
-	void setDefaults();
-	void setupInterface();
-	void setupPhysicsWorld();
+	void inputSetup();                              // setup INPUTS
+	void setDefaults();                             // setup VARS
+	void setupInterface();                          // setup INTERFACE
+	void setupPhysicsWorld();                       // setup PYSICS
 	void sonosDraw();
 	void sonosUpdate();
-	
+	void sonosBlobsInsert();
+	void sonosBlobsUpdate();	
 	void background(int color);
 	void debugDraw();
 	void drawDebugInterface(float x, float y);
@@ -100,6 +101,6 @@ private:
 		
 private:
 	// containers 
-	map<int ,sonosBlob>  sonosblobs;
+	map<string ,sonosBlob>  sonosblobs;
 	
 };

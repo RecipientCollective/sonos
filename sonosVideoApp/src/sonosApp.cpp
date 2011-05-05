@@ -627,26 +627,19 @@ void sonosApp::sonosUpdate()
 		
 	// CASO 2: sonosblobs vuoto ma blobs on screen
 	} else if ((flags & (SONOSEMPTY | MOREBLOBS)) == (SONOSEMPTY | MOREBLOBS)) {
-		
-		for(int i = 0; i < contourFinder.blobs.size(); i++) {
-			sonosBlob myblob = contourFinder.blobs[i];
-			myblob.avatar.setStyle(randOfColor());
-			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
-		}
 #ifdef DEBUG
 		std::cerr << "Event: BLOBS ON SCREEN, SONOS EMPTY" << " FLAGS: ";
 		printf("%d", flags);
 		std::cerr << std::endl;
-#endif
+#endif			
+		sonosBlobsInsert();
 		
 	// CASO 3: sonosblobs pieno e blobs on screen equal size: remapping
 	} else if ((flags & EQUALSIZE) == EQUALSIZE) {
 		
-		for(int i = 0; i < contourFinder.blobs.size(); i++) {
-			sonosblobs[i].update(contourFinder.blobs[i]);
-		}
-		
-	// CASO 4: sonosblobs piu' grande di blob on screen. Qualcosa e' sparito
+		sonosBlobsUpdate();
+				
+	// CASO 4: sonosblobs piu' piccolo di blobs on screen. Qualcosa e' apparito
 	} else if ((flags & MOREBLOBS) == MOREBLOBS) {
 
 #ifdef DEBUG		
@@ -655,48 +648,17 @@ void sonosApp::sonosUpdate()
 		std::cerr << std::endl;
 #endif
 		
-		// Itero sui sonoblobs
-		for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
-		{
-			// set initial MAX distance and shrink
-			float distance = camWidth;
-			int blobposition;
-			for ( int m=0; m < contourFinder.blobs.size(); m++) {
-				unsigned mdist = abs(contourFinder.blobs[m].centroid.x - i->second.centroid.x);
-				if (mdist < distance) {
-					distance = mdist;
-					blobposition = m;
-				}
-			}
-#ifdef DEBUG
-			std::cerr << "sonosBlob: " << i->second.centroid.x << " with code: " << i->second.code << " and id: " << i->first << " map with cvBlob: " << contourFinder.blobs[blobposition].centroid.x << std::endl;
-#endif
-			sonosblobs[i->first].update(contourFinder.blobs[blobposition]);
-			//erase this blob
-			contourFinder.blobs.erase(contourFinder.blobs.begin() + blobposition);
-		}
-		
-		// copy the remaining NEW blobs
-		for(int k = 0; k < contourFinder.blobs.size(); k++) {
-			sonosBlob myblob = contourFinder.blobs[k];
-			myblob.avatar.setStyle(randOfColor());
-			sonosblobs.insert(std::pair<int, sonosBlob>(k,myblob));
-#ifdef DEBUG
-			std::cerr << "a NEW ofCvBlobs remains: " << contourFinder.blobs[k].centroid.x << std::endl;
-			std::cerr << "copying it to new sonosBlob: " << myblob.code << "and id" << k << std::endl; 
-#endif						
-		}
+		sonosBlobsUpdate();
+	
+		sonosBlobsInsert();
 						
-	// CASO 5: sonosblobs piu' piccolo di blobs on screen. Qualcosa e' apparito
+
+	// CASO 4: sonosblobs piu' grande di blob on screen. Qualcosa e' sparito
 	} else if ((flags & MORESONOS) == MORESONOS) {
 		
 		// FIXME per ora resetto tutto
 		sonosblobs.clear();
-		for(int i = 0; i < contourFinder.blobs.size(); i++) {
-			sonosBlob myblob = contourFinder.blobs[i];
-			myblob.avatar.setStyle(randOfColor());
-			sonosblobs.insert(std::pair<int, sonosBlob>(i,myblob));
-		}
+		sonosBlobsInsert();
 		
 #ifdef DEBUG		
 		std::cerr << "Event: LESS BLOBS ON SCREEN than blobs in sonos."  << " FLAGS: ";
@@ -731,6 +693,46 @@ void sonosApp::sonosUpdate()
 }
 
 //--------------------------------------------------------------
+void sonosApp::sonosBlobsInsert()
+{
+	// inserisco sonosBlobs
+	for(int i = 0; i < contourFinder.blobs.size(); i++) {
+		sonosBlob myblob = contourFinder.blobs[i];
+		myblob.avatar.setStyle(randOfColor());
+		sonosblobs.insert(std::pair<string, sonosBlob>(myblob.code,myblob));
+	}	
+}
+
+//--------------------------------------------------------------
+void sonosApp::sonosBlobsUpdate()
+{
+	// Itero sui sonoblobs
+	for(map<string, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
+	{
+		// set initial MAX distance
+		float distance = camWidth;
+		int blobposition;
+		
+		// Itero sui CVblobs
+		for ( int m=0; m < contourFinder.blobs.size(); m++ ) 
+		{
+			unsigned mdist = abs(contourFinder.blobs[m].centroid.x - i->second.centroid.x);
+			// cerca minimal distance
+			if (mdist < distance) {
+				distance = mdist;
+				blobposition = m;
+			}
+		}
+		// update del sonosBlob con il CVblob piu' vicino (byCentroid)
+		sonosblobs[i->first].update(contourFinder.blobs[blobposition]);
+		//erase this blob
+		contourFinder.blobs.erase(contourFinder.blobs.begin() + blobposition);
+	}
+	
+}
+
+
+//--------------------------------------------------------------
 void sonosApp::sonosDraw()
 {	
 	// background
@@ -749,7 +751,7 @@ void sonosApp::sonosDraw()
 	}
 	
 	// in draw we iterate in the map
-	for(map<int, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
+	for(map<string, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
 	{
 		sonosBlob curr_blob = i->second;
 		curr_blob.setBlobColor(BlobColor);
@@ -760,22 +762,12 @@ void sonosApp::sonosDraw()
 		
 		// set color by position (TEST)
 		ofPushStyle();
-		if (i->first == 0) {
-			ofSetColor(255, 0, 0);
-		} else if (i->first == 1) {
-			ofSetColor(0, 255, 0);
-		} else if (i->first == 2) {
-			ofSetColor(0, 0, 255);
-		} else {
-			ofSetColor(100, 100, 150);
-		}
-		
+		ofSetColor(curr_blob.avatar.color);		
 		if (bCircle) curr_blob.circle();
 		if (bLine) curr_blob.rectangle();
 		ofPopStyle();
 		
 		if (bAvatar) {
-			//curr_blob.avatar.setStyle(BlobColor);
 			curr_blob.avatar.draw();
 		}
 		
