@@ -653,7 +653,7 @@ void sonosApp::sonosUpdate()
 		sonosBlobsInsert();
 						
 
-	// CASO 4: sonosblobs piu' grande di blob on screen. Qualcosa e' sparito
+	// CASO 5: sonosblobs piu' grande di blob on screen. Qualcosa e' sparito
 	} else if ((flags & MORESONOS) == MORESONOS) {
 		
 		// FIXME 
