@@ -655,37 +655,33 @@ void sonosApp::sonosUpdate()
 
 	// CASO 5: sonosblobs piu' grande di blob on screen. Qualcosa e' sparito
 	} else if ((flags & MORESONOS) == MORESONOS) {
-		
-		// FIXME 
-		sonosblobs.clear();
-		sonosBlobsInsert();
-//		// per ora: un gire per ettare tutti NOT updated
-//		for(map<string, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
-//		{
-//			sonosBlob curr_blob = i->second;
-//			std::cerr << "UPDATED: " << curr_blob.updated << std::endl;
-//			curr_blob.updated = false;
-//		}
-//		// update ...
-//		sonosBlobsUpdate();
-//		// cancella i NOT updated
-//		map<string, sonosBlob>::iterator i = sonosblobs.begin();
-//		while( i != sonosblobs.end() )
-//		{
-//			if (!i->second.updated) {
-//				map<string, sonosBlob>::iterator t = i;
-//				++i;
-//				sonosblobs.erase(t);
-//			} else {
-//				++i;
-//			}
-//		}
-		
 #ifdef DEBUG		
 		std::cerr << "Event: LESS BLOBS ON SCREEN than blobs in sonos."  << " FLAGS: ";
 		printf("%d", flags);
 		std::cerr << std::endl;
-#endif
+#endif		
+		// FIXME 
+		sonosblobs.clear();
+		sonosBlobsInsert();
+		// per ora: un giro per settare tutti NOT updated
+		//for(map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end(); ++it)
+//		{
+//			it->second.updated = false;
+//		}
+		
+		// update ...
+		//sonosBlobsUpdate();
+
+		// cancella i NOT updated
+		//for (map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end();) {
+//			if (!it->second.updated) {
+//				std::cerr << "Erasing: " << it->second.code << std::endl;
+//				sonosblobs.erase(it);
+//				it++;
+//			} else {
+//				it++;
+//			}
+//		}
 	}
 		
 	/* 
@@ -727,6 +723,9 @@ void sonosApp::sonosBlobsInsert()
 //--------------------------------------------------------------
 void sonosApp::sonosBlobsUpdate()
 {
+	// se non ci sono blobs in contourFinder picche
+	if (contourFinder.blobs.size() == 0) return;
+	
 	// Itero sui sonoblobs
 	for(map<string, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
 	{
