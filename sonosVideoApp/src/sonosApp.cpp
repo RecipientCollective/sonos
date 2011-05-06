@@ -660,28 +660,26 @@ void sonosApp::sonosUpdate()
 		printf("%d", flags);
 		std::cerr << std::endl;
 #endif		
-		// FIXME 
-		sonosblobs.clear();
-		sonosBlobsInsert();
+		// FIXME OPTIMIZE?
 		// per ora: un giro per settare tutti NOT updated
-		//for(map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end(); ++it)
-//		{
-//			it->second.updated = false;
-//		}
+		for(map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end(); ++it)
+		{
+			it->second.updated = false;
+		}
 		
 		// update ...
-		//sonosBlobsUpdate();
+		sonosBlobsUpdate();
 
 		// cancella i NOT updated
-		//for (map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end();) {
-//			if (!it->second.updated) {
-//				std::cerr << "Erasing: " << it->second.code << std::endl;
-//				sonosblobs.erase(it);
-//				it++;
-//			} else {
-//				it++;
-//			}
-//		}
+		for (map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end();) {
+			if (!it->second.updated) {
+				//std::cerr << "Erasing: " << it->second.code << std::endl;
+				sonosblobs.erase(it);
+				it++;
+			} else {
+				it++;
+			}
+		}
 	}
 		
 	/* 
@@ -722,13 +720,14 @@ void sonosApp::sonosBlobsInsert()
 
 //--------------------------------------------------------------
 void sonosApp::sonosBlobsUpdate()
-{
-	// se non ci sono blobs in contourFinder picche
-	if (contourFinder.blobs.size() == 0) return;
-	
+{	
 	// Itero sui sonoblobs
 	for(map<string, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
 	{
+		
+		// se non ci sono blobs in contourFinder picche
+		if (contourFinder.blobs.size() == 0) return;
+		
 		// set initial MAX distance
 		float distance = camWidth;
 		int blobposition;
