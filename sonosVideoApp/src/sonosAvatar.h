@@ -31,7 +31,7 @@ public:
 	void setStyle(ofColor color);
 	void draw();
 	void drawParticles();
-
+	
 	// Physics
 	//Physics::Particle2D body;
 };

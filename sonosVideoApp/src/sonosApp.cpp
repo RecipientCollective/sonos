@@ -151,6 +151,7 @@ void sonosApp::update()
 	
 	if (bNewFrame){
 		sonosUpdate();
+		physics.update();
 	}
 }
 
@@ -397,7 +398,6 @@ void sonosApp::setDefaults()
 	bBox = true;
 	bAvatar = false;
 	bDrawParticles = false;
-
 }
 
 //--------------------------------------------------------------
@@ -533,8 +533,8 @@ void sonosApp::drawInterface(float x, float y)
 	ofSetColor(255, 255, 255);
 	ofDrawBitmapString("INTERFACE (press: h to hide/show)", x, y);
 	char reportStr[1024];
-	char help[1024] = "fps: %f\nnum blobs found %i, MaxBlobs: %i\nThreshold %i\nContourMinSize: %i\ntranslate (%i, %i)\nscale (%.2f, %.2f)\nCamWidth: %i, CamHeight: %i";
-	sprintf(reportStr, help , ofGetFrameRate(),contourFinder.nBlobs, blobMax, Threshold, contour_min, mtrx, mtry, scale_x, scale_y, camWidth, camHeight);
+	char help[1024] = "fps: %f\nnum blobs found %i, MaxBlobs: %i\nThreshold %i\nContourMinSize: %i\ntranslate (%i, %i)\nscale (%.2f, %.2f)\nCamWidth: %i, CamHeight: %i\nParticles on screen: %i";
+	sprintf(reportStr, help , ofGetFrameRate(),contourFinder.nBlobs, blobMax, Threshold, contour_min, mtrx, mtry, scale_x, scale_y, camWidth, camHeight,physics.numberOfParticles());
 	ofDrawBitmapString(reportStr, x, y + 25);
 	
 	ofPushStyle();
@@ -705,6 +705,24 @@ void sonosApp::sonosUpdate()
 	
 	// save pStatus (previuos frame memory)
 	pflags = flags;
+	
+	// a questo livello ho i miei sonosBlobs per ulteriori loops
+	for(map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end(); ++it)
+	{
+		if (physics.numberOfParticles() < 1000)
+		{
+			float mass		= ofRandom(MIN_MASS, MAX_MASS);
+			float bounce	= ofRandom(MIN_BOUNCE, MAX_BOUNCE);
+			float radius	= ofMap(mass, MIN_MASS, MAX_MASS, NODE_MIN_RADIUS, NODE_MAX_RADIUS);
+			
+			// physics.makeParticle returns a particle pointer so you can customize it
+			Physics::Particle2D *p = physics.makeParticle(Vec2f(it->second.avatar.x,it->second.avatar.y));
+			
+			// and set a bunch of properties (you don't have to set all of them, there are defaults)
+			p->setMass(mass)->setBounce(bounce)->setRadius(radius)->enableCollision()->makeFree();
+
+		}
+	}
 }
 
 //--------------------------------------------------------------
@@ -794,6 +812,15 @@ void sonosApp::sonosDraw()
 			curr_blob.avatar.drawParticles();
 		}
 	}
+	
+	// test Physics
+	ofPushStyle();
+	for(int i=0; i<physics.numberOfParticles(); i++) {
+		Physics::Particle2D *p = physics.getParticle(i);
+		ofSetColor(1,1,1);
+		ofCircle( p->getPosition().x, p->getPosition().y, p->getRadius());
+	}
+	ofPopStyle();
 	
 	ofPopMatrix();
 }

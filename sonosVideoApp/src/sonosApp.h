@@ -22,8 +22,14 @@
 #define OUTPUT_WIDTH 1024.0
 
 // PHYSICS
-#define	GRAVITY	1
+#define	GRAVITY	-0.1
 #define SECTOR_COUNT 1		// currently there is a bug at sector borders
+#define NODE_MIN_RADIUS			1
+#define NODE_MAX_RADIUS			5
+#define MIN_MASS				1
+#define MAX_MASS				3
+#define MIN_BOUNCE				0.2
+#define MAX_BOUNCE				0.9
 
 // BITMASK sonosUpdate
 #define SONOSEMPTY        1  // 2^0, bit 0
