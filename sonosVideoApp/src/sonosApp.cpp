@@ -24,14 +24,17 @@ bool bBox;
 bool bAvatar;
 bool bDrawParticles;
 bool bPause;
+bool bDrawImage;
 int	 blobMax;
 int  Threshold;
 int  contour_min;
 int	 mtrx;
 int	 mtry;
 int	 BckColor;
+int	 DrawImageCounter;
 float scale_x;
 float scale_y;
+
 
 void learnBackground ( puObject * ob ) 
 {
@@ -216,7 +219,7 @@ void sonosApp::keyPressed(int key)
 			bToogleFullScreen = true;
 			break;
 #ifndef _USE_LIVE_VIDEO			
-		case ' ':
+		case 'p':
 			bPause = !bPause;
 			vidPlayer.setPaused(bPause);
 			break;
@@ -242,6 +245,9 @@ void sonosApp::keyPressed(int key)
 			break;
 		case OF_KEY_RIGHT:
 			mtrx++;
+			break;
+		case ' ':
+			bDrawImage=true;
 			break;
 			
 #ifdef _USE_LIVE_VIDEO
@@ -352,10 +358,12 @@ void sonosApp::inputSetup()
 	sonosApp:exit();
 	}
 #endif
-	
+
 #ifdef DEBUG		
 	cerr << "Input size: width =" << camWidth << " height = " << camHeight << endl;
-#endif	
+#endif
+	
+lettering1.loadImage("images/lettering.png");
 }
 
 //--------------------------------------------------------------
@@ -391,6 +399,7 @@ void sonosApp::setDefaults()
 	scale_y = 1.0;
 	mtrx = 1;
 	mtry = 1;
+	DrawImageCounter = 0;
 	bInterface = true;
 	bCircle = false;
 	bDebug = false;
@@ -398,6 +407,7 @@ void sonosApp::setDefaults()
 	bBox = true;
 	bAvatar = false;
 	bDrawParticles = false;
+	bDrawImage = false;
 }
 
 //--------------------------------------------------------------
@@ -809,6 +819,10 @@ void sonosApp::sonosDraw()
 		}
 		
 	}
+	if (bDrawImage==true){
+	DrawImageCounter++;
+	bDrawImage=false;
+	}
 	
 	// test Physics
 	ofPushStyle();
@@ -819,7 +833,19 @@ void sonosApp::sonosDraw()
 	}
 	ofPopStyle();
 	
+
+	if (DrawImageCounter>0) {
+		for (int dic=1; dic<DrawImageCounter; dic++) {
+			ofEnableAlphaBlending();
+			float wave = sin(ofGetElapsedTimef());
+			lettering1.draw(500 + (wave * dic * 100), 20);
+			//lettering1.draw(200 + (wave * 100), 20);
+			ofDisableAlphaBlending();
+		}
+	}
+	
 	ofPopMatrix();
+
 }
 
 //--------------------------------------------------------------

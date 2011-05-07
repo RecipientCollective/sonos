@@ -80,6 +80,14 @@ private:
 	ofxCvContourFinder		contourFinder;
 	
 	Physics::World2D		physics;
+	
+	// MSAFluids
+	//MSA::FluidSolver	fluidSolver;
+//	MSA::FluidDrawerGl	fluidDrawer;	
+//	ParticleSystem		particleSystem;
+	
+	//images containers
+	ofImage lettering1;
 
 // INTERAL STUFFS
 private:
