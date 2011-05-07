@@ -83,7 +83,7 @@ void toggleAvatar ( puObject * ob )
 
 void toggleParticles ( puObject * ob )
 {
-	bDrawParticles = !bDrawParticles;
+	bDrawParticles = true;
 }
 
 void setTrx (puObject * ob)
@@ -717,21 +717,26 @@ void sonosApp::sonosUpdate()
 	pflags = flags;
 	
 	// a questo livello ho i miei sonosBlobs per ulteriori loops
-	for(map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end(); ++it)
+	if (bDrawParticles && (physics.numberOfParticles() < 100))
 	{
-		if (bDrawParticles && (physics.numberOfParticles() < 1000))
+		for(map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end(); ++it)
 		{
-			float mass		= ofRandom(MIN_MASS, MAX_MASS);
-			float bounce	= ofRandom(MIN_BOUNCE, MAX_BOUNCE);
-			float radius	= ofMap(mass, MIN_MASS, MAX_MASS, NODE_MIN_RADIUS, NODE_MAX_RADIUS);
+		
+			//float mass		= ofRandom(MIN_MASS, MAX_MASS);
+			//float bounce	= ofRandom(MIN_BOUNCE, MAX_BOUNCE);
+			//float radius	= ofMap(mass, MIN_MASS, MAX_MASS, NODE_MIN_RADIUS, NODE_MAX_RADIUS);
+			float mass      = 1.0;
+			float bounce    = 0.5;
+			float radius    = 15.0;
 			
 			// physics.makeParticle returns a particle pointer so you can customize it
 			Physics::Particle2D *p = physics.makeParticle(Vec2f(it->second.avatar.x,it->second.avatar.y));
 			
 			// and set a bunch of properties (you don't have to set all of them, there are defaults)
 			p->setMass(mass)->setBounce(bounce)->setRadius(radius)->enableCollision()->makeFree();
-
+			
 		}
+		bDrawParticles = false;
 	}
 }
 
@@ -828,8 +833,10 @@ void sonosApp::sonosDraw()
 	ofPushStyle();
 	for(int i=0; i<physics.numberOfParticles(); i++) {
 		Physics::Particle2D *p = physics.getParticle(i);
-		ofSetColor(1,1,1);
-		ofCircle( p->getPosition().x, p->getPosition().y, p->getRadius());
+		ofEnableAlphaBlending();
+		lettering1.draw(p->getPosition().x, p->getPosition().y);
+		ofDisableAlphaBlending();
+		//ofCircle( p->getPosition().x, p->getPosition().y, p->getRadius());
 	}
 	ofPopStyle();
 	

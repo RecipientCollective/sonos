@@ -22,7 +22,7 @@
 #define OUTPUT_WIDTH 1024.0
 
 // PHYSICS
-#define	GRAVITY	-0.1
+#define	GRAVITY	0.1
 #define SECTOR_COUNT 1		// currently there is a bug at sector borders
 #define NODE_MIN_RADIUS			1
 #define NODE_MAX_RADIUS			5
