@@ -30,7 +30,7 @@ public:
 	void setPosition(ofPoint c, ofRectangle br);
 	void setStyle(ofColor color);
 	void draw();
-	void drawParticles();
+	//void drawParticles();
 	
 	// Physics
 	//Physics::Particle2D body;

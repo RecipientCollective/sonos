@@ -709,7 +709,7 @@ void sonosApp::sonosUpdate()
 	// a questo livello ho i miei sonosBlobs per ulteriori loops
 	for(map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end(); ++it)
 	{
-		if (physics.numberOfParticles() < 1000)
+		if (bDrawParticles && (physics.numberOfParticles() < 1000))
 		{
 			float mass		= ofRandom(MIN_MASS, MAX_MASS);
 			float bounce	= ofRandom(MIN_BOUNCE, MAX_BOUNCE);
@@ -808,9 +808,6 @@ void sonosApp::sonosDraw()
 			curr_blob.avatar.draw();
 		}
 		
-		if (bDrawParticles) {
-			curr_blob.avatar.drawParticles();
-		}
 	}
 	
 	// test Physics
