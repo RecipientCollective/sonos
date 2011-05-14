@@ -34,7 +34,9 @@ int	 BckColor;
 int	 DrawImageCounter;
 float scale_x;
 float scale_y;
-
+int				current_msg_string;
+string		msg_strings[NUM_MSG_STRINGS];
+float			timers[NUM_MSG_STRINGS];
 
 void learnBackground ( puObject * ob ) 
 {
@@ -133,6 +135,8 @@ void sonosApp::setup()
 	
 	setupInterface();
 	
+	setupOsc();
+	
 #ifdef DEBUG
 	std::cerr << "END SETUP" << std::endl;
 #endif
@@ -141,6 +145,7 @@ void sonosApp::setup()
 //--------------------------------------------------------------
 void sonosApp::update()
 {
+	OscUpdate();
 	
 	// IS A NEW FRAME?
 	bool bNewFrame = false;
@@ -155,6 +160,7 @@ void sonosApp::update()
 	if (bNewFrame){
 		sonosUpdate();
 		physics.update();
+		
 	}
 }
 
@@ -170,7 +176,9 @@ void sonosApp::draw()
 	}
 	if (bInterface) {
 		drawInterface(20, 20);
+		OscDraw();
 	}
+	
 }
 
 //--------------------------------------------------------------
@@ -432,6 +440,17 @@ void sonosApp::setupPhysicsWorld()
 	physics.clear();
 	
 }
+
+//--------------------------------------------------------------
+void sonosApp::setupOsc()
+{
+	// listen on the given port
+	cout << "listening for osc messages on port " << PORT << "\n";
+	receiver.setup( PORT );
+	current_msg_string = 0;
+}
+
+//--------------------------------------------------------------
 
 //--------------------------------------------------------------
 //  SETUP/DRAW INTERFACE 
@@ -739,6 +758,104 @@ void sonosApp::sonosUpdate()
 		bDrawParticles = false;
 	}
 }
+//--------------------------------------------------------------
+//  OSC UPDATE/DRAW
+//--------------------------------------------------------------
+
+//--------------------------------------------------------------
+void sonosApp::OscUpdate()
+{
+	
+	// hide old messages
+	for ( int i=0; i<NUM_MSG_STRINGS; i++ )
+	{
+		if ( timers[i] < ofGetElapsedTimef() )
+			msg_strings[i] = "";
+	}
+	
+	// check for waiting messages
+	while( receiver.hasWaitingMessages() )
+	{
+		// get the next message
+		ofxOscMessage m;
+		receiver.getNextMessage( &m );
+		
+		// check for mouse moved message
+		// midi type note channel 1
+		if ( m.getAddress() == "/midi/note/1" )
+		{
+			// both the arguments are int32's
+			//example= m.getArgAsInt32( 0 );
+			//example= m.getArgAsInt32( 1 );
+			
+			string msg_string;
+			msg_string = m.getAddress();
+			msg_string += ": ";
+			for ( int i=0; i<m.getNumArgs(); i++ )
+			{
+				// get the argument type
+				msg_string += m.getArgTypeName( i );
+				msg_string += ":";
+				// display the argument - make sure we get the right type
+				if( m.getArgType( i ) == OFXOSC_TYPE_INT32 )
+					msg_string += ofToString( m.getArgAsInt32( i ) );
+				else if( m.getArgType( i ) == OFXOSC_TYPE_FLOAT )
+					msg_string += ofToString( m.getArgAsFloat( i ) );
+				else if( m.getArgType( i ) == OFXOSC_TYPE_STRING )
+					msg_string += m.getArgAsString( i );
+				else
+					msg_string += "unknown";
+			}
+			// add to the list of strings to display
+			msg_strings[current_msg_string] = msg_string;
+			timers[current_msg_string] = ofGetElapsedTimef() + 5.0f;
+			current_msg_string = ( current_msg_string + 1 ) % NUM_MSG_STRINGS;
+			// clear the next line
+			msg_strings[current_msg_string] = "";
+		}
+		// check for mouse button message
+		else if ( m.getAddress() == "/midi/note/2" )
+		{
+			// the single argument is a string
+			//mouseButtonState = m.getArgAsString( 0 ) ;
+			
+		}
+		else
+		{
+			// unrecognized message: display on the bottom of the screen
+			string msg_string;
+			msg_string = m.getAddress();
+			msg_string += ": ";
+			for ( int i=0; i<m.getNumArgs(); i++ )
+			{
+				// get the argument type
+				msg_string += m.getArgTypeName( i );
+				msg_string += ":";
+				// display the argument - make sure we get the right type
+				if( m.getArgType( i ) == OFXOSC_TYPE_INT32 )
+					msg_string += ofToString( m.getArgAsInt32( i ) );
+				else if( m.getArgType( i ) == OFXOSC_TYPE_FLOAT )
+					msg_string += ofToString( m.getArgAsFloat( i ) );
+				else if( m.getArgType( i ) == OFXOSC_TYPE_STRING )
+					msg_string += m.getArgAsString( i );
+				else
+					msg_string += "unknown";
+			}
+			// add to the list of strings to display
+			msg_strings[current_msg_string] = msg_string;
+			timers[current_msg_string] = ofGetElapsedTimef() + 5.0f;
+			current_msg_string = ( current_msg_string + 1 ) % NUM_MSG_STRINGS;
+			// clear the next line
+			msg_strings[current_msg_string] = "";
+		}
+		
+	}
+	
+	
+}
+
+//--------------------------------------------------------------
+
 
 //--------------------------------------------------------------
 void sonosApp::sonosBlobsInsert()
@@ -854,6 +971,18 @@ void sonosApp::sonosDraw()
 	ofPopMatrix();
 
 }
+
+//-----------OSC DRAW---------------------------------------------------
+void sonosApp::OscDraw()
+{	
+	//for ( int i=0; i<NUM_MSG_STRINGS; i++ )
+	//{
+	//	ofDrawBitmapString( msg_strings[i], 10, 40+15*i );
+	//}
+	
+	
+}
+
 
 //--------------------------------------------------------------
 //  DEBUG DRAW and HELPERS
