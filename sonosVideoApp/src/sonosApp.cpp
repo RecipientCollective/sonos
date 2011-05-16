@@ -445,7 +445,9 @@ void sonosApp::setupPhysicsWorld()
 void sonosApp::setupOsc()
 {
 	// listen on the given port
-	cout << "listening for osc messages on port " << PORT << "\n";
+#ifdef DEBUG
+    std::cerr << "listening for osc messages on port " << PORT << std::endl;
+#endif
 	receiver.setup( PORT );
 	current_msg_string = 0;
 }
@@ -799,8 +801,9 @@ void sonosApp::OscUpdate()
 		
 		// check for mouse moved message
 		// midi type note channel 1
-		if ( m.getAddress() == "" )
+		if ( m.getAddress() == "/midi/note/1" )
 		{
+            bDrawParticles = true;
 			// both the arguments are int32's
 			//example= m.getArgAsInt32( 0 );
 			//example= m.getArgAsInt32( 1 );
