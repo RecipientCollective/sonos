@@ -14,12 +14,17 @@
 #include "sonosBlob.h"
 #include "functions.h"
 #include "MSAPhysics2D.h"
+#include "ofxOsc.h"
 
 // Uncomment to activate VideoLive
 //#define _USE_LIVE_VIDEO
 
 #define OUTPUT_HEIGHT 768.0
 #define OUTPUT_WIDTH 1024.0
+
+//OSC SETTINGS
+#define PORT 5556
+#define NUM_MSG_STRINGS 20
 
 // PHYSICS
 #define	GRAVITY	0.1
@@ -79,6 +84,9 @@ private:
 	ofxCvGrayscaleImage 	grayDiff;
 	ofxCvContourFinder		contourFinder;
 	
+	//osc stuff
+	ofxOscReceiver	receiver;
+	
 	Physics::World2D		physics;
 	
 	// MSAFluids
@@ -96,8 +104,11 @@ private:
 	void setDefaults();                             // setup VARS
 	void setupInterface();                          // setup INTERFACE
 	void setupPhysicsWorld();                       // setup PYSICS
+	void setupOsc();								// setup OSC
 	void sonosDraw();
+	void OscDraw();
 	void sonosUpdate();
+	void OscUpdate();
 	void sonosBlobsInsert();
 	void sonosBlobsUpdate();	
 	void background(int color);
