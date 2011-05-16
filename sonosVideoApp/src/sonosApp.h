@@ -35,7 +35,7 @@
 #define MAX_MASS				3
 #define MIN_BOUNCE				0.2
 #define MAX_BOUNCE				0.9
-#define MAXPARTICLES            100
+#define MAXPARTICLES            1000
 #define PARTICLEMASS            1.0
 #define PARTICLERADIUS          10.0
 #define PARTICLEBOUNCE          1.0
