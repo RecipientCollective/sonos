@@ -27,7 +27,7 @@
 #define NUM_MSG_STRINGS 20
 
 // PHYSICS
-#define	GRAVITY	0.1
+#define	GRAVITY	-0.1
 #define SECTOR_COUNT 1		// currently there is a bug at sector borders
 #define NODE_MIN_RADIUS			1
 #define NODE_MAX_RADIUS			5
@@ -35,6 +35,10 @@
 #define MAX_MASS				3
 #define MIN_BOUNCE				0.2
 #define MAX_BOUNCE				0.9
+#define MAXPARTICLES            100
+#define PARTICLEMASS            1.0
+#define PARTICLERADIUS          10.0
+#define PARTICLEBOUNCE          1.0
 
 // BITMASK sonosUpdate
 #define SONOSEMPTY        1  // 2^0, bit 0
@@ -116,7 +120,9 @@ private:
 	void drawDebugInterface(float x, float y);
 	void drawInterface(float x, float y);
 	void setFullScreen();
-	
+    void makeParticles();
+	void drawParticles();
+    
 private:
 	// Our vars
 	std::string filename;

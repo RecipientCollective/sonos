@@ -430,6 +430,7 @@ void sonosApp::setupPhysicsWorld()
 	
 	// set world dimensions, not essential, but speeds up collision
 	physics.setWorldSize(Vec2f(0.0,0.0), Vec2f(camWidth, camHeight));
+    
 	/* STRANGE SETS TODO FIXME */
 	physics.setSectorCount(SECTOR_COUNT);
     physics.setDrag(0.97f);
@@ -738,45 +739,46 @@ void sonosApp::sonosUpdate()
 	pflags = flags;
 	
 	// a questo livello ho i miei sonosBlobs per ulteriori loops
-    // 	if (bDrawParticles && (physics.numberOfParticles() < 100))
-	if (bDrawParticles)
-	{
-		for(map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end(); ++it)
-		{
-		
-			//float mass		= ofRandom(MIN_MASS, MAX_MASS);
-			//float bounce	= ofRandom(MIN_BOUNCE, MAX_BOUNCE);
-			//float radius	= ofMap(mass, MIN_MASS, MAX_MASS, NODE_MIN_RADIUS, NODE_MAX_RADIUS);
-			float mass      = 1.0;
-			float bounce    = 0.5;
-			float radius    = 2.0;
-			float range     = 20.0;
-            float spring_force = 0.1;
-            
-			// physics.makeParticle returns a particle pointer so you can customize it
-			Physics::Particle2D *p1 = physics.makeParticle(Vec2f(it->second.avatar.x - range, it->second.avatar.y - range));
-            Physics::Particle2D *p2 = physics.makeParticle(Vec2f(it->second.avatar.x + range, it->second.avatar.y - range));
-			Physics::Particle2D *p3 = physics.makeParticle(Vec2f(it->second.avatar.x + range, it->second.avatar.y + range));
-            Physics::Particle2D *p4 = physics.makeParticle(Vec2f(it->second.avatar.x - range, it->second.avatar.y + range));
-            
-            physics.makeSpring(p1, p2, spring_force, range);
-            physics.makeSpring(p2, p3, spring_force, range);
-            physics.makeSpring(p3, p4, spring_force, range);
-            physics.makeSpring(p4, p1, spring_force, range);
-            physics.makeSpring(p2, p4, spring_force, range);
-            physics.makeSpring(p1, p3, spring_force, range);
-            
-            
-			// and set a bunch of properties (you don't have to set all of them, there are defaults)
-			p1->setMass(mass)->setBounce(bounce)->setRadius(radius)->enableCollision()->makeFree();
-            p2->setMass(mass)->setBounce(bounce)->setRadius(radius)->enableCollision()->makeFree();
-            p3->setMass(mass)->setBounce(bounce)->setRadius(radius)->enableCollision()->makeFree();
-            p4->setMass(mass)->setBounce(bounce)->setRadius(radius)->enableCollision()->makeFree();
-			
-		}
-		bDrawParticles = false;
-	}
+    
+    if (bDrawParticles && (physics.numberOfParticles() < MAXPARTICLES))
+    {
+        makeParticles();
+    }
+
 }
+
+//--------------------------------------------------------------
+// PARTICLES
+//--------------------------------------------------------------
+void sonosApp::makeParticles()
+{
+    for(map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end(); ++it)
+    {
+        
+        // physics.makeParticle returns a particle pointer so you can customize it
+        Physics::Particle2D *p = physics.makeParticle(Vec2f(it->second.avatar.x, it->second.avatar.y));
+        
+        // and set a bunch of properties (you don't have to set all of them, there are defaults)
+        p->setMass(PARTICLEMASS)->setBounce(PARTICLEBOUNCE)->setRadius(PARTICLERADIUS)->enableCollision()->makeFree();        
+    }
+    bDrawParticles = false;
+}
+
+void sonosApp::drawParticles()
+{
+    // test Physics
+	ofPushStyle();
+	for(int i=0; i<physics.numberOfParticles(); i++) {
+		Physics::Particle2D *p = physics.getParticle(i);
+		ofEnableAlphaBlending();
+        lettering1.setAnchorPoint(30,13);
+		lettering1.draw(p->getPosition().x, p->getPosition().y);
+		ofDisableAlphaBlending();
+        if (bInterface) ofCircle( p->getPosition().x, p->getPosition().y, p->getRadius());
+	}
+    ofPopStyle();
+}
+
 //--------------------------------------------------------------
 //  OSC UPDATE/DRAW
 //--------------------------------------------------------------
@@ -943,35 +945,8 @@ void sonosApp::sonosDraw()
         bDrawImage=false;
 	}
 	
-	// test Physics
-	ofPushStyle();
-	for(int i=0; i<physics.numberOfParticles(); i++) {
-		Physics::Particle2D *p = physics.getParticle(i);
-		//ofEnableAlphaBlending();
-		//lettering1.draw(p->getPosition().x, p->getPosition().y);
-		//ofDisableAlphaBlending();
-		ofCircle( p->getPosition().x, p->getPosition().y, p->getRadius());
-	}
-    
-    for(int i=0; i<physics.numberOfSprings(); i++) {
-        Physics::Spring2D *spring = (Physics::Spring2D *) physics.getSpring(i);
-        Physics::Particle2D *a = spring->getOneEnd();
-        Physics::Particle2D *b = spring->getTheOtherEnd();
-        ofLine(a->getPosition().x, a->getPosition().y, b->getPosition().x, b->getPosition().y);
-    }
-    ofPopStyle();
-	
+	drawParticles();
 
-	if (DrawImageCounter>0) {
-		for (int dic=1; dic<DrawImageCounter; dic++) {
-			ofEnableAlphaBlending();
-			float wave = sin(ofGetElapsedTimef());
-			lettering1.draw(500 + (wave * dic * 100), 20);
-			//lettering1.draw(200 + (wave * 100), 20);
-			ofDisableAlphaBlending();
-		}
-	}
-	
 	ofPopMatrix();
 
 }
