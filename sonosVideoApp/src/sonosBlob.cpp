@@ -40,10 +40,11 @@ sonosBlob::sonosBlob(const ofxCvBlob &other)
 	code = randomString(10, true, false, false);
 	// on start the blob is set as updated
 	updated = true;
-	
-//#ifdef DEBUG
-//	std::cerr << "generated code for sonosBlob: " << code << std::endl;
-//#endif
+}
+
+void sonosBlob::clean()
+{
+    
 }
 
 void sonosBlob::update(const ofxCvBlob blob)

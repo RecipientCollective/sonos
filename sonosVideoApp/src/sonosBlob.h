@@ -29,7 +29,7 @@ public:
 	
 	// AVATAR
 	sonosAvatar avatar;
-	
+    
 	// costruttori
 	sonosBlob();
 	sonosBlob(const ofxCvBlob &other);
@@ -40,6 +40,7 @@ public:
 	void circle();
 	void rectangle();
 	void update(const ofxCvBlob blob);
+    void clean();
 };
 
 #endif

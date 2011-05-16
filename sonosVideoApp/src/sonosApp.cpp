@@ -705,7 +705,10 @@ void sonosApp::sonosUpdate()
 		// cancella i NOT updated
 		for (map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end();) {
 			if (!it->second.updated) {
-				//std::cerr << "Erasing: " << it->second.code << std::endl;
+#ifdef DEBUG
+                std::cerr << "Erasing blob: " << it->second.code << std::endl;
+#endif
+                it->second.clean();
 				sonosblobs.erase(it);
 				it++;
 			} else {
