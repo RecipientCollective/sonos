@@ -761,6 +761,12 @@ void sonosApp::makeParticles()
         // physics.makeParticle returns a particle pointer so you can customize it
         Physics::Particle2D *p = physics.makeParticle(Vec2f(it->second.avatar.x, it->second.avatar.y));
         
+        int randomN = ofRandom(0,4);
+        p->data = &randomN;
+        
+        int *pInt = (int *)p->data;
+        std::cerr << "DATA: " << *pInt << std::endl;
+        
         // and set a bunch of properties (you don't have to set all of them, there are defaults)
         p->setMass(PARTICLEMASS)->setBounce(PARTICLEBOUNCE)->setRadius(PARTICLERADIUS)->enableCollision()->makeFree();        
     }
@@ -777,6 +783,11 @@ void sonosApp::drawParticles()
         lettering1.setAnchorPoint(30,13);
 		lettering1.draw(p->getPosition().x, p->getPosition().y);
 		ofDisableAlphaBlending();
+        
+
+        int *pInt = (int *)p->data;
+        std::cerr << "DATA: " << *(static_cast<int*>(pInt)) << std::endl;
+        
         if (bInterface) ofCircle( p->getPosition().x, p->getPosition().y, p->getRadius());
 	}
     ofPopStyle();
