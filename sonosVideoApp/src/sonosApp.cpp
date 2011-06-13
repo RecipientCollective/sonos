@@ -757,18 +757,18 @@ void sonosApp::makeParticles()
 {
     for(map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end(); ++it)
     {
-        
         // physics.makeParticle returns a particle pointer so you can customize it
-        Physics::Particle2D *p = physics.makeParticle(Vec2f(it->second.avatar.x, it->second.avatar.y));
+        Physics::Particle2D *p = new Physics::Particle2D(Vec2f(it->second.avatar.x, it->second.avatar.y));
+        
+        // and set a bunch of properties (you don't have to set all of them, there are defaults)
+        p->setMass(PARTICLEMASS)->setBounce(PARTICLEBOUNCE)->setRadius(PARTICLERADIUS)->enableCollision()->makeFree();
         
         int randomN = ofRandom(0,4);
         p->data = &randomN;
+
+        std::cerr << "DATA INPUT: " << *(int *)p->data << std::endl;
         
-        int *pInt = (int *)p->data;
-        std::cerr << "DATA: " << *pInt << std::endl;
-        
-        // and set a bunch of properties (you don't have to set all of them, there are defaults)
-        p->setMass(PARTICLEMASS)->setBounce(PARTICLEBOUNCE)->setRadius(PARTICLERADIUS)->enableCollision()->makeFree();        
+        physics.addParticle(p);
     }
     bDrawParticles = false;
 }
@@ -783,10 +783,9 @@ void sonosApp::drawParticles()
         lettering1.setAnchorPoint(30,13);
 		lettering1.draw(p->getPosition().x, p->getPosition().y);
 		ofDisableAlphaBlending();
-        
-
-        int *pInt = (int *)p->data;
-        std::cerr << "DATA: " << *(static_cast<int*>(pInt)) << std::endl;
+     
+        // che cazzo ora da sempre '2'
+        std::cerr << "DATA OUTPUT: " << *(int *)p->data << std::endl;
         
         if (bInterface) ofCircle( p->getPosition().x, p->getPosition().y, p->getRadius());
 	}
