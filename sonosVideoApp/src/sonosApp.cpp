@@ -764,11 +764,16 @@ void sonosApp::makeParticles()
         p->setMass(PARTICLEMASS)->setBounce(PARTICLEBOUNCE)->setRadius(PARTICLERADIUS)->enableCollision()->makeFree();
         
         int randomN = ofRandom(0,4);
-        p->data = &randomN;
-
-        std::cerr << "DATA INPUT: " << *(int *)p->data << std::endl;
+        int *xp = (int*) malloc(sizeof(int));
         
+        *xp = randomN;
+        p->data = xp;
         physics.addParticle(p);
+        
+        std::cerr << "DATA INPUT: " << *reinterpret_cast<int *>(p->data) << std::endl;
+        
+        // FIXME sto malloc da qualche parte sevre un dealloc
+        
     }
     bDrawParticles = false;
 }
@@ -784,8 +789,27 @@ void sonosApp::drawParticles()
 		lettering1.draw(p->getPosition().x, p->getPosition().y);
 		ofDisableAlphaBlending();
      
-        // che cazzo ora da sempre '2'
-        std::cerr << "DATA OUTPUT: " << *(int *)p->data << std::endl;
+        // forse e' ok
+        int * pt = reinterpret_cast<int *>(p->data);
+        
+        switch (*pt) {
+            case 0:
+                std::cerr << "DATA OUTPUT: " << *pt << std::endl;
+                ofSetColor(255,0,0);
+                break;
+            case 1:
+                ofSetColor(0,255,0);
+                break;
+            case 2:
+                ofSetColor(0,0,255);
+                break;
+            case 3:
+                ofSetColor(255,255,0);
+                break;                
+            default:
+                ofSetColor(255,255,255);
+                break;
+        }
         
         if (bInterface) ofCircle( p->getPosition().x, p->getPosition().y, p->getRadius());
 	}
