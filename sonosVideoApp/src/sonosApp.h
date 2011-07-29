@@ -113,7 +113,6 @@ private:
 	void setupPhysicsWorld();                       // setup PYSICS
 	void setupOsc();								// setup OSC
 	void sonosDraw();
-	void OscDraw();
 	void sonosUpdate();
 	void OscUpdate();
 	void sonosBlobsInsert();
