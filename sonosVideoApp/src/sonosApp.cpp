@@ -254,28 +254,28 @@ void sonosApp::keyPressed(int key)
         
         // TEST particles
         case 'z':
-            makeParticles(1,1);
+            makeParticles(1,0);
             break;
         case 'x':
-            makeParticles(2,1);            
+            makeParticles(2,0);            
             break;
         case 'c':
-            makeParticles(3,1);            
+            makeParticles(3,0);            
             break;
         case 'v':
-            makeParticles(4,1);            
+            makeParticles(4,0);            
             break;
         case 'q':
-            makeParticles(1,2);
+            makeParticles(1,1);
             break;
         case 'w':
-            makeParticles(2,2);            
+            makeParticles(2,1);            
             break;
         case 'e':
-            makeParticles(3,2);            
+            makeParticles(3,1);            
             break;
         case 'r':
-            makeParticles(4,2);            
+            makeParticles(4,1);            
             break;
 
 			
@@ -769,10 +769,19 @@ void sonosApp::makeParticles(int data, int position)
     if (physics.numberOfParticles() < MAXPARTICLES) {
         // la map dei sonos blob ha key a randomString, non so perche' FIXME
         // per ora copiamo in un vector
+
+        std::vector <sonosBlob> blobs;
+        
         for(map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end(); ++it)
         {
+            blobs.push_back(it->second);
+        }
+        
+        std::sort(blobs.begin(),blobs.end(), sortByCentroid);
+        
+        if (position < blobs.size()) {
             // physics.makeParticle returns a particle pointer so you can customize it
-            Physics::Particle2D *p = new Physics::Particle2D(Vec2f(it->second.avatar.x, it->second.avatar.y));
+            Physics::Particle2D *p = new Physics::Particle2D(Vec2f(blobs[position].avatar.x, blobs[position].avatar.y));
             
             // and set a bunch of properties (you don't have to set all of them, there are defaults)
             p->setMass(PARTICLEMASS)->setBounce(PARTICLEBOUNCE)->setRadius(PARTICLERADIUS)->enableCollision()->makeFree();
@@ -781,12 +790,12 @@ void sonosApp::makeParticles(int data, int position)
             *xp = data;
             p->data = xp;
             physics.addParticle(p);
-            
-            //std::cerr << "DATA INPUT: " << *reinterpret_cast<int *>(p->data) << std::endl;
-            
-            // FIXME sto malloc da qualche parte sevre un dealloc
-            
         }
+        //std::cerr << "DATA INPUT: " << *reinterpret_cast<int *>(p->data) << std::endl;
+        
+        // FIXME sto malloc da qualche parte sevre un dealloc
+        
+
     }
 }
 
