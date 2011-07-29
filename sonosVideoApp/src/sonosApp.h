@@ -100,6 +100,9 @@ private:
 	
 	//images containers
 	ofImage lettering1;
+    ofImage lettering2;
+    ofImage lettering3;
+    ofImage lettering4;
 
 // INTERAL STUFFS
 private:
@@ -120,7 +123,7 @@ private:
 	void drawDebugInterface(float x, float y);
 	void drawInterface(float x, float y);
 	void setFullScreen();
-    void makeParticles(int data, int position);
+    void makeParticle(int data, int position);
 	void drawParticles();
     
 private:

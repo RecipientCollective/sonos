@@ -254,28 +254,28 @@ void sonosApp::keyPressed(int key)
         
         // TEST particles
         case 'z':
-            makeParticles(1,0);
+            makeParticle(1,0);
             break;
         case 'x':
-            makeParticles(2,0);            
+            makeParticle(2,0);            
             break;
         case 'c':
-            makeParticles(3,0);            
+            makeParticle(3,0);            
             break;
         case 'v':
-            makeParticles(4,0);            
+            makeParticle(4,0);            
             break;
         case 'q':
-            makeParticles(1,1);
+            makeParticle(1,1);
             break;
         case 'w':
-            makeParticles(2,1);            
+            makeParticle(2,1);            
             break;
         case 'e':
-            makeParticles(3,1);            
+            makeParticle(3,1);            
             break;
         case 'r':
-            makeParticles(4,1);            
+            makeParticle(4,1);            
             break;
 
 			
@@ -392,7 +392,10 @@ void sonosApp::inputSetup()
 	cerr << "Input size: width =" << camWidth << " height = " << camHeight << endl;
 #endif
 	
-lettering1.loadImage("images/lettering.png");
+    lettering1.loadImage("images/lettering_1.png");
+    lettering2.loadImage("images/lettering_2.png");
+    lettering3.loadImage("images/lettering_3.png");
+    lettering4.loadImage("images/lettering_ 4.png");
 }
 
 //--------------------------------------------------------------
@@ -764,7 +767,7 @@ void sonosApp::sonosUpdate()
 //--------------------------------------------------------------
 // PARTICLES
 //--------------------------------------------------------------
-void sonosApp::makeParticles(int data, int position)
+void sonosApp::makeParticle(int data, int position)
 {
     if (physics.numberOfParticles() < MAXPARTICLES) {
         // la map dei sonos blob ha key a randomString, non so perche' FIXME
@@ -803,37 +806,34 @@ void sonosApp::drawParticles()
 {
     // test Physics
 	ofPushStyle();
+	ofEnableAlphaBlending();         
 	for(int i=0; i<physics.numberOfParticles(); i++) {
-		Physics::Particle2D *p = physics.getParticle(i);
-		ofEnableAlphaBlending();
-        lettering1.setAnchorPoint(30,13);
-		lettering1.draw(p->getPosition().x, p->getPosition().y);
-		ofDisableAlphaBlending();
-     
+		Physics::Particle2D *p = physics.getParticle(i);     
         // forse e' ok
-        int * pt = reinterpret_cast<int *>(p->data);
-        
+        int * pt = reinterpret_cast<int *>(p->data);           
         switch (*pt) {
             //std::cerr << "DATA OUTPUT: " << *pt << std::endl;b    
             case 1:
-                ofSetColor(255,0,0);
+                lettering1.setAnchorPoint(15,15);
+                lettering1.draw(p->getPosition().x, p->getPosition().y);
                 break;
             case 2:
-                ofSetColor(0,255,0);
+                lettering2.setAnchorPoint(15,15);
+                lettering2.draw(p->getPosition().x, p->getPosition().y);
                 break;
             case 3:
-                ofSetColor(0,0,255);
+                lettering3.setAnchorPoint(15,15);
+                lettering3.draw(p->getPosition().x, p->getPosition().y);
                 break;
             case 4:
-                ofSetColor(255,255,0);
+                lettering4.setAnchorPoint(15,15);
+                lettering4.draw(p->getPosition().x, p->getPosition().y);
                 break;                
             default:
-                ofSetColor(255,255,255);
                 break;
         }
-        
-        if (bInterface) ofCircle( p->getPosition().x, p->getPosition().y, p->getRadius());
 	}
+    ofDisableAlphaBlending();    
     ofPopStyle();
 }
 
@@ -863,21 +863,8 @@ void sonosApp::OscUpdate()
 		// midi type note channel 1
 		if ( m.getAddress() == "/midi/note/1" )
 		{
-			// both the arguments are int32's
-			//example= m.getArgAsInt32( 0 );
-			//example= m.getArgAsInt32( 1 );
-			
-		}
-		else if ( m.getAddress() == "/midi/note/2" )
-		{
-			//argomenti mesaggio di nota "int:note  float:velocity  int:trigger"
-			// the single argument is a string
-			//mouseButtonState = m.getArgAsString( 0 ) ;
-			
-		}
-		else
-		{
-			// unrecognized message: display on the bottom of the screen
+#ifdef DEBUG
+            // DEBUG
 			string msg_string;
 			msg_string = m.getAddress();
 			msg_string += ": ";
@@ -902,6 +889,22 @@ void sonosApp::OscUpdate()
 			current_msg_string = ( current_msg_string + 1 ) % NUM_MSG_STRINGS;
 			// clear the next line
 			msg_strings[current_msg_string] = "";
+            std::cerr << msg_string << std::endl;
+#endif
+            
+//          makeParticle(1,0);
+//		    makeParticle(2,0);		
+//			makeParticle(3,0);				
+//			makeParticle(4,0);			
+//			makeParticle(1,1);
+//			makeParticle(1,2);
+//			makeParticle(1,3);
+//			makeParticle(1,4);
+			
+		}
+		else
+		{
+			// unrecognized message
 		}
 		
 	}
