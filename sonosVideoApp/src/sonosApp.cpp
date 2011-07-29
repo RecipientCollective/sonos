@@ -862,38 +862,38 @@ void sonosApp::OscUpdate()
 		// midi type note channel 1
 		if ( m.getAddress() == "/midi/note/1" )
 		{
-            int nota = m.getArgAsInt32(0);
-            
-            switch (nota) {
-                case 57:
-                    makeParticle(1,0);
-                    break;
-                case 59:
-                    makeParticle(2,0);		
-                    break;
-                case 54:
-                    makeParticle(3,0);				
-                    break;
-                case 60:
-                    makeParticle(4,0);				                    
-                    break;
-                case 38:
-                    makeParticle(1,1);			                    
-                    break;
-                case 43:
-                    makeParticle(2,1);
-                    break;
-                case 42:
-                    makeParticle(3,1);
-                    break;
-                case 41:
-                    makeParticle(4,1);
-                    break;
-                default:
-                    std::cerr << "Nota Sconosciuta: " << nota << std::endl;
-                    break;
+            if ( m.getArgAsInt32(2) == 1 ) {
+                int nota = m.getArgAsInt32(0);
+                switch (nota) {
+                    case 57:
+                        makeParticle(1,0);
+                        break;
+                    case 59:
+                        makeParticle(2,0);		
+                        break;
+                    case 54:
+                        makeParticle(3,0);				
+                        break;
+                    case 60:
+                        makeParticle(4,0);				                    
+                        break;
+                    case 38:
+                        makeParticle(1,1);			                    
+                        break;
+                    case 43:
+                        makeParticle(2,1);
+                        break;
+                    case 42:
+                        makeParticle(3,1);
+                        break;
+                    case 41:
+                        makeParticle(4,1);
+                        break;
+                    default:
+                        std::cerr << "Nota Sconosciuta: " << nota << std::endl;
+                        break;
+                }
             }
-             
             
 #ifdef DEBUG
             // DEBUG
