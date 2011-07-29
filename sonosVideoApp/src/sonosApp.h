@@ -120,7 +120,7 @@ private:
 	void drawDebugInterface(float x, float y);
 	void drawInterface(float x, float y);
 	void setFullScreen();
-    void makeParticles();
+    void makeParticles(int data, int position);
 	void drawParticles();
     
 private:

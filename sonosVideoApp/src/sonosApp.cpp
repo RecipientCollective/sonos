@@ -22,7 +22,6 @@ bool bCircle;
 bool bLine;
 bool bBox;
 bool bAvatar;
-bool bDrawParticles;
 bool bPause;
 bool bDrawImage;
 int	 blobMax;
@@ -81,11 +80,6 @@ void toggleLine ( puObject * ob )
 void toggleAvatar ( puObject * ob )
 {
 	bAvatar	= !bAvatar;
-}
-
-void toggleParticles ( puObject * ob )
-{
-	bDrawParticles = true;
 }
 
 void setTrx (puObject * ob)
@@ -257,6 +251,33 @@ void sonosApp::keyPressed(int key)
 		case ' ':
 			bDrawImage=true;
 			break;
+        
+        // TEST particles
+        case 'z':
+            makeParticles(1,1);
+            break;
+        case 'x':
+            makeParticles(2,1);            
+            break;
+        case 'c':
+            makeParticles(3,1);            
+            break;
+        case 'v':
+            makeParticles(4,1);            
+            break;
+        case 'q':
+            makeParticles(1,2);
+            break;
+        case 'w':
+            makeParticles(2,2);            
+            break;
+        case 'e':
+            makeParticles(3,2);            
+            break;
+        case 'r':
+            makeParticles(4,2);            
+            break;
+
 			
 #ifdef _USE_LIVE_VIDEO
 		case ',':
@@ -414,7 +435,6 @@ void sonosApp::setDefaults()
 	bLine = false;
 	bBox = true;
 	bAvatar = false;
-	bDrawParticles = false;
 	bDrawImage = false;
 }
 
@@ -497,11 +517,7 @@ void sonosApp::setupInterface()
 	
 	ofxpuButton *avatarBt= new ofxpuButton(align_left + column_spacer, align_top + spacer_bt*2, "Avatar");
 	avatarBt->setCallback(toggleAvatar);
-	
-	ofxpuButton *particlesBt= new ofxpuButton(align_left + column_spacer, align_top + spacer_bt*3, "Particles");
-	particlesBt->setCallback(toggleParticles);
-	
-	
+		
 	// COLUMN 3
 	ofxpuaSpinBox * spinBlobs = new ofxpuaSpinBox (align_left + column_spacer * 2, align_top, 60, 30);
 	spinBlobs->setLabel("maxBlobs");
@@ -743,39 +759,35 @@ void sonosApp::sonosUpdate()
 	
 	// a questo livello ho i miei sonosBlobs per ulteriori loops
     
-    if (bDrawParticles && (physics.numberOfParticles() < MAXPARTICLES))
-    {
-        makeParticles();
-    }
-
 }
 
 //--------------------------------------------------------------
 // PARTICLES
 //--------------------------------------------------------------
-void sonosApp::makeParticles()
+void sonosApp::makeParticles(int data, int position)
 {
-    for(map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end(); ++it)
-    {
-        // physics.makeParticle returns a particle pointer so you can customize it
-        Physics::Particle2D *p = new Physics::Particle2D(Vec2f(it->second.avatar.x, it->second.avatar.y));
-        
-        // and set a bunch of properties (you don't have to set all of them, there are defaults)
-        p->setMass(PARTICLEMASS)->setBounce(PARTICLEBOUNCE)->setRadius(PARTICLERADIUS)->enableCollision()->makeFree();
-        
-        int randomN = ofRandom(0,4);
-        int *xp = (int*) malloc(sizeof(int));
-        
-        *xp = randomN;
-        p->data = xp;
-        physics.addParticle(p);
-        
-        //std::cerr << "DATA INPUT: " << *reinterpret_cast<int *>(p->data) << std::endl;
-        
-        // FIXME sto malloc da qualche parte sevre un dealloc
-        
+    if (physics.numberOfParticles() < MAXPARTICLES) {
+        // la map dei sonos blob ha key a randomString, non so perche' FIXME
+        // per ora copiamo in un vector
+        for(map<string, sonosBlob>::iterator it = sonosblobs.begin(); it != sonosblobs.end(); ++it)
+        {
+            // physics.makeParticle returns a particle pointer so you can customize it
+            Physics::Particle2D *p = new Physics::Particle2D(Vec2f(it->second.avatar.x, it->second.avatar.y));
+            
+            // and set a bunch of properties (you don't have to set all of them, there are defaults)
+            p->setMass(PARTICLEMASS)->setBounce(PARTICLEBOUNCE)->setRadius(PARTICLERADIUS)->enableCollision()->makeFree();
+            
+            int *xp = (int*) malloc(sizeof(int));
+            *xp = data;
+            p->data = xp;
+            physics.addParticle(p);
+            
+            //std::cerr << "DATA INPUT: " << *reinterpret_cast<int *>(p->data) << std::endl;
+            
+            // FIXME sto malloc da qualche parte sevre un dealloc
+            
+        }
     }
-    bDrawParticles = false;
 }
 
 void sonosApp::drawParticles()
@@ -793,17 +805,17 @@ void sonosApp::drawParticles()
         int * pt = reinterpret_cast<int *>(p->data);
         
         switch (*pt) {
-            case 0:
-                //std::cerr << "DATA OUTPUT: " << *pt << std::endl;
+            //std::cerr << "DATA OUTPUT: " << *pt << std::endl;b    
+            case 1:
                 ofSetColor(255,0,0);
                 break;
-            case 1:
+            case 2:
                 ofSetColor(0,255,0);
                 break;
-            case 2:
+            case 3:
                 ofSetColor(0,0,255);
                 break;
-            case 3:
+            case 4:
                 ofSetColor(255,255,0);
                 break;                
             default:
@@ -842,7 +854,6 @@ void sonosApp::OscUpdate()
 		// midi type note channel 1
 		if ( m.getAddress() == "/midi/note/1" )
 		{
-            bDrawParticles = true;
 			// both the arguments are int32's
 			//example= m.getArgAsInt32( 0 );
 			//example= m.getArgAsInt32( 1 );
