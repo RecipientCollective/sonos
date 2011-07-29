@@ -138,9 +138,7 @@ void sonosApp::setup()
 
 //--------------------------------------------------------------
 void sonosApp::update()
-{
-	OscUpdate();
-	
+{	
 	// IS A NEW FRAME?
 	bool bNewFrame = false;
 #ifdef _USE_LIVE_VIDEO
@@ -154,7 +152,7 @@ void sonosApp::update()
 	if (bNewFrame){
 		sonosUpdate();
 		physics.update();
-		
+        OscUpdate();
 	}
 }
 
