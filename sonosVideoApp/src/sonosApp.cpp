@@ -394,7 +394,7 @@ void sonosApp::inputSetup()
     lettering1.loadImage("images/lettering_1.png");
     lettering2.loadImage("images/lettering_2.png");
     lettering3.loadImage("images/lettering_3.png");
-    lettering4.loadImage("images/lettering_ 4.png");
+    lettering4.loadImage("images/lettering_4.png");
 }
 
 //--------------------------------------------------------------
