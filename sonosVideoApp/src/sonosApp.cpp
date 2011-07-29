@@ -770,7 +770,7 @@ void sonosApp::makeParticles()
         p->data = xp;
         physics.addParticle(p);
         
-        std::cerr << "DATA INPUT: " << *reinterpret_cast<int *>(p->data) << std::endl;
+        //std::cerr << "DATA INPUT: " << *reinterpret_cast<int *>(p->data) << std::endl;
         
         // FIXME sto malloc da qualche parte sevre un dealloc
         
@@ -794,7 +794,7 @@ void sonosApp::drawParticles()
         
         switch (*pt) {
             case 0:
-                std::cerr << "DATA OUTPUT: " << *pt << std::endl;
+                //std::cerr << "DATA OUTPUT: " << *pt << std::endl;
                 ofSetColor(255,0,0);
                 break;
             case 1:
