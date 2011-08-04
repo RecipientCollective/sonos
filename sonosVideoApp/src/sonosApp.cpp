@@ -766,6 +766,7 @@ void sonosApp::sonosUpdate()
 //--------------------------------------------------------------
 void sonosApp::makeParticle(int data, int position)
 {
+    physics.update();
     if (physics.numberOfParticles() < MAXPARTICLES) {
         // la map dei sonos blob ha key a randomString, non so perche' FIXME
         // per ora copiamo in un vector
