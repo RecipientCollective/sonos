@@ -250,6 +250,22 @@ void sonosApp::keyPressed(int key)
 			break;
         
         // TEST particles
+        case 'k':
+            clearParticles();
+            break;
+        case '1':
+            removeParticle(1);
+            break;
+        case '2':
+            removeParticle(2);
+            break;
+        case '3':
+            removeParticle(3);
+            break;
+        case '4':
+            removeParticle(4);
+            break;
+
         case 'z':
             makeParticle(1,0);
             break;
@@ -764,6 +780,25 @@ void sonosApp::sonosUpdate()
 //--------------------------------------------------------------
 // PARTICLES
 //--------------------------------------------------------------
+void sonosApp::clearParticles()
+{
+    physics.clear();
+}
+
+void sonosApp::removeParticle(int data)
+{
+    for(int i=0; i<physics.numberOfParticles(); i++) {
+        Physics::Particle2D *p = physics.getParticle(i);     
+        // forse e' ok
+        int * pt = reinterpret_cast<int *>(p->data);
+        if (*pt == data)
+        {
+            p->kill();
+            return;
+        }
+    }
+}
+
 void sonosApp::makeParticle(int data, int position)
 {
     physics.update();

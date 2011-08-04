@@ -124,6 +124,8 @@ private:
 	void setFullScreen();
     void makeParticle(int data, int position);
 	void drawParticles();
+    void clearParticles();
+    void removeParticle(int data);
     
 private:
 	// Our vars
