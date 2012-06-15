@@ -8,7 +8,7 @@ http://www.delicious.com/sonosv0
 per il login usate il login yahoo 
 u: sonosv0
 p: v0sonos
-potete usarlo per bookmark di riferimento utili per il porgetto
+potete usarlo per bookmark di riferimento utili per il progetto
 
 
 tutte le path sono relative,
@@ -18,6 +18,15 @@ tutte le path sono relative,
 
 
 =======
+
+0.
+------------------
+Name: sonosVideoApp
+addons: ofxOpencv
+
+QUESTA E' LA NOSTA ALPHA VERSION.
+
+------------------
 
 
 1.
