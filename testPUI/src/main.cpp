@@ -4,12 +4,9 @@
 
 //========================================================================
 int main( ){
-
-    ofAppGlutWindow window;
-	ofSetupOpenGL(&window, OUTPUT_WIDTH, OUTPUT_HEIGHT, OF_WINDOW);			// <-------- setup the GL context
-	//antialias settings
-	glutInitDisplayString("rgba double samples >= 4 depth");
 	
+    ofAppGlutWindow window;
+	ofSetupOpenGL(&window, 1024,768, OF_WINDOW);			// <-------- setup the GL context
 	
 	// this kicks off the running of my app
 	// can be OF_WINDOW or OF_FULLSCREEN

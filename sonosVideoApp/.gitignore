@@ -1,0 +1,14 @@
+*.depend
+*.layout
+*.mode*v3
+*.pbxuser
+*.app*
+*.DS_*
+*.xcuserstate
+
+.svn/
+obj/
+bin/
+build/
+!data/
+
