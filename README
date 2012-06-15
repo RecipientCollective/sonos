@@ -19,6 +19,29 @@ tutte le path sono relative,
 
 =======
 
+FIXING PROBLEMS WITH XCODE 4.3.2 && 10.7 
+
+1. CREATO NUOVO PROGETTO: sonoApp
+
+2. Download openFrameworks 0071 (OSX)
+
+3. cd addons && git clone https://github.com/memo/msalibs.git
+
+4. mkdir Code && cd Code && git clone git@github.com:RecipientCollective/sonos.git
+
+5. open PROJECT sonosAPP
+
+
+RUN RUN RUN BABE!
+
+
+
+
+
+=======
+
+
+
 0.
 ------------------
 Name: sonosVideoApp
