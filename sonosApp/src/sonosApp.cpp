@@ -1020,14 +1020,6 @@ void sonosApp::sonosDraw()
 	ofScale(scale_x, scale_y, 1.0);
 	ofTranslate(mtrx, mtry, 1.0);
 	
-	if (bBox) {
-		ofPushStyle();
-		ofSetColor(255, 255, 255);
-		ofNoFill();
-		ofRect(0, 0, camWidth, camHeight);
-		ofPopStyle();
-	}
-	
 	// in draw we iterate in the map
 	for(map<string, sonosBlob>::iterator i = sonosblobs.begin(); i != sonosblobs.end(); ++i)
 	{
